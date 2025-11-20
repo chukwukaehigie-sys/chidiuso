@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Emergency | MedMinder</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff8f8;
+      margin: 0;
+      padding: 20px;
+    }
+    header {
+      background: white;
+      color: #333;
+      padding: 25px;
+      border-radius: 15px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.5em;
+      margin-bottom: 15px;
+      color: #2c5530;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+    }
+    .utility-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 25px;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+      background: linear-gradient(90deg, #4474dd 0%, #4adef1 100%);
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .utility-bar button, 
+    .utility-bar select,
+    .utility-bar a button {
+      font-size: 16px;
+      padding: 12px 18px;
+      border: 2px solid #4CAF50;
+      background: white;
+      color: #2c5530;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      border-bottom: none;
+    }
+
+    .utility-bar button:hover,
+    .utility-bar a button:hover {
+      background: #4CAF50;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+    }
+
+    .utility-bar button:active,
+    .utility-bar a button:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 6px rgba(76, 175, 80, 0.2);
+    }
+
+    .utility-bar button[disabled],
+    .utility-bar a button[disabled] {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .utility-bar select {
+      background: white;
+      color: #333;
+      border: 2px solid #4CAF50;
+      padding: 11px 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .utility-bar select:hover {
+      border-color: #45a049;
+      box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .utility-bar select option {
+      background: white;
+      color: #333;
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      color: #b30000;
+    }
+    
+    /* Emergency Sections */
+    .emergency-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
+    }
+    
+    .emergency-card {
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      border-left: 5px solid #ff6b6b;
+    }
+    
+    .emergency-card.medical {
+      border-left-color: #ff6b6b;
+    }
+    
+    .emergency-card.contacts {
+      border-left-color: #4CAF50;
+    }
+    
+    .emergency-card.guidelines {
+      border-left-color: #2196F3;
+    }
+    
+    .emergency-card h2 {
+      color: #cc0000;
+      margin-top: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .emergency-card p {
+      font-size: 16px;
+      line-height: 1.6;
+      margin: 15px 0;
+    }
+    
+    .contact-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .contact-list li {
+      padding: 12px 0;
+      border-bottom: 1px solid #f0f0f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .contact-list li:last-child {
+      border-bottom: none;
+    }
+    
+    .contact-name {
+      font-weight: bold;
+      color: #333;
+    }
+    
+    .contact-number {
+      color: #4CAF50;
+      font-weight: bold;
+    }
+    
+    .quick-action-btn {
+      background: #ff6b6b;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
+    
+    .quick-action-btn:hover {
+      background: #ff5252;
+      transform: translateY(-2px);
+    }
+    
+    .guideline-list {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .guideline-list li {
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f0f0;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+    
+    .guideline-list li:last-child {
+      border-bottom: none;
+    }
+    
+    .guideline-number {
+      background: #2196F3;
+      color: white;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    
+    .emergency-alert {
+      background: linear-gradient(135deg, #ff6b6b, #ff5252);
+      color: white;
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+      margin: 30px 0;
+      box-shadow: 0 6px 20px rgba(255, 107, 107, 0.3);
+    }
+    
+    .emergency-alert h2 {
+      margin-top: 0;
+      font-size: 28px;
+    }
+    
+    .emergency-alert p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    
+    .big-emergency-btn {
+      background: white;
+      color: #ff6b6b;
+      border: none;
+      padding: 18px 35px;
+      border-radius: 30px;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    
+    .big-emergency-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+    
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      color: #666;
+      padding: 30px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    footer p {
+      margin: 10px 0;
+      font-size: 1.1em;
+    }
+
+    footer a {
+      color: #4CAF50;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .emergency-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .utility-bar {
+        flex-direction: column;
+      }
+      
+      .utility-bar button, 
+      .utility-bar select,
+      .utility-bar a button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav class="utility-bar">
+      <a href="index.html" style="text-decoration: none;"><button id="homeBtn">🏠 Home</button></a>
+      <a href="schedule.html" style="text-decoration: none;"><button id="scheduleBtn">📅 Schedule</button></a>
+      <a href="reminder.html" style="text-decoration: none;"><button id="remindersBtn">🔔 Reminders</button></a>
+      <a href="settings.html" style="text-decoration: none;"><button id="settingsBtn">⚙️ Settings</button></a>
+      <a href="howtouse.html" style="text-decoration: none;"><button>❓ How to Use</button></a>
+      <a href="added-medications.html" style="text-decoration: none;"><button>💊 Added Medications</button></a>
+      <a href="profile.html" style="text-decoration: none;"><button>👤 Profile</button></a>
+      
+      <select class="lS" id="languageSelect">
+        <option value="en">English</option>
+        <option value="ig">Igbo</option>
+        <option value="yo">Yoruba</option>
+        <option value="ha">Hausa</option>
+      </select>
+    </nav>
+    <h1>📞 Emergency Assistance</h1>
+  </header>
+
+  <!-- <div class="emergency-alert">
+    <h2>🚨 IMMEDIATE HELP NEEDED?</h2>
+    <p>If this is a life-threatening emergency, press the button below to alert your emergency contacts immediately</p>
+    <button class="big-emergency-btn" onclick="triggerEmergencyAlert()">🚨 EMERGENCY ALERT</button>
+  </div> -->
+
+  <div class="emergency-grid">
+    <div class="emergency-card medical">
+      <h2>🩺 Medical Emergency Contacts</h2>
+      <p>For immediate medical assistance, contact these services:</p>
+      <ul class="contact-list">
+        <li>
+          <span class="contact-name">National Emergency</span>
+          <span class="contact-number">112 or 199</span>
+          <!-- <button class="quick-action-btn" onclick="callNumber('112')">Call</button> -->
+        </li>
+        <li>
+          <span class="contact-name">Ambulance Services</span>
+          <span class="contact-number">+234-700-225-564</span>
+          <!-- <button class="quick-action-btn" onclick="callNumber('+234700225564')">Call</button> -->
+        </li>
+        <li>
+          <span class="contact-name">Police Emergency</span>
+          <span class="contact-number">112 or 199</span>
+          <!-- <button class="quick-action-btn" onclick="callNumber('112')">Call</button> -->
+        </li>
+        <li>
+          <span class="contact-name">Fire Service</span>
+          <span class="contact-number">112</span>
+          <!-- <button class="quick-action-btn" onclick="callNumber('112')">Call</button> -->
+        </li>
+      </ul>
+    </div>
+
+    <!-- <div class="emergency-card contacts">
+      <h2>👨‍👩‍👧‍👦 Personal Emergency Contacts</h2>
+      <p>Your trusted contacts who will be notified in case of emergency:</p>
+      <ul class="contact-list">
+        <li>
+          <span class="contact-name">Dr. Adebayo (Primary Doctor)</span>
+          <span class="contact-number">+234-803-123-4567</span>
+          <button class="quick-action-btn" onclick="callNumber('+2348031234567')">Call</button>
+        </li>
+        <li>
+          <span class="contact-name">Chidi (Son)</span>
+          <span class="contact-number">+234-802-987-6543</span>
+          <button class="quick-action-btn" onclick="callNumber('+2348029876543')">Call</button>
+        </li>
+        <li>
+          <span class="contact-name">Ngozi (Daughter)</span>
+          <span class="contact-number">+234-805-555-7890</span>
+          <button class="quick-action-btn" onclick="callNumber('+2348055557890')">Call</button>
+        </li>
+        <li>
+          <span class="contact-name">Mr. Johnson (Neighbor)</span>
+          <span class="contact-number">+234-807-222-3333</span>
+          <button class="quick-action-btn" onclick="callNumber('+2348072223333')">Call</button>
+        </li>
+      </ul>
+    </div> -->
+
+    <div class="emergency-card guidelines">
+      <h2>📋 Emergency Guidelines</h2>
+      <p>What to do in case of emergency:</p>
+      <ul class="guideline-list">
+        <li>
+          <div class="guideline-number">1</div>
+          <div>Stay calm and assess the situation</div>
+        </li>
+        <li>
+          <div class="guideline-number">2</div>
+          <div>Call emergency services if it's life-threatening</div>
+        </li>
+        <li>
+          <div class="guideline-number">3</div>
+          <div>Use the Emergency Alert button to notify your contacts</div>
+        </li>
+        <li>
+          <div class="guideline-number">4</div>
+          <div>Have your medical information ready to share</div>
+        </li>
+        <li>
+          <div class="guideline-number">5</div>
+          <div>If possible, unlock your door for emergency responders</div>
+        </li>
+        <li>
+          <div class="guideline-number">6</div>
+          <div>Keep your phone charged and nearby at all times</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>
+    <p>MedMinder © 2025</p>
+    <p>Designed with care for older adults | <a href="#">Privacy Policy</a></p>
+  </footer>
+
+  <script>
+    function triggerEmergencyAlert() {
+      alert('🚨 EMERGENCY ALERT ACTIVATED!\n\nYour emergency contacts are being notified with your location and medical information.\n\nStay on the line for emergency services.');
+      
+      // In a real application, this would:
+      // 1. Send SMS/email alerts to all emergency contacts
+      // 2. Share location data
+      // 3. Provide medical information to responders
+      // 4. Call emergency services
+    }
+    
+    function callNumber(number) {
+      alert(`Calling ${number}...\n\nPlease ensure your phone is connected and ready.`);
+      // In a real application, this would initiate a phone call
+      // window.location.href = `tel:${number}`;
+    }
+  </script>
+
+</body>
+</html>

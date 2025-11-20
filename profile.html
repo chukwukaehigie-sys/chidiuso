@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MedMinder - Profile</title>
+  <link rel="stylesheet" href="simpmedcheck.css" />
+  <style>
+    /* Profile-specific styles that match your existing design */
+    .profile-container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 30px;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .profile-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background-color: #4a90e2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      color: white;
+      margin-right: 20px;
+    }
+
+    .profile-info h2 {
+      margin: 0 0 5px 0;
+      color: #333;
+    }
+
+    .profile-info p {
+      margin: 0;
+      color: #666;
+    }
+
+    .profile-details {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .detail-card {
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .detail-card h3 {
+      margin-top: 0;
+      color: #4a90e2;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 10px;
+    }
+
+    .detail-item {
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .detail-label {
+      font-weight: bold;
+      color: #555;
+    }
+
+    .detail-value {
+      color: #333;
+    }
+
+    .emergency-contacts {
+      margin-bottom: 30px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      background-color: white;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .contact-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #e74c3c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      margin-right: 15px;
+    }
+
+    .contact-info {
+      flex-grow: 1;
+    }
+
+    .contact-name {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .contact-relationship {
+      color: #666;
+      font-size: 0.9em;
+    }
+
+    .contact-phone {
+      color: #4a90e2;
+    }
+
+    .profile-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .action-btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    .edit-btn {
+      background-color: #4a90e2;
+      color: white;
+    }
+
+    .edit-btn:hover {
+      background-color: #3a7bc8;
+    }
+
+    .logout-btn {
+      background-color: #e74c3c;
+      color: white;
+    }
+
+    .logout-btn:hover {
+      background-color: #c0392b;
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-title {
+      margin: 0;
+      color: #333;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: #666;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      color: #555;
+      font-weight: bold;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    .save-btn {
+      background-color: #4a90e2;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    .save-btn:hover {
+      background-color: #3a7bc8;
+    }
+
+    @media (max-width: 768px) {
+      .profile-details {
+        grid-template-columns: 1fr;
+      }
+      
+      .profile-header {
+        flex-direction: column;
+        text-align: center;
+      }
+      
+      .profile-avatar {
+        margin-right: 0;
+        margin-bottom: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="utility-bar">
+      <a href="index.html" style="text-decoration: none;"><button>🏠 Home</button></a>
+      <a href="schedule.html" style="text-decoration: none;"><button>📅 Schedule</button></a>
+      <a href="reminder.html" style="text-decoration: none;"><button>🔔 Reminders</button></a>
+      <a href="emergency.html" style="text-decoration: none;"><button>📞 Emergency</button></a>
+      <a href="settings.html" style="text-decoration: none;"><button>⚙️ Settings</button></a>
+      <a href="howtouse.html" style="text-decoration: none;"><button>❓ How to Use</button></a>
+      <a href="added-medications.html" style="text-decoration: none;"><button>💊 Added Medications</button></a>
+      
+      <a href="profile.html" style="text-decoration: none;"><button>👤 Profile</button></a>
+
+      <select class="lS" id="languageSelect">
+        <option value="en">English</option>
+        <option value="ig">Igbo</option>
+        <option value="yo">Yoruba</option>
+        <option value="ha">Hausa</option>
+      </select>
+    </nav>
+
+    <h1>👵 MedMinder</h1>
+    <p id="headerGreeting">Welcome, Chidiuso!</p>
+    <p id="headerTime"></p>
+    <p id="dailyQuote"></p>
+    <button class="hauf" id="wellnessBtn">🧘 How are you feeling today?</button>
+  </header>
+
+  <main>
+    <div class="profile-container">
+      <!-- <div class="profile-header">
+        <div class="profile-avatar">C</div>
+        <div class="profile-info">
+          <h2>Chidiuso</h2>
+          <p>MedMinder User since 2023</p>
+          <p>Last login: Today</p>
+        </div> -->
+      </div>
+      
+      <div class="profile-details">
+        <div class="detail-card">
+          <h3>Personal Information</h3>
+          <div class="detail-item">
+            <span class="detail-label">Full Name:</span>
+            <span class="detail-value" id="profileFullName">Chidiuso</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Date of Birth:</span>
+            <span class="detail-value" id="profileDOB">January 15, 1955</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Gender:</span>
+            <span class="detail-value" id="profileGender">Female</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Phone:</span>
+            <span class="detail-value" id="profilePhone">+234-XXX-XXXX</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Email:</span>
+            <span class="detail-value" id="profileEmail">chidiuso@example.com</span>
+          </div>
+        </div>
+        
+        <div class="detail-card">
+          <h3>Health Information</h3>
+          <div class="detail-item">
+            <span class="detail-label">Primary Doctor:</span>
+            <span class="detail-value" id="profileDoctor">Dr. Adebayo</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Doctor's Phone:</span>
+            <span class="detail-value" id="profileDoctorPhone">+234-XXX-XXXX</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Pharmacy:</span>
+            <span class="detail-value" id="profilePharmacy">MedPlus Pharmacy</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Allergies:</span>
+            <span class="detail-value" id="profileAllergies">Penicillin, Sulfa drugs</span>
+          </div>
+          <div class="detail-item">
+            <span class="detail-label">Blood Type:</span>
+            <span class="detail-value" id="profileBloodType">O+</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="emergency-contacts">
+        <h3>Emergency Contacts</h3>
+        <div class="contact-item">
+          <div class="contact-icon">C</div>
+          <div class="contact-info">
+            <div class="contact-name">Chidi</div>
+            <div class="contact-relationship">Son</div>
+          </div>
+          <div class="contact-phone">+234-XXX-XXXX</div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">A</div>
+          <div class="contact-info">
+            <div class="contact-name">Amara</div>
+            <div class="contact-relationship">Daughter</div>
+          </div>
+          <div class="contact-phone">+234-XXX-XXXX</div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">N</div>
+          <div class="contact-info">
+            <div class="contact-name">Nneka</div>
+            <div class="contact-relationship">Neighbor</div>
+          </div>
+          <div class="contact-phone">+234-XXX-XXXX</div>
+        </div>
+      </div>
+      
+      <div class="profile-actions">
+        <button class="action-btn edit-btn" id="editProfileBtn">Edit Profile</button>
+        <button class="action-btn logout-btn" id="logoutBtn">Log Out</button>
+      </div>
+    </div>
+    
+    <!-- Edit Profile Modal -->
+    <div class="modal" id="editProfileModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">Edit Profile</h3>
+          <button class="close-btn" id="closeModalBtn">&times;</button>
+        </div>
+        <form id="editProfileForm">
+          <div class="form-group">
+            <label for="editFullName">Full Name</label>
+            <input type="text" id="editFullName" required>
+          </div>
+          <div class="form-group">
+            <label for="editDOB">Date of Birth</label>
+            <input type="text" id="editDOB" required>
+          </div>
+          <div class="form-group">
+            <label for="editGender">Gender</label>
+            <select id="editGender" required>
+              <option value="Female">Female</option>
+              <option value="Male">Male</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="editPhone">Phone</label>
+            <input type="tel" id="editPhone" required>
+          </div>
+          <div class="form-group">
+            <label for="editEmail">Email</label>
+            <input type="email" id="editEmail">
+          </div>
+          <div class="form-group">
+            <label for="editDoctor">Primary Doctor</label>
+            <input type="text" id="editDoctor">
+          </div>
+          <div class="form-group">
+            <label for="editDoctorPhone">Doctor's Phone</label>
+            <input type="tel" id="editDoctorPhone">
+          </div>
+          <div class="form-group">
+            <label for="editPharmacy">Pharmacy</label>
+            <input type="text" id="editPharmacy">
+          </div>
+          <div class="form-group">
+            <label for="editAllergies">Allergies</label>
+            <input type="text" id="editAllergies">
+          </div>
+          <div class="form-group">
+            <label for="editBloodType">Blood Type</label>
+            <input type="text" id="editBloodType">
+          </div>
+          <button type="submit" class="save-btn">Save Changes</button>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>MedMinder © 2025</p>
+    <p>Designed with care for older adults | <a href="#">Privacy Policy</a></p>
+  </footer>
+
+  <script>
+    // Language translations
+    const translations = {
+      en: {
+        welcome: "Welcome, Chidiuso!",
+        feeling: "🧘 How are you feeling today?"
+      },
+      ig: {
+        welcome: "Nnọọ, Chidiuso!",
+        feeling: "🧘 Kedu ka ị si dị taa?"
+      },
+      yo: {
+        welcome: "Kaabo, Chidiuso!",
+        feeling: "🧘 Bawo ni o ṣe n rilara loni?"
+      },
+      ha: {
+        welcome: "Barka da zuwa, Chidiuso!",
+        feeling: "🧘 Yaya kake ji yau?"
+      }
+    };
+
+    function applyTranslation(lang) {
+      const t = translations[lang] || translations["en"];
+      const elements = {
+        headerGreeting: t.welcome,
+        wellnessBtn: t.feeling
+      };
+      Object.entries(elements).forEach(([id, text]) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = text;
+      });
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      const defaultLang = document.getElementById("languageSelect").value;
+      applyTranslation(defaultLang);
+    });
+
+    document.getElementById("languageSelect").addEventListener("change", (e) => {
+      applyTranslation(e.target.value);
+    });
+
+    // Header functionality
+    function getGreeting() {
+      const hour = new Date().getHours();
+      if (hour < 12) return "Good morning";
+      if (hour < 18) return "Good afternoon";
+      return "Good evening";
+    }
+
+    function updateHeader() {
+      const greeting = getGreeting();
+      document.getElementById("headerGreeting").textContent = `${greeting}, Chidiuso! Let's stay on track with your health today.`;
+
+      const now = new Date();
+      document.getElementById("headerTime").textContent = now.toLocaleString();
+
+      const quotes = [
+        "Your health is your wealth 💙",
+        "Every dose is a step toward strength.",
+        "You're doing great — keep going!",
+        "Small steps, big impact. Take your meds!",
+        "The body knows how to heal — we just need to listen.",
+        "A healthy dose of gratitude is good medicine.",
+        "Medicine is not magic. It's science and care.",
+        "The best medicine is prevention.",
+        "Healing is a team effort.",
+        "Medication is a bridge — not the destination.",
+        "The best medicine is a life well-lived.",
+        "Doctors treat. Healers transform.",
+        "The medicine you need may not come in a bottle.",
+        "Doctors diagnose. Patients decide.",
+        "Medicine is a journey, not a destination.",
+        "Healing begins with trust.",
+        "A kind word is sometimes better than a prescription.",
+        "The best medicine is a good night's sleep.",
+        "Medicine is a science of hope.",
+        "The most powerful medicine is love.",
+        "Healing is remembering you are whole.",
+        "Medicine is a tool. Healing is a process."
+      ];
+      const quote = quotes[Math.floor(Math.random() * quotes.length)];
+      document.getElementById("dailyQuote").textContent = quote;
+    }
+
+    setInterval(updateHeader, 1800000);
+    updateHeader();
+
+    // Wellness button functionality
+    document.getElementById("wellnessBtn").addEventListener("click", () => {
+      const response = prompt("How are you feeling today?");
+      if (!response) return;
+
+      const negativeWords = ["sad", "tired", "angry", "bad", "not good", "depressed", "unwell", "down"];
+      const isNegative = negativeWords.some(word => response.toLowerCase().includes(word));
+
+      if (isNegative) {
+        alert("I'm really sorry you're feeling that way, Chidiuso. You're not alone — and it's okay to take things one step at a time 💙");
+      } else {
+        alert(`Thanks for sharing, Chidiuso. I'm here for you 💙`);
+      }
+    });
+
+    // Profile page functionality
+    document.addEventListener('DOMContentLoaded', function() {
+      // Modal functionality
+      const editProfileBtn = document.getElementById('editProfileBtn');
+      const editProfileModal = document.getElementById('editProfileModal');
+      const closeModalBtn = document.getElementById('closeModalBtn');
+      const editProfileForm = document.getElementById('editProfileForm');
+      
+      // Open modal
+      if (editProfileBtn) {
+        editProfileBtn.addEventListener('click', function() {
+          // Populate form with current values
+          document.getElementById('editFullName').value = document.getElementById('profileFullName').textContent;
+          document.getElementById('editDOB').value = document.getElementById('profileDOB').textContent;
+          document.getElementById('editGender').value = document.getElementById('profileGender').textContent;
+          document.getElementById('editPhone').value = document.getElementById('profilePhone').textContent;
+          document.getElementById('editEmail').value = document.getElementById('profileEmail').textContent;
+          document.getElementById('editDoctor').value = document.getElementById('profileDoctor').textContent;
+          document.getElementById('editDoctorPhone').value = document.getElementById('profileDoctorPhone').textContent;
+          document.getElementById('editPharmacy').value = document.getElementById('profilePharmacy').textContent;
+          document.getElementById('editAllergies').value = document.getElementById('profileAllergies').textContent;
+          document.getElementById('editBloodType').value = document.getElementById('profileBloodType').textContent;
+          
+          editProfileModal.style.display = 'flex';
+        });
+      }
+      
+      // Close modal
+      if (closeModalBtn) {
+        closeModalBtn.addEventListener('click', function() {
+          editProfileModal.style.display = 'none';
+        });
+      }
+      
+      // Close modal when clicking outside
+      window.addEventListener('click', function(event) {
+        if (event.target === editProfileModal) {
+          editProfileModal.style.display = 'none';
+        }
+      });
+      
+      // Handle form submission
+      if (editProfileForm) {
+        editProfileForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          // Update profile with new values
+          document.getElementById('profileFullName').textContent = document.getElementById('editFullName').value;
+          document.getElementById('profileDOB').textContent = document.getElementById('editDOB').value;
+          document.getElementById('profileGender').textContent = document.getElementById('editGender').value;
+          document.getElementById('profilePhone').textContent = document.getElementById('editPhone').value;
+          document.getElementById('profileEmail').textContent = document.getElementById('editEmail').value;
+          document.getElementById('profileDoctor').textContent = document.getElementById('editDoctor').value;
+          document.getElementById('profileDoctorPhone').textContent = document.getElementById('editDoctorPhone').value;
+          document.getElementById('profilePharmacy').textContent = document.getElementById('editPharmacy').value;
+          document.getElementById('profileAllergies').textContent = document.getElementById('editAllergies').value;
+          document.getElementById('profileBloodType').textContent = document.getElementById('editBloodType').value;
+          
+          // Update header greeting if name changed
+          const newName = document.getElementById('editFullName').value;
+          document.getElementById('headerGreeting').textContent = `Welcome, ${newName}!`;
+          
+          // Close modal
+          editProfileModal.style.display = 'none';
+          
+          // Show success message
+          alert('Profile updated successfully!');
+        });
+      }
+      
+      // Logout functionality
+      const logoutBtn = document.getElementById('logoutBtn');
+      if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+          if (confirm('Are you sure you want to log out?')) {
+            alert('You have been logged out.');
+            // window.location.href = 'login.html';
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
