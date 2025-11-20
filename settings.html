@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings – MedMinder</title>
+  <link rel="stylesheet" href="simpmedcheck.css">
+  <style>
+    /* Settings-specific styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      font-size: 18px;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f5f7fa;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    h2 {
+      color: #2c5530;
+      font-size: 2.2em;
+      margin-bottom: 25px;
+      text-align: center;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+    }
+
+    /* section {
+      background: white;
+      padding: 30px;
+      margin: 25px 0;
+      border-radius: 15px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      border: 2px solid #f8f9fa;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    } */
+
+    h3 {
+      color: #2c5530;
+      font-size: 1.8em;
+      margin-bottom: 25px;
+      border-bottom: 3px solid #4CAF50;
+      padding-bottom: 12px;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 8px;
+      font-weight: bold;
+      color: #2c5530;
+      font-size: 1.1em;
+    }
+
+    input[type="text"],
+    input[type="tel"],
+    input[type="time"] {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      box-sizing: border-box;
+      font-size: 18px;
+      transition: all 0.3s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="tel"]:focus,
+    input[type="time"]:focus {
+      border-color: #4CAF50;
+      outline: none;
+      box-shadow: 0 0 10px rgba(76, 175, 80, 0.2);
+      transform: translateY(-2px);
+    }
+
+    input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+    }
+
+    /* button {
+      background: linear-gradient(135deg, #4CAF50, #45a049);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 15px 25px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 15px;
+      font-size: 1.1em;
+      transition: all 0.3s ease;
+      display: block;
+      width: 100%;
+    } */
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+      background: linear-gradient(135deg, #45a049, #3d8b40);
+    }
+
+    #resumeTalkingBtn {
+      border-radius: 30px;
+      height: 60px;
+      width: 200px;
+      margin: 20px auto;
+      background: linear-gradient(135deg, #28a745, #218838);
+    }
+
+    #resumeTalkingBtn:hover {
+      background: linear-gradient(135deg, #218838, #1e7e34);
+    }
+
+    .home-button {
+      display: block;
+      width: 200px;
+      margin: 30px auto;
+      background: linear-gradient(135deg, #6c757d, #5a6268);
+      text-align: center;
+    }
+
+    .home-button:hover {
+      background: linear-gradient(135deg, #5a6268, #495057);
+    }
+
+    .instruction-text {
+      font-size: 16px;
+      color: #666;
+      margin-top: 5px;
+      font-style: italic;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title span {
+      font-size: 24px;
+    }
+
+    /* Fix for language selector alignment */
+    .utility-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 25px;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+      background: linear-gradient(90deg, #4474dd 0%, #4adef1 100%);
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .utility-bar button, 
+    .utility-bar select,
+    .utility-bar a button {
+      font-size: 16px;
+      padding: 12px 18px;
+      border: 2px solid #4CAF50;
+      background: white;
+      color: #2c5530;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      border-bottom: none;
+      height: 50px; /* Fixed height for consistent alignment */
+      min-width: 120px; /* Minimum width for consistency */
+    }
+
+    .utility-bar button:hover,
+    .utility-bar a button:hover {
+      background: #4CAF50;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+    }
+
+    .utility-bar select {
+      background: white;
+      color: #333;
+      border: 2px solid #4CAF50;
+      padding: 11px 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      height: 50px; /* Match button height */
+      min-width: 120px; /* Match button min-width */
+    }
+
+    .utility-bar select:hover {
+      border-color: #45a049;
+      box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .utility-bar select option {
+      background: white;
+      color: #333;
+      padding: 10px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="utility-bar">
+      <a href="clone.html" style="text-decoration: none;"><button>🏠 Home</button></a>
+      <a href="schedule.html" style="text-decoration: none;"><button>📅 Schedule</button></a>
+      <a href="reminder.html" style="text-decoration: none;"><button>🔔 Reminders</button></a>
+      <a href="emergency.html" style="text-decoration: none;"><button>📞 Emergency</button></a>
+      <a href="settings.html" style="text-decoration: none;"><button>⚙️ Settings</button></a>
+      <a href="howtouse.html" style="text-decoration: none;"><button>❓ How to Use</button></a>
+      <a href="added-medications.html" style="text-decoration: none;"><button>💊 Added Medications</button></a>
+      <a href="profile.html" style="text-decoration: none;"><button>👤 Profile</button></a>
+
+      <select class="lS" id="languageSelect">
+        <option value="en">English</option>
+        <option value="ig">Igbo</option>
+        <option value="yo">Yoruba</option>
+        <option value="ha">Hausa</option>
+      </select>
+    </nav>
+  </header>
+  
+  <h2>⚙️ Settings</h2>
+
+  <section id="voiceSettings">
+    <h3 class="section-title"><span>🔊</span> Voice Settings</h3>
+    <div class="form-group">
+      <label for="voiceToggle">Enable Voice Narration:</label>
+      <input type="checkbox" id="voiceToggle" checked />
+      <div class="instruction-text">Turn on or off the voice that reads the screen</div>
+    </div>
+    
+    <div class="form-group">
+      <label for="stopTalkingToggle">Stop Talking:</label>
+      <input type="checkbox" id="stopTalkingToggle" />
+      <div class="instruction-text">Temporarily pause the voice without turning it off completely</div>
+    </div>
+    
+    <button id="resumeTalkingBtn">🔈 Resume Talking</button>
+  </section>
+
+  <section id="quietHours">
+    <h3 class="section-title"><span>🌙</span> Quiet Hours</h3>
+    <div class="form-group">
+      <label for="quietStart">Start Time:</label>
+      <input type="time" id="quietStart" />
+      <div class="instruction-text">When should the app stop making sounds?</div>
+    </div>
+    
+    <div class="form-group">
+      <label for="quietEnd">End Time:</label>
+      <input type="time" id="quietEnd" />
+      <div class="instruction-text">When should the app start making sounds again?</div>
+    </div>
+  </section>
+
+  <section id="emergencyEditor">
+    <h3 class="section-title"><span>🚨</span> Emergency Contact</h3>
+    <form id="emergencyForm">
+      <div class="form-group">
+        <label for="editName">Name:</label>
+        <input type="text" id="editName" placeholder="Adaobi Okeke" required />
+        <div class="instruction-text">Full name of your emergency contact</div>
+      </div>
+
+      <div class="form-group">
+        <label for="editPhone">Phone:</label>
+        <input type="tel" id="editPhone" placeholder="+2348031234567" required />
+        <div class="instruction-text">Phone number with country code</div>
+      </div>
+
+      <div class="form-group">
+        <label for="editRelation">Relationship:</label>
+        <input type="text" id="editRelation" placeholder="Daughter" required />
+        <div class="instruction-text">How are they related to you? (e.g., Daughter, Son, Neighbor)</div>
+      </div>
+
+      <button style="border-radius: 15px; width: 110px; margin-left: 590px; height: 10vh; " type="submit">💾 Save Contact</button>
+    </form>
+  </section>
+  
+  <!-- <a href="clone.html" style="text-decoration: none;">
+    <button class="home-button">🏠 Back to Home</button>
+  </a> -->
+
+  <script>
+    // Speech synthesis functionality
+    let speechEnabled = true;
+    let speechPaused = false;
+    let speechUtterance = null;
+    
+    // DOM elements
+    const voiceToggle = document.getElementById('voiceToggle');
+    const stopTalkingToggle = document.getElementById('stopTalkingToggle');
+    const resumeTalkingBtn = document.getElementById('resumeTalkingBtn');
+    const emergencyForm = document.getElementById('emergencyForm');
+    
+    // Initialize settings from localStorage
+    function initializeSettings() {
+      // Voice settings
+      const savedVoiceSetting = localStorage.getItem('voiceEnabled');
+      if (savedVoiceSetting !== null) {
+        speechEnabled = savedVoiceSetting === 'true';
+        voiceToggle.checked = speechEnabled;
+      }
+      
+      // Quiet hours
+      const savedQuietStart = localStorage.getItem('quietStart');
+      const savedQuietEnd = localStorage.getItem('quietEnd');
+      if (savedQuietStart) document.getElementById('quietStart').value = savedQuietStart;
+      if (savedQuietEnd) document.getElementById('quietEnd').value = savedQuietEnd;
+      
+      // Emergency contact
+      const savedEmergencyContact = localStorage.getItem('emergencyContact');
+      if (savedEmergencyContact) {
+        const contact = JSON.parse(savedEmergencyContact);
+        document.getElementById('editName').value = contact.name || '';
+        document.getElementById('editPhone').value = contact.phone || '';
+        document.getElementById('editRelation').value = contact.relation || '';
+      }
+      
+      // Announce settings page if voice is enabled
+      if (speechEnabled) {
+        speakText("Welcome to the Settings page. Here you can manage voice settings, quiet hours, and emergency contacts.");
+      }
+    }
+    
+    // Speech synthesis function
+    function speakText(text) {
+      if (!speechEnabled || speechPaused) return;
+      
+      // Cancel any ongoing speech
+      if (speechUtterance) {
+        window.speechSynthesis.cancel();
+      }
+      
+      // Create new speech utterance
+      speechUtterance = new SpeechSynthesisUtterance(text);
+      speechUtterance.rate = 0.8; // Slower rate for better comprehension
+      speechUtterance.pitch = 1;
+      speechUtterance.volume = 1;
+      
+      // Speak the text
+      window.speechSynthesis.speak(speechUtterance);
+    }
+    
+    // Event listeners for voice controls
+    voiceToggle.addEventListener('change', function() {
+      speechEnabled = this.checked;
+      localStorage.setItem('voiceEnabled', speechEnabled);
+      
+      if (speechEnabled) {
+        speakText("Voice narration has been enabled.");
+      } else {
+        window.speechSynthesis.cancel();
+        speakText("Voice narration has been disabled.");
+      }
+    });
+    
+    stopTalkingToggle.addEventListener('change', function() {
+      speechPaused = this.checked;
+      
+      if (speechPaused) {
+        window.speechSynthesis.cancel();
+        speakText("Voice narration has been paused.");
+      } else {
+        speakText("Voice narration has been resumed.");
+      }
+    });
+    
+    resumeTalkingBtn.addEventListener('click', function() {
+      speechPaused = false;
+      stopTalkingToggle.checked = false;
+      speakText("Voice narration has been resumed.");
+    });
+    
+    // Save quiet hours
+    document.getElementById('quietStart').addEventListener('change', function() {
+      localStorage.setItem('quietStart', this.value);
+      if (speechEnabled) speakText("Quiet hours start time has been updated to " + this.value);
+    });
+    
+    document.getElementById('quietEnd').addEventListener('change', function() {
+      localStorage.setItem('quietEnd', this.value);
+      if (speechEnabled) speakText("Quiet hours end time has been updated to " + this.value);
+    });
+    
+    // Save emergency contact
+    emergencyForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const contact = {
+        name: document.getElementById('editName').value,
+        phone: document.getElementById('editPhone').value,
+        relation: document.getElementById('editRelation').value
+      };
+      
+      localStorage.setItem('emergencyContact', JSON.stringify(contact));
+      
+      if (speechEnabled) {
+        speakText(`Emergency contact ${contact.name} has been saved successfully.`);
+      }
+      
+      alert('Emergency contact saved successfully!');
+    });
+    
+    // Initialize settings when page loads
+    document.addEventListener('DOMContentLoaded', initializeSettings);
+  </script>
+</body>
+</html>

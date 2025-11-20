@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>📅 Medication Schedule</title>
+  <link rel="stylesheet" href="simpmedcheck.css" />
+</head>
+<body>
+  <header>
+    <nav class="utility-bar">
+  <a href="clone.html" style="text-decoration: none;"><button id="homeBtn">🏠 Home</button></a>
+  <a href="schedule.html" style="text-decoration: none;"><button id="scheduleBtn">📅 Schedule</button></a>
+  <a href="reminder.html" style="text-decoration: none;"><button id="remindersBtn">🔔 Reminders</button></a>
+  <a href="emergency.html" style="text-decoration: none;"><button id="emergencyBtn">📞 Emergency</button></a>
+  <a href="settings.html" style="text-decoration: none;"><button id="settingsBtn">⚙️ Settings</button></a>
+  <a href="howtouse.html" style="text-decoration: none;"><button>❓ How to Use</button></a>
+  <a href="added-medications.html" style="text-decoration: none;"><button>💊 Added Medications</button></a>
+  <a href="profile.html" style="text-decoration: none;"><button>👤 Profile</button></a>
+  <select class="lS" id="languageSelect">👤
+    <option value="en">English</option>
+    <option value="ig">Igbo</option>
+    <option value="yo">Yoruba</option>
+    <option value="ha">Hausa</option>
+  </select>
+</nav>
+    <h1>📅 Your Medication Schedule</h1>
+    <p id="scheduleGreeting">Hello, Chidiuso! Here's your full schedule.</p>
+    <!-- <button class="gb" onclick="goBack()">🔙 Back to Home</button> -->
+  </header>
+
+  <main>
+    <section class="schedule-table">
+      <h2>🕒 Weekly Overview</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Day</th>
+            <th>Medication</th>
+            <th>Dosage</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody id="scheduleBody">
+          <!-- Rows will be added dynamically -->
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer>
+    <p>MedMinder © 2025</p>
+    <p>Designed with care for older adults | <a href="#">Privacy Policy</a></p>
+  </footer>
+
+  <script>
+    const scheduleData = [
+      { day: "Monday", med: "Paracetamol", dose: "500mg", time: "8:00 AM" },
+      { day: "Monday", med: "Ibuprofen", dose: "200mg", time: "2:00 PM" },
+      { day: "Tuesday", med: "Vitamin D", dose: "1000 IU", time: "1:00 PM" },
+      { day: "Wednesday", med: "Losartan", dose: "50mg", time: "9:00 AM" },
+      { day: "Thursday", med: "Amoxicillin", dose: "250mg", time: "1:00 PM" },
+      { day: "Friday", med: "Atorvastatin", dose: "10mg", time: "5:00 PM" }
+    ];
+
+    const scheduleBody = document.getElementById("scheduleBody");
+    scheduleData.forEach(item => {
+      const row = document.createElement("tr");
+      row.innerHTML = `<td>${item.day}</td><td>${item.med}</td><td>${item.dose}</td><td>${item.time}</td>`;
+      scheduleBody.appendChild(row);
+    });
+
+    function goBack() {
+      window.location.href = "clone.html"; // Replace with your home page filename
+    }
+  </script>
+</body>
+</html>

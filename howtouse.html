@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>❓ How to Use Med Checker</title>
+  <link rel="stylesheet" href="SimpMedCheck.css" />
+</head>
+<body>
+  <header><nav class="utility-bar">
+  <a href="clone.html" style="text-decoration: none;"><button id="homeBtn">🏠 Home</button></a>
+  <a href="schedule.html" style="text-decoration: none;"><button id="scheduleBtn">📅 Schedule</button></a>
+  <a href="reminder.html" style="text-decoration: none;"><button id="remindersBtn">🔔 Reminders</button></a>
+  <a href="emergency.html" style="text-decoration: none;"><button id="emergencyBtn">📞 Emergency</button></a>
+  <a href="settings.html" style="text-decoration: none;"><button id="settingsBtn">⚙️ Settings</button></a>
+  <a href="howtouse.html" style="text-decoration: none;"><button>❓ How to Use</button></a>
+  <a href="added-medications.html" style="text-decoration: none;"><button>💊 Added Medications</button></a>
+  
+  <button id="profileBtn">👤 Profile</button>
+
+
+  <select class="lS" id="languageSelect">
+    <option value="en">English</option>
+    <option value="ig">Igbo</option>
+    <option value="yo">Yoruba</option>
+    <option value="ha">Hausa</option>
+  </select>
+</nav>
+    <h1>❓ How to Use Med Checker Companion</h1>
+    <!-- <button class="gb" onclick="goBack()">🔙 Back to Home</button> -->
+  </header>
+
+  <main>
+    <section class="how-to-use">
+      <ul>
+        <li><strong>Home:</strong> See your greeting, daily quote, and wellness check-in.</li>
+        <li><strong>Schedule:</strong> View and manage your medication plan.</li>
+        <li><strong>Reminders:</strong> Get alerts for upcoming doses.</li>
+        <li><strong>Emergency:</strong> Access your emergency contact quickly.</li>
+        <li><strong>Settings:</strong> Change language, preferences, and accessibility options.</li>
+        <li><strong>How to Use:</strong> View and learn how the app works</li>
+      </ul>
+      <button class="hi" id="speakHowToUseBtn">🔊 Hear Instructions</button>
+    </section>
+  </main>
+
+  <script>
+    function goBack() {
+      window.location.href = "clone.html";
+    }
+
+    document.getElementById("speakHowToUseBtn").addEventListener("click", () => {
+      const instructions = `
+        Welcome to Med Checker Companion.
+        Home shows your greeting, daily quote, and wellness check-in.
+        Schedule displays your medication plan.
+        Reminders alert you when it's time to take your meds.
+        Emergency gives you quick access to your emergency contact.
+        Settings lets you change language and preferences.
+      `;
+      const utterance = new SpeechSynthesisUtterance(instructions);
+      utterance.lang = "en-US";
+      speechSynthesis.speak(utterance);
+    });
+  </script>
+</body>
+</html>
