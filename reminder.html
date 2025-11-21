@@ -1,132 +1,397 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Medication Table</title>
-  <link rel="stylesheet" href="SimpMedCheck.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medication Schedule - MedMinder</title>
+  <link rel="stylesheet" href="simpMedCheck.css">
   <style>
-    table, th, td {
-      border: 1px solid black;
-      border-collapse: collapse;
-      padding: 8px;
+    /* Senior-friendly styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      font-size: 20px; /* Larger base font size */
+      line-height: 1.6;
+      color: #333;
+      background-color: #f5f7fa;
+      margin: 0;
+      padding: 20px;
     }
+    
+    /* Navigation bar */
+    .utility-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 25px;
+      justify-content: center;
+      align-items: center;
+      padding: 15px;
+      background: linear-gradient(90deg, #4474dd 0%, #4adef1 100%);
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .utility-bar button, 
+    .utility-bar select,
+    .utility-bar a button {
+      font-size: 18px; /* Larger font for navigation */
+      padding: 12px 18px;
+      border: 2px solid #4CAF50;
+      background: white;
+      color: #2c5530;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      height: 60px; /* Taller buttons for easier tapping */
+      min-width: 140px; /* Wider buttons */
+    }
+
+    .utility-bar button:hover,
+    .utility-bar a button:hover {
+      background: #4CAF50;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+    }
+
+    .utility-bar select {
+      background: white;
+      color: #333;
+      border: 2px solid #4CAF50;
+      padding: 11px 15px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 18px;
+      transition: all 0.3s ease;
+      height: 60px;
+      min-width: 140px;
+    }
+
+    /* Headings */
+    h2 {
+      color: #2c5530;
+      font-size: 2.2em;
+      margin-bottom: 25px;
+      text-align: center;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+    }
+
+    /* Table styling for better readability */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background-color: white;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      border-radius: 15px;
+      overflow: hidden;
+    }
+
+    th, td {
+      border: 2px solid #4CAF50; /* Higher contrast borders */
+      padding: 15px; /* More padding for easier reading */
+      text-align: left;
+      font-size: 20px; /* Larger text in table */
+    }
+
+    th {
+      background-color: #4CAF50;
+      color: white;
+      font-weight: bold;
+      font-size: 22px; /* Slightly larger header text */
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2; /* Alternate row coloring for better readability */
+    }
+
+    /* Input fields */
     input {
       width: 100%;
       box-sizing: border-box;
+      padding: 12px;
+      font-size: 18px; /* Larger input text */
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #4CAF50;
+      outline: none;
+      box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
+    }
+
+    /* Buttons */
+    button {
+      background: linear-gradient(135deg, #4CAF50, #45a049);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 15px 25px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 20px; /* Larger button text */
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+      background: linear-gradient(135deg, #45a049, #3d8b40);
+    }
+
+    .add {
+      display: block;
+      margin: 20px auto;
+      width: 200px;
+      height: 60px;
+      font-size: 22px;
+    }
+
+    .remove-btn {
+      background: linear-gradient(135deg, #f44336, #d32f2f);
+      padding: 12px 20px;
+      font-size: 18px;
+    }
+
+    .remove-btn:hover {
+      background: linear-gradient(135deg, #d32f2f, #b71c1c);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding: 20px;
+      background-color: #e9ecef;
+      border-radius: 10px;
+      font-size: 18px;
+    }
+
+    footer a {
+      color: #4CAF50;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* High contrast mode option */
+    .high-contrast {
+      background-color: #000;
+      color: #fff;
+    }
+    
+    .high-contrast table {
+      background-color: #000;
+      color: #fff;
+    }
+    
+    .high-contrast th {
+      background-color: #ffff00;
+      color: #000;
+    }
+    
+    .high-contrast input {
+      background-color: #000;
+      color: #fff;
+      border-color: #fff;
+    }
+
+    /* Accessibility controls */
+    .accessibility-controls {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .accessibility-btn {
+      background: linear-gradient(135deg, #6c757d, #5a6268);
+      font-size: 18px;
+      padding: 12px 20px;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .utility-bar {
+        flex-direction: column;
+      }
+      
+      .utility-bar button, 
+      .utility-bar select,
+      .utility-bar a button {
+        width: 100%;
+      }
+      
+      table {
+        font-size: 18px;
+      }
+      
+      th, td {
+        padding: 10px;
+      }
     }
   </style>
 </head>
 <body>
   <header>
     <nav class="utility-bar">
-  <a href="index.html" style="text-decoration: none;"><button id="homeBtn">🏠 Home</button></a>
-  <a href="schedule.html" style="text-decoration: none;"><button id="scheduleBtn">📅 Schedule</button></a>
-  <a href="reminder.html" style="text-decoration: none;"><button id="remindersBtn">🔔 Reminders</button></a>
-  <a href="emergency.html" style="text-decoration: none;"><button id="emergencyBtn">📞 Emergency</button></a>
-  <a href="settings.html" style="text-decoration: none;"><button id="settingsBtn">⚙️ Settings</button></a>
-  <a href="howtouse.html" style="text-decoration: none;"><button>❓ How to Use</button></a>
-  <a href="added-medications.html" style="text-decoration: none;"><button>💊 Added Medications</button></a>
-  <a href="profile.html" style="text-decoration: none;"><button>👤 Profile</button></a>
-  
- 
+      <a href="index.html" style="text-decoration: none;"><button id="homeBtn">🏠 Home</button></a>
+      <a href="schedule.html" style="text-decoration: none;"><button id="scheduleBtn">📅 Schedule</button></a>
+      <a href="reminder.html" style="text-decoration: none;"><button id="remindersBtn">🔔 Reminders</button></a>
+      <a href="emergency.html" style="text-decoration: none;"><button id="emergencyBtn">📞 Emergency</button></a>
+      <a href="settings.html" style="text-decoration: none;"><button id="settingsBtn">⚙️ Settings</button></a>
+      <a href="howtouse.html" style="text-decoration: none;"><button>❓ How to Use</button></a>
+      <a href="added-medications.html" style="text-decoration: none;"><button>💊 Added Medications</button></a>
+      <a href="profile.html" style="text-decoration: none;"><button>👤 Profile</button></a>
 
-
-  <select class="lS" id="languageSelect">👤
-    <option value="en">English</option>
-    <option value="ig">Igbo</option>
-    <option value="yo">Yoruba</option>
-    <option value="ha">Hausa</option>
-  </select>
-</nav>
+      <select class="lS" id="languageSelect">
+        <option value="en">English</option>
+        <option value="ig">Igbo</option>
+        <option value="yo">Yoruba</option>
+        <option value="ha">Hausa</option>
+      </select>
+    </nav>
   </header>
 
-<h2 class="week">Weekly Overview</h2>
-<!-- <button class="gb" onclick="goBack()">🔙 Back to Home</button> -->
+  <h2 class="week">📋 Weekly Medication Schedule</h2>
+  
+  <!-- Accessibility Controls -->
+  <div class="accessibility-controls">
+    <button class="accessibility-btn" onclick="increaseFontSize()">A+ Larger Text</button>
+    <button class="accessibility-btn" onclick="decreaseFontSize()">A- Smaller Text</button>
+    <button class="accessibility-btn" id="contrastToggle" onclick="toggleContrast()">🔆 High Contrast</button>
+    <button class="accessibility-btn" onclick="speakTable()">🔊 Read Aloud</button>
+  </div>
 
-<table id="medTable">
-  <thead>
-    <tr>
-      <th>Day</th>
-      <th>Medication</th>
-      <th>Dosage</th>
-      <th>Time</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><input type="text" placeholder="e.g. Monday"></td>
-      <td><input type="text" placeholder="e.g. Paracetamol"></td>
-      <td><input type="text" placeholder="e.g. 500mg"></td>
-      <td><input type="time"></td>
-      <td><button class="remove-btn" onclick="removeRow(this)">Remove</button></td>
+  <table id="medTable">
+    <thead>
+      <tr>
+        <th>Day</th>
+        <th>Medication</th>
+        <th>Dosage</th>
+        <th>Time</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><input type="text" placeholder="e.g. Monday"></td>
+        <td><input type="text" placeholder="e.g. Paracetamol"></td>
+        <td><input type="text" placeholder="e.g. 500mg"></td>
+        <td><input type="time"></td>
+        <td><button class="remove-btn" onclick="removeRow(this)">Remove</button></td>
+      </tr>
+    </tbody>
+  </table>
 
-    </tr>
-  </tbody>
-</table>
-
-<br>
-<button class="add" onclick="addRow()">➕ Add</button>
+  <br>
+  <button class="add" onclick="addRow()">➕ Add Medication</button>
+  
   <footer>
     <p>MedMinder © 2025</p>
     <p>Designed with care for older adults | <a href="#">Privacy Policy</a></p>
   </footer>
 
-<script>
-function addRow() {
-  const tableBody = document.getElementById("medTable").getElementsByTagName("tbody")[0];
-  const newRow = document.createElement("tr");
-
-  const cells = [
-    '<input type="text" placeholder="e.g. Tuesday">',
-    '<input type="text" placeholder="e.g. Ibuprofen">',
-    '<input type="text" placeholder="e.g. 200mg">',
-    '<input type="time">'
-  ];
-
-  cells.forEach(cellHTML => {
-    const cell = document.createElement("td");
-    cell.innerHTML = cellHTML;
-    newRow.appendChild(cell);
-  });
-
-  tableBody.appendChild(newRow);
-}
-function removeRow(button) {
-  const row = button.closest("tr");
-  row.remove();
-}
-function addRow() {
-  const tableBody = document.getElementById("medTable").getElementsByTagName("tbody")[0];
-  const newRow = document.createElement("tr");
-
-  const cells = [
-    '<input type="text" placeholder="e.g. Tuesday">',
-    '<input type="text" placeholder="e.g. Ibuprofen">',
-    '<input type="text" placeholder="e.g. 200mg">',
-    '<input type="time">'
-  ];
-
-  cells.forEach(cellHTML => {
-    const cell = document.createElement("td");
-    cell.innerHTML = cellHTML;
-    newRow.appendChild(cell);
-  });
-
-  const removeCell = document.createElement("td");
-  const removeBtn = document.createElement("button");
-  removeBtn.textContent = "Remove";
-  removeBtn.className = "remove-btn";
-  removeBtn.onclick = function () {
-    removeRow(this);
-  };
-  removeCell.appendChild(removeBtn);
-  newRow.appendChild(removeCell);
-
-  tableBody.appendChild(newRow);
-}
-function goBack() {
-      window.location.href = "clone.html"; // Replace with your home page filename
+  <script>
+    // Font size adjustment
+    let currentFontSize = 20;
+    
+    function increaseFontSize() {
+      currentFontSize += 2;
+      document.body.style.fontSize = currentFontSize + 'px';
     }
-</script>
+    
+    function decreaseFontSize() {
+      if (currentFontSize > 16) {
+        currentFontSize -= 2;
+        document.body.style.fontSize = currentFontSize + 'px';
+      }
+    }
+    
+    // High contrast mode
+    function toggleContrast() {
+      document.body.classList.toggle('high-contrast');
+      const button = document.getElementById('contrastToggle');
+      if (document.body.classList.contains('high-contrast')) {
+        button.textContent = '🌙 Normal Mode';
+      } else {
+        button.textContent = '🔆 High Contrast';
+      }
+    }
+    
+    // Text-to-speech functionality
+    function speakTable() {
+      if ('speechSynthesis' in window) {
+        const table = document.getElementById('medTable');
+        let text = 'Your medication schedule: ';
+        
+        const rows = table.getElementsByTagName('tr');
+        for (let i = 1; i < rows.length; i++) { // Start from 1 to skip header
+          const cells = rows[i].getElementsByTagName('td');
+          if (cells.length > 0) {
+            const day = cells[0].querySelector('input').value || 'Not specified';
+            const med = cells[1].querySelector('input').value || 'Not specified';
+            const dose = cells[2].querySelector('input').value || 'Not specified';
+            const time = cells[3].querySelector('input').value || 'Not specified';
+            
+            text += `On ${day}, take ${med}, ${dose} at ${time}. `;
+          }
+        }
+        
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = 0.8; // Slower speech for better comprehension
+        window.speechSynthesis.speak(utterance);
+      } else {
+        alert('Text-to-speech is not supported in your browser.');
+      }
+    }
+    
+    // Table functionality
+    function addRow() {
+      const tableBody = document.getElementById("medTable").getElementsByTagName("tbody")[0];
+      const newRow = document.createElement("tr");
 
+      const cells = [
+        '<input type="text" placeholder="e.g. Tuesday">',
+        '<input type="text" placeholder="e.g. Ibuprofen">',
+        '<input type="text" placeholder="e.g. 200mg">',
+        '<input type="time">'
+      ];
+
+      cells.forEach(cellHTML => {
+        const cell = document.createElement("td");
+        cell.innerHTML = cellHTML;
+        newRow.appendChild(cell);
+      });
+
+      const removeCell = document.createElement("td");
+      const removeBtn = document.createElement("button");
+      removeBtn.textContent = "Remove";
+      removeBtn.className = "remove-btn";
+      removeBtn.onclick = function () {
+        removeRow(this);
+      };
+      removeCell.appendChild(removeBtn);
+      newRow.appendChild(removeCell);
+
+      tableBody.appendChild(newRow);
+    }
+    
+    function removeRow(button) {
+      const row = button.closest("tr");
+      row.remove();
+    }
+  </script>
 </body>
 </html>
