@@ -43,20 +43,63 @@
     .medication-item {
       display: flex;
       justify-content: space-between;
-      padding: 8px;
-      margin: 5px 0;
+      align-items: center;
+      padding: 10px;
+      margin: 8px 0;
       background: white;
-      border-radius: 4px;
+      border-radius: 6px;
       border-left: 4px solid #3498db;
+      transition: all 0.3s ease;
+    }
+
+    .medication-item:hover {
+      background: #f8f9fa;
+      transform: translateX(5px);
+    }
+    
+    .med-info {
+      flex-grow: 1;
     }
     
     .med-name {
       font-weight: bold;
       color: #2c3e50;
+      display: block;
     }
     
     .med-details {
       color: #7f8c8d;
+      font-size: 0.9em;
+    }
+    
+    .med-time {
+      margin-right: 15px;
+      font-weight: bold;
+      color: #2c3e50;
+    }
+    
+    .remove-btn {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.8em;
+      transition: background 0.3s ease;
+    }
+    
+    .remove-btn:hover {
+      background: #c0392b;
+    }
+    
+    .daily-badge {
+      background: #27ae60;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 0.7em;
+      margin-left: 8px;
     }
   </style>
 </head>
@@ -168,6 +211,33 @@
       
       return currentWeekMeds;
     }
+
+    // Function to remove a medication
+    function removeMedication(medName, dose, time, day) {
+      if (confirm(`Are you sure you want to remove ${medName} (${dose}) from ${day} at ${formatTime(time)}?`)) {
+        // Get current medications from localStorage
+        const userMedications = JSON.parse(localStorage.getItem('userMedications') || '[]');
+        
+        // Filter out the medication to remove
+        const updatedMedications = userMedications.filter(med => {
+          // For daily medications, we need to be more specific
+          if (day === 'Daily' || !med.day) {
+            return !(med.name === medName && med.dose === dose && med.time === time);
+          }
+          // For day-specific medications
+          return !(med.name === medName && med.dose === dose && med.time === time && med.day === day);
+        });
+        
+        // Save back to localStorage
+        localStorage.setItem('userMedications', JSON.stringify(updatedMedications));
+        
+        // Reload the schedule to reflect changes
+        loadWeeklySchedule();
+        
+        // Show success message
+        alert(`${medName} has been removed from your schedule.`);
+      }
+    }
     
     // Function to load and display weekly schedule
     function loadWeeklySchedule() {
@@ -238,12 +308,17 @@
             medItem.className = 'medication-item';
             
             medItem.innerHTML = `
-              <div>
+              <div class="med-info">
                 <span class="med-name">${med.name}</span>
-                <span class="med-details"> - ${med.dose}</span>
-                ${med.isDaily ? '<span style="color: #27ae60; margin-left: 8px;">• Daily</span>' : ''}
+                <span class="med-details">${med.dose}</span>
+                ${med.isDaily ? '<span class="daily-badge">Daily</span>' : ''}
               </div>
-              <div class="med-time">${formatTime(med.time)}</div>
+              <div style="display: flex; align-items: center;">
+                <span class="med-time">${formatTime(med.time)}</span>
+                <button class="remove-btn" onclick="removeMedication('${med.name}', '${med.dose}', '${med.time}', '${med.isDaily ? 'Daily' : dayInfo.dayName}')">
+                  ✕ Remove
+                </button>
+              </div>
             `;
             
             daySection.appendChild(medItem);
