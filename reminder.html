@@ -221,6 +221,24 @@
       padding: 12px 20px;
     }
 
+    /* Speech controls */
+    .speech-controls {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 15px 0;
+    }
+
+    .speech-btn {
+      background: linear-gradient(135deg, #2196F3, #1976D2);
+      font-size: 18px;
+      padding: 10px 15px;
+    }
+
+    .speech-btn.stop {
+      background: linear-gradient(135deg, #f44336, #d32f2f);
+    }
+
     /* Responsive design */
     @media (max-width: 768px) {
       .utility-bar {
@@ -239,6 +257,12 @@
       
       th, td {
         padding: 10px;
+      }
+      
+      .accessibility-controls,
+      .speech-controls {
+        flex-direction: column;
+        align-items: center;
       }
     }
   </style>
@@ -271,7 +295,12 @@
     <button class="accessibility-btn" onclick="increaseFontSize()">A+ Larger Text</button>
     <button class="accessibility-btn" onclick="decreaseFontSize()">A- Smaller Text</button>
     <button class="accessibility-btn" id="contrastToggle" onclick="toggleContrast()">🔆 High Contrast</button>
-    <button class="accessibility-btn" onclick="speakTable()">🔊 Read Aloud</button>
+  </div>
+
+  <!-- Speech Controls -->
+  <div class="speech-controls">
+    <button class="speech-btn" onclick="readEverything()">🔊 Read Everything Aloud</button>
+    <button class="speech-btn stop" onclick="stopSpeech()">⏹️ Stop Reading</button>
   </div>
 
   <table id="medTable">
@@ -331,29 +360,105 @@
     }
     
     // Text-to-speech functionality
-    function speakTable() {
+    let currentUtterance = null;
+    
+    function readEverything() {
       if ('speechSynthesis' in window) {
-        const table = document.getElementById('medTable');
-        let text = 'Your medication schedule: ';
+        // Stop any ongoing speech
+        window.speechSynthesis.cancel();
         
-        const rows = table.getElementsByTagName('tr');
-        for (let i = 1; i < rows.length; i++) { // Start from 1 to skip header
-          const cells = rows[i].getElementsByTagName('td');
-          if (cells.length > 0) {
-            const day = cells[0].querySelector('input').value || 'Not specified';
-            const med = cells[1].querySelector('input').value || 'Not specified';
-            const dose = cells[2].querySelector('input').value || 'Not specified';
-            const time = cells[3].querySelector('input').value || 'Not specified';
-            
-            text += `On ${day}, take ${med}, ${dose} at ${time}. `;
+        // Get all text content from the page
+        let fullText = "Weekly Medication Schedule Page. ";
+        
+        // Read navigation items
+        const navButtons = document.querySelectorAll('.utility-bar button');
+        fullText += "Navigation: ";
+        navButtons.forEach(button => {
+          if (button.textContent && !button.textContent.includes('👤')) { // Skip language select indicator
+            fullText += button.textContent + ". ";
           }
+        });
+        
+        // Read main heading
+        const mainHeading = document.querySelector('h2');
+        if (mainHeading) {
+          fullText += mainHeading.textContent + ". ";
         }
         
-        const utterance = new SpeechSynthesisUtterance(text);
-        utterance.rate = 0.8; // Slower speech for better comprehension
-        window.speechSynthesis.speak(utterance);
+        // Read accessibility controls
+        const accessibilityButtons = document.querySelectorAll('.accessibility-controls button');
+        fullText += "Accessibility controls: ";
+        accessibilityButtons.forEach(button => {
+          fullText += button.textContent + ". ";
+        });
+        
+        // Read speech controls
+        const speechButtons = document.querySelectorAll('.speech-controls button');
+        fullText += "Speech controls: ";
+        speechButtons.forEach(button => {
+          if (!button.textContent.includes('⏹️')) { // Skip stop button in reading
+            fullText += button.textContent + ". ";
+          }
+        });
+        
+        // Read table headers
+        const tableHeaders = document.querySelectorAll('th');
+        fullText += "Medication table with columns: ";
+        tableHeaders.forEach(header => {
+          if (!header.textContent.includes('Action')) {
+            fullText += header.textContent + ", ";
+          }
+        });
+        
+        // Read table content
+        const tableRows = document.querySelectorAll('#medTable tbody tr');
+        if (tableRows.length > 0) {
+          fullText += "Current medications: ";
+          tableRows.forEach((row, index) => {
+            const inputs = row.querySelectorAll('input');
+            if (inputs.length >= 4) {
+              const day = inputs[0].value || "Day not specified";
+              const medication = inputs[1].value || "Medication not specified";
+              const dosage = inputs[2].value || "Dosage not specified";
+              const time = inputs[3].value || "Time not specified";
+              
+              fullText += `Row ${index + 1}: On ${day}, take ${medication}, ${dosage} at ${time}. `;
+            }
+          });
+        } else {
+          fullText += "No medications added yet. ";
+        }
+        
+        // Read footer
+        const footerText = document.querySelector('footer');
+        if (footerText) {
+          const footerContent = footerText.textContent.replace(/\s+/g, ' ').trim();
+          fullText += "Footer: " + footerContent + ". ";
+        }
+        
+        // Instructions for using the page
+        fullText += "To add a new medication, use the Add Medication button. To remove a medication, use the Remove button next to each entry. ";
+        fullText += "You can adjust text size and contrast using the accessibility controls. ";
+        
+        // Create and speak the utterance
+        currentUtterance = new SpeechSynthesisUtterance(fullText);
+        currentUtterance.rate = 0.8; // Slower speech for better comprehension
+        currentUtterance.pitch = 1;
+        currentUtterance.volume = 1;
+        
+        currentUtterance.onend = function() {
+          console.log("Finished reading the page content");
+        };
+        
+        window.speechSynthesis.speak(currentUtterance);
       } else {
-        alert('Text-to-speech is not supported in your browser.');
+        alert('Text-to-speech is not supported in your browser. Please try using Chrome, Edge, or Safari.');
+      }
+    }
+    
+    function stopSpeech() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
       }
     }
     
@@ -392,6 +497,12 @@
       const row = button.closest("tr");
       row.remove();
     }
+    
+    // Auto-read when page loads (optional - can be removed if not desired)
+    document.addEventListener('DOMContentLoaded', function() {
+      // Uncomment the line below if you want the page to automatically read when loaded
+      // setTimeout(readEverything, 1000);
+    });
   </script>
 </body>
 </html>
