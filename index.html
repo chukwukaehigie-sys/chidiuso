@@ -407,15 +407,26 @@
       document.getElementById("medications").appendChild(newItem);
 
       // Show output with translation
-      const output = document.getElementById("pythonOutput");
-      output.style.display = "block";
-      output.textContent = `>>> ${t.medicationAdded}\n${t.dayLabel}: '${day}'\n${t.medNameLabel}: '${name}'\n${t.dosageLabel}: '${dose}'\n${t.timeLabel}: '${time}'`;
+     document.getElementById("medForm").addEventListener("submit", function(e) {
+  e.preventDefault();
 
-      // Save reminder
-      reminders.push({ name, dose, time, alerted: false });
+  const currentLang = document.getElementById("languageSelect").value;
+  const t = translations[currentLang] || translations["en"];
 
-      this.reset();
-    });
+  const day = document.getElementById("Day").value;
+  const name = document.getElementById("medName").value;
+  const dose = document.getElementById("dosage").value;
+  const time = document.getElementById("time").value;
+
+  const newItem = document.createElement("li");
+  newItem.innerHTML = `<strong>${name}</strong> – ${dose} at <em>${time}</em>`;
+  document.getElementById("medications").appendChild(newItem);
+
+  // Save reminder
+  reminders.push({ name, dose, time, alerted: false });
+
+  this.reset();
+});
 
     // Check every minute for reminders with translation
     setInterval(() => {
@@ -696,4 +707,5 @@ document.getElementById('manualLog')?.addEventListener('click', () => {
 
   </script>
 </body>
+
 </html>
