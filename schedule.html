@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>📅 Medication Schedule</title>
+  <link rel="stylesheet" href="simpmedcheck.css" />
+  <style>
+    .day-section {
+      margin-bottom: 25px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 15px;
+      background: #f9f9f9;
+    }
+    
+    .today-section {
+      background: #e8f4fd !important;
+      border-color: #3498db !important;
+      box-shadow: 0 2px 5px rgba(52, 152, 219, 0.3);
+    }
+    
+    .day-header {
+      font-size: 1.3em;
+      font-weight: bold;
+      color: #2c3e50;
+      margin-bottom: 10px;
+      padding-bottom: 5px;
+      border-bottom: 2px solid #3498db;
+    }
+    
+    .today-header {
+      color: #2980b9 !important;
+      border-bottom-color: #2980b9;
+    }
+    
+    .no-meds {
+      text-align: center;
+      color: #7f8c8d;
+      font-style: italic;
+      padding: 20px;
+    }
+    
+    .medication-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px;
+      margin: 5px 0;
+      background: white;
+      border-radius: 4px;
+      border-left: 4px solid #3498db;
+    }
+    
+    .med-name {
+      font-weight: bold;
+      color: #2c3e50;
+    }
+    
+    .med-details {
+      color: #7f8c8d;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="utility-bar">
+      <a href="index.html" style="text-decoration: none;"><button id="homeBtn">🏠 Home</button></a>
+      <a href="schedule.html" style="text-decoration: none;"><button id="scheduleBtn">📅 Schedule</button></a>
+      <a href="reminder.html" style="text-decoration: none;"><button id="remindersBtn">🔔 Reminders</button></a>
+      <a href="emergency.html" style="text-decoration: none;"><button id="emergencyBtn">📞 Emergency</button></a>
+      <a href="settings.html" style="text-decoration: none;"><button id="settingsBtn">⚙️ Settings</button></a>
+      <a href="howtouse.html" style="text-decoration: none;"><button>❓ How to Use</button></a>
+      <a href="added-medications.html" style="text-decoration: none;"><button>💊 Added Medications</button></a>
+      <a href="profile.html" style="text-decoration: none;"><button>👤 Profile</button></a>
+      <select class="lS" id="languageSelect">
+        <option value="en">English</option>
+        <option value="ig">Igbo</option>
+        <option value="yo">Yoruba</option>
+        <option value="ha">Hausa</option>
+      </select>
+    </nav>
+    <h1>📅 Your Medication Schedule</h1>
+    <p id="scheduleGreeting">Hello, Chidiuso! Here's your schedule for this week.</p>
+  </header>
+
+  <main>
+    <section class="schedule-table">
+      <h2>🕒 This Week's Medication Schedule</h2>
+      <div id="weeklySchedule">
+        <!-- Day sections will be added here dynamically -->
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>MedMinder © 2025</p>
+    <p>Designed with care for older adults | <a href="#">Privacy Policy</a></p>
+  </footer>
+
+  <script>
+    // Define days of the week in order
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    
+    // Function to get current week dates
+    function getCurrentWeekDates() {
+      const now = new Date();
+      const currentDay = now.getDay(); // 0 = Sunday, 1 = Monday, etc.
+      const currentDate = now.getDate();
+      
+      const startOfWeek = new Date(now);
+      startOfWeek.setDate(currentDate - currentDay);
+      
+      const weekDates = [];
+      
+      for (let i = 0; i < 7; i++) {
+        const date = new Date(startOfWeek);
+        date.setDate(startOfWeek.getDate() + i);
+        weekDates.push({
+          dayName: daysOfWeek[i],
+          date: date.getDate(),
+          month: date.getMonth() + 1,
+          fullDate: date.toISOString().split('T')[0] // YYYY-MM-DD format
+        });
+      }
+      
+      return weekDates;
+    }
+    
+    // Function to format time from 24h to 12h format
+    function formatTime(timeString) {
+      try {
+        const [hours, minutes] = timeString.split(':');
+        const hour = parseInt(hours);
+        const ampm = hour >= 12 ? 'PM' : 'AM';
+        const displayHour = hour % 12 || 12;
+        return `${displayHour}:${minutes.padStart(2, '0')} ${ampm}`;
+      } catch (e) {
+        return timeString;
+      }
+    }
+    
+    // Function to sort medications by time
+    function sortMedicationsByTime(medications) {
+      return medications.sort((a, b) => {
+        const timeA = a.time.replace(':', '');
+        const timeB = b.time.replace(':', '');
+        return timeA - timeB;
+      });
+    }
+    
+    // Function to get medications for current week
+    function getMedicationsForCurrentWeek() {
+      const userMedications = JSON.parse(localStorage.getItem('userMedications') || '[]');
+      const weekDates = getCurrentWeekDates();
+      
+      // For this demo, we'll assume medications with specific days are for this week
+      // In a real app, you'd have actual dates stored with each medication
+      const currentWeekMeds = userMedications.filter(med => {
+        // If medication has a day assigned, include it for that day this week
+        if (med.day && daysOfWeek.includes(med.day)) {
+          return true;
+        }
+        // If no day specified, include it for every day (daily medications)
+        if (!med.day || med.day === 'Daily') {
+          return true;
+        }
+        return false;
+      });
+      
+      return currentWeekMeds;
+    }
+    
+    // Function to load and display weekly schedule
+    function loadWeeklySchedule() {
+      const weeklySchedule = document.getElementById('weeklySchedule');
+      weeklySchedule.innerHTML = '';
+      
+      // Get current week dates
+      const weekDates = getCurrentWeekDates();
+      
+      // Get medications for current week
+      const currentWeekMeds = getMedicationsForCurrentWeek();
+      
+      if (currentWeekMeds.length === 0) {
+        weeklySchedule.innerHTML = `
+          <div class="no-meds">
+            <p>No medications scheduled for this week. </p>
+            <p>Go to the Home page to add your medications!</p>
+          </div>
+        `;
+        return;
+      }
+      
+      // Group medications by day
+      const medicationsByDay = {};
+      daysOfWeek.forEach(day => {
+        medicationsByDay[day] = [];
+      });
+      
+      // Add medications to their respective days
+      currentWeekMeds.forEach(med => {
+        if (med.day && daysOfWeek.includes(med.day)) {
+          // Medication for specific day
+          medicationsByDay[med.day].push(med);
+        } else {
+          // Daily medication - add to all days
+          daysOfWeek.forEach(day => {
+            medicationsByDay[day].push({
+              ...med,
+              isDaily: true
+            });
+          });
+        }
+      });
+      
+      // Create section for each day of the current week
+      weekDates.forEach(dayInfo => {
+        const dayMedications = medicationsByDay[dayInfo.dayName];
+        const isToday = new Date().getDay() === weekDates.indexOf(dayInfo);
+        
+        const daySection = document.createElement('div');
+        daySection.className = `day-section ${isToday ? 'today-section' : ''}`;
+        
+        const dayHeader = document.createElement('div');
+        dayHeader.className = `day-header ${isToday ? 'today-header' : ''}`;
+        dayHeader.innerHTML = `
+          ${isToday ? '📌 ' : ''}${dayInfo.dayName}
+          ${isToday ? '<span style="color: #e74c3c; margin-left: 10px;">• Today</span>' : ''}
+        `;
+        
+        daySection.appendChild(dayHeader);
+        
+        if (dayMedications.length > 0) {
+          // Sort medications by time
+          const sortedMeds = sortMedicationsByTime(dayMedications);
+          
+          sortedMeds.forEach(med => {
+            const medItem = document.createElement('div');
+            medItem.className = 'medication-item';
+            
+            medItem.innerHTML = `
+              <div>
+                <span class="med-name">${med.name}</span>
+                <span class="med-details"> - ${med.dose}</span>
+                ${med.isDaily ? '<span style="color: #27ae60; margin-left: 8px;">• Daily</span>' : ''}
+              </div>
+              <div class="med-time">${formatTime(med.time)}</div>
+            `;
+            
+            daySection.appendChild(medItem);
+          });
+        } else {
+          const noMeds = document.createElement('div');
+          noMeds.className = 'no-meds';
+          noMeds.textContent = 'No medications scheduled for this day';
+          daySection.appendChild(noMeds);
+        }
+        
+        weeklySchedule.appendChild(daySection);
+      });
+    }
+    
+    // Load schedule when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      loadWeeklySchedule();
+    });
+    
+    function goBack() {
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>
