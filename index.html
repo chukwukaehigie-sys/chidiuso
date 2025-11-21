@@ -6,7 +6,6 @@
   <title>Med Checker Companion</title>
   <link rel="stylesheet" href="simpmedcheck.css" />
   <style>
-    /* Additional styles for better language support */
     .language-selector {
       display: flex;
       align-items: center;
@@ -15,6 +14,21 @@
     
     .translated-content {
       transition: all 0.3s ease;
+    }
+
+    .remove-btn {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.8em;
+      margin-left: 10px;
+    }
+    
+    .remove-btn:hover {
+      background: #c0392b;
     }
   </style>
 </head>
@@ -43,7 +57,6 @@
     <p id="headerGreeting" data-translate="welcome">Welcome, Chidiuso!</p>
     <p id="headerTime"></p>
     <p id="dailyQuote"></p>
-    <!-- <button class="hauf" id="wellnessBtn" data-translate="wellnessQuestion">🧘 How are you feeling today?</button> -->
   </header>
 
   <main>
@@ -75,7 +88,6 @@
 
         <button type="submit" data-translate="addMedButton">Add Medication</button>
       </form>
-      <!-- <div id="pythonOutput" class="output"></div> -->
     </section>
   </main>
 
@@ -85,365 +97,211 @@
   </footer>
 
   <script>
-    // Comprehensive translations for all content
-    // Comprehensive translations for all content
-const translations = {
-  en: {
-    // Navigation
-    home: "Home",
-    schedule: "Schedule",
-    reminders: "Reminders",
-    settings: "Settings",
-    howToUse: "How to Use",
-    addedMeds: "Added Medications",
-    profile: "Profile",
-    
-    // Header
-    appName: "MedMinder",
-    welcome: "Welcome, Chidiuso!",
-    welcomeMessage: "Welcome to MedMinder!",
-    
-    // Main content
-    todaysMeds: "Today's Medications",
-    addNewMed: "Add a New Medication",
-    dayLabel: "Day",
-    medNameLabel: "Medication Name",
-    dosageLabel: "Dosage",
-    timeLabel: "Time to Take",
-    addMedButton: "Add Medication",
-    
-    // Footer
-    copyright: "MedMinder © 2025",
-    designedFor: "Designed with care for older adults",
-    privacyPolicy: "Privacy Policy",
-    
-    // Form placeholders
-    dayPlaceholder: "e.g. Monday",
-    medNamePlaceholder: "e.g. Vitamin D",
-    dosagePlaceholder: "e.g. 500mg",
-    
-    // Messages
-    medicationAdded: "Medication Added",
-    reminderAlert: "⏰ Reminder: Take {name} ({dose}) in 30 minutes",
-    
-    // Time-based greetings
-    goodMorning: "Good morning",
-    goodAfternoon: "Good afternoon", 
-    goodEvening: "Good evening",
-    
-    // Quotes (sample - you can add more)
-    quotes: [
-      "Your health is your wealth 💙",
-      "Every dose is a step toward strength.",
-      "You're doing great — keep going!",
-      "Small steps, big impact. Take your meds!",
-      "The body knows how to heal — we just need to listen."
-    ]
-  },
-  ig: {
-    // Navigation
-    home: "Ụlọ",
-    schedule: "Nhazi oge",
-    reminders: "Ncheta",
-    settings: "Ntọala",
-    howToUse: "Otu esi eji",
-    addedMeds: "Ọgwụ Agbakwunyere",
-    profile: "Profaịlụ",
-    
-    // Header
-    appName: "MedMinder",
-    welcome: "Nnọọ, Chidiuso!",
-    welcomeMessage: "Nnọọ na MedMinder!",
-    
-    // Main content
-    todaysMeds: "Ọgwụ Taa",
-    addNewMed: "Tinye Ọgwụ Ọhụrụ",
-    dayLabel: "Ụbọchị",
-    medNameLabel: "Aha Ọgwụ",
-    dosageLabel: "Usoro",
-    timeLabel: "Oge Iwere",
-    addMedButton: "Tinye Ọgwụ",
-    
-    // Footer
-    copyright: "MedMinder © 2025",
-    designedFor: "Emebere ya maka ndị okenye",
-    privacyPolicy: "Amụma Nzuzo",
-    
-    // Form placeholders
-    dayPlaceholder: "dịka Mọnde",
-    medNamePlaceholder: "dịka Vitamin D",
-    dosagePlaceholder: "dịka 500mg",
-    
-    // Messages
-    medicationAdded: "Agbakwunyere Ọgwụ",
-    reminderAlert: "⏰ Ncheta: Were {name} ({dose}) n'ime nkeji iri atọ",
-    
-    // Time-based greetings
-    goodMorning: "Utụtụ ọma",
-    goodAfternoon: "Ehihie ọma",
-    goodEvening: "Anyasị ọma",
-    
-    // Quotes
-    quotes: [
-      "Ahụ ike gị bụ akụ na ụba gị 💙",
-      "Ọgwụ ọ bụla bụ nzọụkwụ n'ihu ike.",
-      "Ị na-eme nke ọma — gaa n'ihu!",
-      "Nzọụkwụ ndị dị nta, mmetụta dị ukwuu. Were ọgwụ gị!",
-      "Ahụ maara otu esi agwọ ọrịa — anyị kwesịrị ige ntị."
-    ]
-  },
-  yo: {
-    // Navigation
-    home: "Ile",
-    schedule: "Iṣeto Akoko",
-    reminders: "Awọn iranti",
-    settings: "Eto",
-    howToUse: "Bii Lati Lo",
-    addedMeds: "Awọn Oogun Ti A Fikun",
-    profile: "Profaili",
-    
-    // Header
-    appName: "MedMinder",
-    welcome: "Kaabo, Chidiuso!",
-    welcomeMessage: "Kaabo si MedMinder!",
-    
-    // Main content
-    todaysMeds: "Awọn Oogun Loni",
-    addNewMed: "Fi Oogun Tuntun Kun",
-    dayLabel: "Ọjọ",
-    medNameLabel: "Orukọ Oogun",
-    dosageLabel: "Iwon Oogun",
-    timeLabel: "Akoko Lati Mu",
-    addMedButton: "Fi Oogun Kun",
-    
-    // Footer
-    copyright: "MedMinder © 2025",
-    designedFor: "A ṣe apẹrẹ pẹlu itoju fun awọn arọgbọ",
-    privacyPolicy: "Ilana Ikọkọ",
-    
-    // Form placeholders
-    dayPlaceholder: "bii Monday",
-    medNamePlaceholder: "bii Vitamin D",
-    dosagePlaceholder: "bii 500mg",
-    
-    // Messages
-    medicationAdded: "Oogun Ti A Fikun",
-    reminderAlert: "⏰ Iranti: Mu {name} ({dose}) ninu iṣẹju aadọta",
-    
-    // Time-based greetings
-    goodMorning: "E kaaro",
-    goodAfternoon: "E kasan",
-    goodEvening: "E ku irole",
-    
-    // Quotes
-    quotes: [
-      "Ilera rẹ ni dukia rẹ 💙",
-      "Gbigbe oogun kọọkan jẹ igbesẹ si alagbara.",
-      "O n ṣe daradara — tẹsiwaju!",
-      "Awọn igbesẹ kekere, ipa nla. Mu awọn oogun rẹ!",
-      "Ara mọ bi a ṣe le wosan — a kan nilo lati feti si."
-    ]
-  },
-  ha: {
-    // Navigation
-    home: "Gida",
-    schedule: "Jadawali",
-    reminders: "Tunatarwa",
-    settings: "Saituna",
-    howToUse: "Yadda ake Amfani",
-    addedMeds: "Magungunan Da Aka Ƙara",
-    profile: "Bayanan Martaba",
-    
-    // Header
-    appName: "MedMinder",
-    welcome: "Barka da zuwa, Chidiuso!",
-    welcomeMessage: "Barka da zuwa MedMinder!",
-    
-    // Main content
-    todaysMeds: "Magungunan Yau",
-    addNewMed: "Ƙara Sabon Magani",
-    dayLabel: "Rana",
-    medNameLabel: "Sunan Magani",
-    dosageLabel: "Dozi",
-    timeLabel: "Lokacin Shan",
-    addMedButton: "Ƙara Magani",
-    
-    // Footer
-    copyright: "MedMinder © 2025",
-    designedFor: "An tsara shi da kulawa ga tsofaffi",
-    privacyPolicy: "Manufar Sirri",
-    
-    // Form placeholders
-    dayPlaceholder: "misali Litinin",
-    medNamePlaceholder: "misali Vitamin D",
-    dosagePlaceholder: "misali 500mg",
-    
-    // Messages
-    medicationAdded: "An Ƙara Magani",
-    reminderAlert: "⏰ Tunatarwa: Sha {name} ({dose}) cikin mintuna talatin",
-    
-    // Time-based greetings
-    goodMorning: "Barka da safiya",
-    goodAfternoon: "Barka da rana",
-    goodEvening: "Barka da yamma",
-    
-    // Quotes
-    quotes: [
-      "Lafiyar ku ce dukiyar ku 💙",
-      "Kowane dozi mataki ne zuwa ga ƙarfi.",
-      "Kuna yin kyau — ci gaba!",
-      "Ƙananan matakai, babban tasiri. Sha magungunan ku!",
-      "Jiki ya san yadda ake warkarwa — kawai muna buƙatar sauraro."
-    ]
-  }
-};
+    // Comprehensive translations for all content - SINGLE DEFINITION
+    const translations = {
+      en: {
+        home: "Home", schedule: "Schedule", reminders: "Reminders", settings: "Settings",
+        howToUse: "How to Use", addedMeds: "Added Medications", profile: "Profile",
+        appName: "MedMinder", welcome: "Welcome, Chidiuso!", welcomeMessage: "Welcome to MedMinder!",
+        todaysMeds: "Today's Medications", addNewMed: "Add a New Medication", dayLabel: "Day",
+        medNameLabel: "Medication Name", dosageLabel: "Dosage", timeLabel: "Time to Take",
+        addMedButton: "Add Medication", copyright: "MedMinder © 2025",
+        designedFor: "Designed with care for older adults", privacyPolicy: "Privacy Policy",
+        dayPlaceholder: "e.g. Monday", medNamePlaceholder: "e.g. Vitamin D", dosagePlaceholder: "e.g. 500mg",
+        medicationAdded: "Medication Added", reminderAlert: "⏰ Reminder: Take {name} ({dose}) in 30 minutes",
+        goodMorning: "Good morning", goodAfternoon: "Good afternoon", goodEvening: "Good evening",
+        quotes: [
+          "Your health is your wealth 💙", "Every dose is a step toward strength.",
+          "You're doing great — keep going!", "Small steps, big impact. Take your meds!",
+          "The body knows how to heal — we just need to listen."
+        ]
+      },
+      ig: {
+        home: "Ụlọ", schedule: "Nhazi oge", reminders: "Ncheta", settings: "Ntọala",
+        howToUse: "Otu esi eji", addedMeds: "Ọgwụ Agbakwunyere", profile: "Profaịlụ",
+        appName: "MedMinder", welcome: "Nnọọ, Chidiuso!", welcomeMessage: "Nnọọ na MedMinder!",
+        todaysMeds: "Ọgwụ Taa", addNewMed: "Tinye Ọgwụ Ọhụrụ", dayLabel: "Ụbọchị",
+        medNameLabel: "Aha Ọgwụ", dosageLabel: "Usoro", timeLabel: "Oge Iwere",
+        addMedButton: "Tinye Ọgwụ", copyright: "MedMinder © 2025",
+        designedFor: "Emebere ya maka ndị okenye", privacyPolicy: "Amụma Nzuzo",
+        dayPlaceholder: "dịka Mọnde", medNamePlaceholder: "dịka Vitamin D", dosagePlaceholder: "dịka 500mg",
+        medicationAdded: "Agbakwunyere Ọgwụ", reminderAlert: "⏰ Ncheta: Were {name} ({dose}) n'ime nkeji iri atọ",
+        goodMorning: "Utụtụ ọma", goodAfternoon: "Ehihie ọma", goodEvening: "Anyasị ọma",
+        quotes: [
+          "Ahụ ike gị bụ akụ na ụba gị 💙", "Ọgwụ ọ bụla bụ nzọụkwụ n'ihu ike.",
+          "Ị na-eme nke ọma — gaa n'ihu!", "Nzọụkwụ ndị dị nta, mmetụta dị ukwuu. Were ọgwụ gị!",
+          "Ahụ maara otu esi agwọ ọrịa — anyị kwesịrị ige ntị."
+        ]
+      },
+      yo: {
+        home: "Ile", schedule: "Iṣeto Akoko", reminders: "Awọn iranti", settings: "Eto",
+        howToUse: "Bii Lati Lo", addedMeds: "Awọn Oogun Ti A Fikun", profile: "Profaili",
+        appName: "MedMinder", welcome: "Kaabo, Chidiuso!", welcomeMessage: "Kaabo si MedMinder!",
+        todaysMeds: "Awọn Oogun Loni", addNewMed: "Fi Oogun Tuntun Kun", dayLabel: "Ọjọ",
+        medNameLabel: "Orukọ Oogun", dosageLabel: "Iwon Oogun", timeLabel: "Akoko Lati Mu",
+        addMedButton: "Fi Oogun Kun", copyright: "MedMinder © 2025",
+        designedFor: "A ṣe apẹrẹ pẹlu itoju fun awọn arọgbọ", privacyPolicy: "Ilana Ikọkọ",
+        dayPlaceholder: "bii Monday", medNamePlaceholder: "bii Vitamin D", dosagePlaceholder: "bii 500mg",
+        medicationAdded: "Oogun Ti A Fikun", reminderAlert: "⏰ Iranti: Mu {name} ({dose}) ninu iṣẹju aadọta",
+        goodMorning: "E kaaro", goodAfternoon: "E kasan", goodEvening: "E ku irole",
+        quotes: [
+          "Ilera rẹ ni dukia rẹ 💙", "Gbigbe oogun kọọkan jẹ igbesẹ si alagbara.",
+          "O n ṣe daradara — tẹsiwaju!", "Awọn igbesẹ kekere, ipa nla. Mu awọn oogun rẹ!",
+          "Ara mọ bi a ṣe le wosan — a kan nilo lati feti si."
+        ]
+      },
+      ha: {
+        home: "Gida", schedule: "Jadawali", reminders: "Tunatarwa", settings: "Saituna",
+        howToUse: "Yadda ake Amfani", addedMeds: "Magungunan Da Aka Ƙara", profile: "Bayanan Martaba",
+        appName: "MedMinder", welcome: "Barka da zuwa, Chidiuso!", welcomeMessage: "Barka da zuwa MedMinder!",
+        todaysMeds: "Magungunan Yau", addNewMed: "Ƙara Sabon Magani", dayLabel: "Rana",
+        medNameLabel: "Sunan Magani", dosageLabel: "Dozi", timeLabel: "Lokacin Shan",
+        addMedButton: "Ƙara Magani", copyright: "MedMinder © 2025",
+        designedFor: "An tsara shi da kulawa ga tsofaffi", privacyPolicy: "Manufar Sirri",
+        dayPlaceholder: "misali Litinin", medNamePlaceholder: "misali Vitamin D", dosagePlaceholder: "misali 500mg",
+        medicationAdded: "An Ƙara Magani", reminderAlert: "⏰ Tunatarwa: Sha {name} ({dose}) cikin mintuna talatin",
+        goodMorning: "Barka da safiya", goodAfternoon: "Barka da rana", goodEvening: "Barka da yamma",
+        quotes: [
+          "Lafiyar ku ce dukiyar ku 💙", "Kowane dozi mataki ne zuwa ga ƙarfi.",
+          "Kuna yin kyau — ci gaba!", "Ƙananan matakai, babban tasiri. Sha magungunan ku!",
+          "Jiki ya san yadda ake warkarwa — kawai muna buƙatar sauraro."
+        ]
+      }
+    };
 
-// Apply translations to the entire page
-function applyTranslation(lang) {
-  const t = translations[lang] || translations["en"];
-  
-  // Update all elements with data-translate attribute
-  document.querySelectorAll('[data-translate]').forEach(element => {
-    const key = element.getAttribute('data-translate');
-    if (t[key]) {
-      element.textContent = t[key];
+    // Apply translations to the entire page
+    function applyTranslation(lang) {
+      const t = translations[lang] || translations["en"];
+      
+      document.querySelectorAll('[data-translate]').forEach(element => {
+        const key = element.getAttribute('data-translate');
+        if (t[key]) element.textContent = t[key];
+      });
+      
+      // Update form placeholders
+      const dayInput = document.getElementById('Day');
+      const medNameInput = document.getElementById('medName');
+      const dosageInput = document.getElementById('dosage');
+      
+      if (dayInput && t.dayPlaceholder) dayInput.placeholder = t.dayPlaceholder;
+      if (medNameInput && t.medNamePlaceholder) medNameInput.placeholder = t.medNamePlaceholder;
+      if (dosageInput && t.dosagePlaceholder) dosageInput.placeholder = t.dosagePlaceholder;
+      
+      updateHeader(lang);
+      updateDailyQuote(lang);
     }
-  });
-  
-  // Update form placeholders
-  const dayInput = document.getElementById('Day');
-  const medNameInput = document.getElementById('medName');
-  const dosageInput = document.getElementById('dosage');
-  
-  if (dayInput && t.dayPlaceholder) dayInput.placeholder = t.dayPlaceholder;
-  if (medNameInput && t.medNamePlaceholder) medNameInput.placeholder = t.medNamePlaceholder;
-  if (dosageInput && t.dosagePlaceholder) dosageInput.placeholder = t.dosagePlaceholder;
-  
-  // Update header greeting with time-based translation
-  updateHeader(lang);
-  
-  // Update quotes
-  updateDailyQuote(lang);
-}
 
-// Time-based greeting function with translation
-function getGreeting(lang) {
-  const hour = new Date().getHours();
-  const t = translations[lang] || translations["en"];
-  
-  if (hour < 12) return t.goodMorning;
-  if (hour < 18) return t.goodAfternoon;
-  return t.goodEvening;
-}
-
-function updateHeader(lang = 'en') {
-  const greeting = getGreeting(lang);
-  const t = translations[lang] || translations["en"];
-  document.getElementById("headerGreeting").textContent = `${greeting}, Chidiuso!`;
-
-  const now = new Date();
-  document.getElementById("headerTime").textContent = now.toLocaleString();
-}
-
-function updateDailyQuote(lang = 'en') {
-  const t = translations[lang] || translations["en"];
-  const quotes = t.quotes || translations["en"].quotes;
-  const quote = quotes[Math.floor(Math.random() * quotes.length)];
-  document.getElementById("dailyQuote").textContent = quote;
-}
-
-// Medication form handling with translation - CLEAN VERSION
-const reminders = [];
-
-// Add duplicate checking function
-function isDuplicateMedication(name, dose, time) {
-    const medications = document.getElementById('medications').getElementsByTagName('li');
-    
-    for (let med of medications) {
-        const medText = med.textContent.toLowerCase();
-        const searchText = `${name} ${dose} ${time}`.toLowerCase();
-        
-        if (medText.includes(searchText)) {
-            return true;
-        }
+    // Time-based greeting function with translation
+    function getGreeting(lang) {
+      const hour = new Date().getHours();
+      const t = translations[lang] || translations["en"];
+      if (hour < 12) return t.goodMorning;
+      if (hour < 18) return t.goodAfternoon;
+      return t.goodEvening;
     }
-    return false;
-}
 
-document.getElementById("medForm").addEventListener("submit", function(e) {
-    e.preventDefault();
+    function updateHeader(lang = 'en') {
+      const greeting = getGreeting(lang);
+      document.getElementById("headerGreeting").textContent = `${greeting}, Chidiuso!`;
+      document.getElementById("headerTime").textContent = new Date().toLocaleString();
+    }
 
-    const currentLang = document.getElementById("languageSelect").value;
-    const t = translations[currentLang] || translations["en"];
+    function updateDailyQuote(lang = 'en') {
+      const t = translations[lang] || translations["en"];
+      const quotes = t.quotes || translations["en"].quotes;
+      const quote = quotes[Math.floor(Math.random() * quotes.length)];
+      document.getElementById("dailyQuote").textContent = quote;
+    }
 
-    const day = document.getElementById("Day").value.trim();
-    const name = document.getElementById("medName").value.trim();
-    const dose = document.getElementById("dosage").value.trim();
-    const time = document.getElementById("time").value;
+    // Load medications from localStorage on page load
+    function loadMedications() {
+      const medicationsList = document.getElementById('medications');
+      medicationsList.innerHTML = '';
+      
+      const userMedications = JSON.parse(localStorage.getItem('userMedications') || '[]');
+      
+      userMedications.forEach(med => {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `
+          <strong>${med.name}</strong> – ${med.dose} at <em>${med.time}</em>
+          <button class="remove-btn" onclick="removeMedication('${med.name}', '${med.dose}', '${med.time}', '${med.day}')">
+            ✕ Remove
+          </button>
+        `;
+        medicationsList.appendChild(listItem);
+      });
+    }
 
-    // VALIDATION: Check for empty fields
-    if (!day || !name || !dose || !time) {
+    // Remove medication function
+    function removeMedication(name, dose, time, day) {
+      if (confirm(`Remove ${name} (${dose}) from ${day} at ${time}?`)) {
+        const userMedications = JSON.parse(localStorage.getItem('userMedications') || '[]');
+        const updatedMeds = userMedications.filter(med => 
+          !(med.name === name && med.dose === dose && med.time === time && med.day === day)
+        );
+        localStorage.setItem('userMedications', JSON.stringify(updatedMeds));
+        loadMedications(); // Refresh the display
+      }
+    }
+
+    // Enhanced duplicate checking - checks localStorage
+    function isDuplicateMedication(name, dose, time, day) {
+      const userMedications = JSON.parse(localStorage.getItem('userMedications') || '[]');
+      return userMedications.some(med => 
+        med.name.toLowerCase() === name.toLowerCase() && 
+        med.dose.toLowerCase() === dose.toLowerCase() && 
+        med.time === time &&
+        med.day === day
+      );
+    }
+
+    // Medication form handling - FIXED with localStorage integration
+    document.getElementById("medForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const day = document.getElementById("Day").value.trim();
+      const name = document.getElementById("medName").value.trim();
+      const dose = document.getElementById("dosage").value.trim();
+      const time = document.getElementById("time").value;
+
+      // VALIDATION: Check for empty fields
+      if (!day || !name || !dose || !time) {
         alert("❌ Please fill all fields");
         return;
-    }
+      }
 
-    // VALIDATION: Check for duplicates
-    if (isDuplicateMedication(name, dose, time)) {
+      // VALIDATION: Check for duplicates in localStorage
+      if (isDuplicateMedication(name, dose, time, day)) {
         alert("❌ This medication is already in your list!");
         return;
-    }
+      }
 
-    // If validation passes, add the medication
-    const newItem = document.createElement("li");
-    newItem.innerHTML = `<strong>${name}</strong> – ${dose} at <em>${time}</em>`;
-    document.getElementById("medications").appendChild(newItem);
+      // Save to localStorage
+      const userMedications = JSON.parse(localStorage.getItem('userMedications') || '[]');
+      userMedications.push({ name, dose, time, day });
+      localStorage.setItem('userMedications', JSON.stringify(userMedications));
 
-    // Save reminder
-    reminders.push({ name, dose, time, alerted: false });
+      // Refresh display
+      loadMedications();
+      this.reset();
+    });
 
-    this.reset();
-});
+    // Initialize the page
+    window.addEventListener("DOMContentLoaded", () => {
+      const defaultLang = document.getElementById("languageSelect").value;
+      applyTranslation(defaultLang);
+      loadMedications(); // Load existing medications
+      
+      setInterval(() => {
+        const currentLang = document.getElementById("languageSelect").value;
+        updateHeader(currentLang);
+      }, 1800000);
+    });
 
-// Check every minute for reminders with translation
-setInterval(() => {
-  const currentLang = document.getElementById("languageSelect").value;
-  const t = translations[currentLang] || translations["en"];
-  
-  const now = new Date();
-  reminders.forEach(reminder => {
-    if (reminder.alerted) return;
-
-    const [hour, minute] = reminder.time.split(":").map(Number);
-    const medTime = new Date();
-    medTime.setHours(hour, minute - 30, 0, 0); // 30 minutes before
-
-    if (
-      now.getHours() === medTime.getHours() &&
-      now.getMinutes() === medTime.getMinutes()
-    ) {
-      const alertMessage = t.reminderAlert.replace('{name}', reminder.name).replace('{dose}', reminder.dose);
-      alert(alertMessage);
-      reminder.alerted = true;
-    }
-  });
-}, 60000);
-
-// Initialize the page
-window.addEventListener("DOMContentLoaded", () => {
-  const defaultLang = document.getElementById("languageSelect").value;
-  applyTranslation(defaultLang);
-  
-  // Set interval for header updates
-  setInterval(() => {
-    const currentLang = document.getElementById("languageSelect").value;
-    updateHeader(currentLang);
-  }, 1800000);
-});
-
-// Language selector event listener
-document.getElementById("languageSelect").addEventListener("change", (e) => {
-  applyTranslation(e.target.value);
-});
+    // Language selector event listener
+    document.getElementById("languageSelect").addEventListener("change", (e) => {
+      applyTranslation(e.target.value);
+    });
   </script>
 </body>
 </html>
