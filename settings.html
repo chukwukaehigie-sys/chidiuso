@@ -25,18 +25,6 @@
       text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
     }
 
-    /* section {
-      background: white;
-      padding: 30px;
-      margin: 25px 0;
-      border-radius: 15px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      border: 2px solid #f8f9fa;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    } */
-
     h3 {
       color: #2c5530;
       font-size: 1.8em;
@@ -79,21 +67,6 @@
       height: 20px;
       margin-right: 10px;
     }
-
-    /* button {
-      background: linear-gradient(135deg, #4CAF50, #45a049);
-      color: white;
-      border: none;
-      border-radius: 10px;
-      padding: 15px 25px;
-      cursor: pointer;
-      font-weight: bold;
-      margin-top: 15px;
-      font-size: 1.1em;
-      transition: all 0.3s ease;
-      display: block;
-      width: 100%;
-    } */
 
     button:hover {
       transform: translateY(-3px);
@@ -272,35 +245,6 @@
     </div>
   </section>
 
-  <!-- <section id="emergencyEditor">
-    <h3 class="section-title"><span>🚨</span> Emergency Contact</h3>
-    <form id="emergencyForm">
-      <div class="form-group">
-        <label for="editName">Name:</label>
-        <input type="text" id="editName" placeholder="Adaobi Okeke" required />
-        <div class="instruction-text">Full name of your emergency contact</div>
-      </div>
-
-      <div class="form-group">
-        <label for="editPhone">Phone:</label>
-        <input type="tel" id="editPhone" placeholder="+2348031234567" required />
-        <div class="instruction-text">Phone number with country code</div>
-      </div>
-
-      <div class="form-group">
-        <label for="editRelation">Relationship:</label>
-        <input type="text" id="editRelation" placeholder="Daughter" required />
-        <div class="instruction-text">How are they related to you? (e.g., Daughter, Son, Neighbor)</div>
-      </div>
-
-      <button style="border-radius: 15px; width: 110px; margin-left: 590px; height: 10vh; " type="submit">💾 Save Contact</button>
-    </form>
-  </section> -->
-  
-  <!-- <a href="clone.html" style="text-decoration: none;">
-    <button class="home-button">🏠 Back to Home</button>
-  </a> -->
-
   <script>
     // Speech synthesis functionality
     let speechEnabled = true;
@@ -311,7 +255,6 @@
     const voiceToggle = document.getElementById('voiceToggle');
     const stopTalkingToggle = document.getElementById('stopTalkingToggle');
     const resumeTalkingBtn = document.getElementById('resumeTalkingBtn');
-    const emergencyForm = document.getElementById('emergencyForm');
     
     // Initialize settings from localStorage
     function initializeSettings() {
@@ -328,18 +271,9 @@
       if (savedQuietStart) document.getElementById('quietStart').value = savedQuietStart;
       if (savedQuietEnd) document.getElementById('quietEnd').value = savedQuietEnd;
       
-      // Emergency contact
-      const savedEmergencyContact = localStorage.getItem('emergencyContact');
-      if (savedEmergencyContact) {
-        const contact = JSON.parse(savedEmergencyContact);
-        document.getElementById('editName').value = contact.name || '';
-        document.getElementById('editPhone').value = contact.phone || '';
-        document.getElementById('editRelation').value = contact.relation || '';
-      }
-      
       // Announce settings page if voice is enabled
       if (speechEnabled) {
-        speakText("Welcome to the Settings page. Here you can manage voice settings, quiet hours, and emergency contacts.");
+        speakText("Welcome to the Settings page. Here you can manage voice settings and quiet hours.");
       }
     }
     
@@ -403,28 +337,8 @@
       if (speechEnabled) speakText("Quiet hours end time has been updated to " + this.value);
     });
     
-    // Save emergency contact
-    emergencyForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      const contact = {
-        name: document.getElementById('editName').value,
-        phone: document.getElementById('editPhone').value,
-        relation: document.getElementById('editRelation').value
-      };
-      
-      localStorage.setItem('emergencyContact', JSON.stringify(contact));
-      
-      if (speechEnabled) {
-        speakText(`Emergency contact ${contact.name} has been saved successfully.`);
-      }
-      
-      alert('Emergency contact saved successfully!');
-    });
-    
     // Initialize settings when page loads
     document.addEventListener('DOMContentLoaded', initializeSettings);
   </script>
 </body>
-
 </html>
