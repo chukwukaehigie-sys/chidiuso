@@ -388,44 +388,46 @@
       }
     });
 
-    // Medication form handling with translation
-    const reminders = [];
+// Simple medication form handler
+let userMedications = JSON.parse(localStorage.getItem('userMedications') || '[]');
 
-    document.getElementById("medForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-
-      const currentLang = document.getElementById("languageSelect").value;
-      const t = translations[currentLang] || translations["en"];
-
-      const day = document.getElementById("Day").value;
-      const name = document.getElementById("medName").value;
-      const dose = document.getElementById("dosage").value;
-      const time = document.getElementById("time").value;
-
-      const newItem = document.createElement("li");
-      newItem.innerHTML = `<strong>${name}</strong> – ${dose} at <em>${time}</em>`;
-      document.getElementById("medications").appendChild(newItem);
-
-      // Show output with translation
-     document.getElementById("medForm").addEventListener("submit", function(e) {
+document.getElementById("medForm").addEventListener("submit", function(e) {
   e.preventDefault();
-
-  const currentLang = document.getElementById("languageSelect").value;
-  const t = translations[currentLang] || translations["en"];
 
   const day = document.getElementById("Day").value;
   const name = document.getElementById("medName").value;
   const dose = document.getElementById("dosage").value;
   const time = document.getElementById("time").value;
 
+  // Save to localStorage
+  userMedications.push({
+    name: name,
+    dose: dose,
+    time: time,
+    days: [day]
+  });
+  localStorage.setItem('userMedications', JSON.stringify(userMedications));
+
+  // Add to today's list immediately
   const newItem = document.createElement("li");
-  newItem.innerHTML = `<strong>${name}</strong> – ${dose} at <em>${time}</em>`;
+  newItem.innerHTML = `
+    <strong>${name}</strong> – ${dose} at <em>${time}</em>
+    <button class="mark-taken-btn" onclick="markMedicationTaken('${name}', '${dose}', '${time}')">✅ Taken</button>
+    <button class="mark-missed-btn" onclick="markMedicationMissed('${name}', '${dose}', '${time}')">❌ Missed</button>
+  `;
   document.getElementById("medications").appendChild(newItem);
 
-  // Save reminder
-  reminders.push({ name, dose, time, alerted: false });
+  // Update progress
+  updateProgressDisplay();
 
+  // Clear form
   this.reset();
+});
+
+// Load medications when page loads
+document.addEventListener('DOMContentLoaded', function() {
+  displayTodayMedications();
+  updateProgressDisplay();
 });
 
     // Check every minute for reminders with translation
@@ -709,3 +711,4 @@ document.getElementById('manualLog')?.addEventListener('click', () => {
 </body>
 
 </html>
+
