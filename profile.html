@@ -94,6 +94,13 @@
       margin-bottom: 10px;
       border-radius: 5px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      justify-content: space-between;
+    }
+
+    .contact-left {
+      display: flex;
+      align-items: center;
+      flex-grow: 1;
     }
 
     .contact-icon {
@@ -106,6 +113,7 @@
       justify-content: center;
       color: white;
       margin-right: 15px;
+      font-size: 18px;
     }
 
     .contact-info {
@@ -126,6 +134,32 @@
       color: #4a90e2;
     }
 
+    .contact-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .contact-btn {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .remove-contact-btn {
+      background-color: #e74c3c;
+      color: white;
+      min-width: 120px;
+    }
+
+    .remove-contact-btn:hover {
+      background-color: #c0392b;
+      transform: translateY(-2px);
+    }
+
     .profile-actions {
       display: flex;
       gap: 10px;
@@ -133,12 +167,13 @@
     }
 
     .action-btn {
-      padding: 10px 20px;
+      padding: 15px 30px;
       border: none;
       border-radius: 5px;
       cursor: pointer;
       font-weight: bold;
       transition: background-color 0.3s;
+      font-size: 18px;
     }
 
     .edit-btn {
@@ -157,6 +192,25 @@
 
     .logout-btn:hover {
       background-color: #c0392b;
+    }
+
+    .add-contact-btn {
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      padding: 15px 25px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-bottom: 15px;
+      font-size: 18px;
+      min-width: 200px;
+      transition: all 0.3s ease;
+    }
+
+    .add-contact-btn:hover {
+      background-color: #219a52;
+      transform: translateY(-2px);
     }
 
     /* Modal Styles */
@@ -180,6 +234,8 @@
       width: 90%;
       max-width: 500px;
       box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      max-height: 90vh;
+      overflow-y: auto;
     }
 
     .modal-header {
@@ -192,30 +248,32 @@
     .modal-title {
       margin: 0;
       color: #333;
+      font-size: 24px;
     }
 
     .close-btn {
       background: none;
       border: none;
-      font-size: 24px;
+      font-size: 28px;
       cursor: pointer;
       color: #666;
     }
 
     .form-group {
-      margin-bottom: 15px;
+      margin-bottom: 20px;
     }
 
     .form-group label {
       display: block;
-      margin-bottom: 5px;
+      margin-bottom: 8px;
       color: #555;
       font-weight: bold;
+      font-size: 16px;
     }
 
     .form-group input, .form-group select {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       border: 1px solid #ddd;
       border-radius: 5px;
       font-size: 16px;
@@ -225,12 +283,14 @@
       background-color: #4a90e2;
       color: white;
       border: none;
-      padding: 10px 15px;
+      padding: 15px 20px;
       border-radius: 5px;
       cursor: pointer;
       font-weight: bold;
       width: 100%;
       margin-top: 10px;
+      font-size: 18px;
+      transition: background-color 0.3s;
     }
 
     .save-btn:hover {
@@ -251,6 +311,35 @@
         margin-right: 0;
         margin-bottom: 15px;
       }
+      
+      .contact-item {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      .contact-actions {
+        margin-top: 15px;
+        width: 100%;
+        justify-content: center;
+      }
+      
+      .contact-btn {
+        width: 100%;
+        padding: 15px;
+      }
+      
+      .add-contact-btn {
+        width: 100%;
+        min-width: auto;
+      }
+      
+      .profile-actions {
+        flex-direction: column;
+      }
+      
+      .action-btn {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -259,11 +348,10 @@
     <nav class="utility-bar">
       <a href="index.html" style="text-decoration: none;"><button>🏠 Home</button></a>
       <a href="schedule.html" style="text-decoration: none;"><button>📅 Schedule</button></a>
-      <a href="reminder.html" style="text-decoration: none;"><button>🔔 Reminders</button></a
+      <a href="reminder.html" style="text-decoration: none;"><button>🔔 Reminders</button></a>
       <a href="settings.html" style="text-decoration: none;"><button>⚙️ Settings</button></a>
       <a href="howtouse.html" style="text-decoration: none;"><button>❓ How to Use</button></a>
       <a href="added-medications.html" style="text-decoration: none;"><button>💊 Added Medications</button></a>
-      
       <a href="profile.html" style="text-decoration: none;"><button>👤 Profile</button></a>
 
       <select class="lS" id="languageSelect">
@@ -278,20 +366,10 @@
     <p id="headerGreeting">Welcome, Chidiuso!</p>
     <p id="headerTime"></p>
     <p id="dailyQuote"></p>
-    <!-- <button class="hauf" id="wellnessBtn">🧘 How are you feeling today?</button> -->
   </header>
 
   <main>
     <div class="profile-container">
-      <!-- <div class="profile-header">
-        <div class="profile-avatar">C</div>
-        <div class="profile-info">
-          <h2>Chidiuso</h2>
-          <p>MedMinder User since 2023</p>
-          <p>Last login: Today</p>
-        </div> -->
-      </div>
-      
       <div class="profile-details">
         <div class="detail-card">
           <h3>Personal Information</h3>
@@ -309,7 +387,7 @@
           </div>
           <div class="detail-item">
             <span class="detail-label">Phone:</span>
-            <span class="detail-value" id="profilePhone">+234-XXX-XXXX</span>
+            <span class="detail-value" id="profilePhone">+234-801-234-5678</span>
           </div>
           <div class="detail-item">
             <span class="detail-label">Email:</span>
@@ -325,7 +403,7 @@
           </div>
           <div class="detail-item">
             <span class="detail-label">Doctor's Phone:</span>
-            <span class="detail-value" id="profileDoctorPhone">+234-XXX-XXXX</span>
+            <span class="detail-value" id="profileDoctorPhone">+234-802-345-6789</span>
           </div>
           <div class="detail-item">
             <span class="detail-label">Pharmacy:</span>
@@ -342,13 +420,13 @@
         </div>
       </div>
       
-<div class="emergency-contacts">
-  <h3>Emergency Contacts</h3>
-  <button class="add-contact-btn" id="addContactBtn">+ Add Emergency Contact</button>
-  <div id="emergencyContactsList">
-    <!-- Contacts will be loaded here dynamically -->
-  </div>
-</div>
+      <div class="emergency-contacts">
+        <h3>Emergency Contacts</h3>
+        <button class="add-contact-btn" id="addContactBtn">+ Add Emergency Contact</button>
+        <div id="emergencyContactsList">
+          <!-- Contacts will be loaded here dynamically -->
+        </div>
+      </div>
       
       <div class="profile-actions">
         <button class="action-btn edit-btn" id="editProfileBtn">Edit Profile</button>
@@ -412,6 +490,31 @@
         </form>
       </div>
     </div>
+
+    <!-- Add Contact Modal -->
+    <div class="modal" id="addContactModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">Add Emergency Contact</h3>
+          <button class="close-btn" id="closeContactModalBtn">&times;</button>
+        </div>
+        <form id="addContactForm">
+          <div class="form-group">
+            <label for="contactName">Full Name</label>
+            <input type="text" id="contactName" required>
+          </div>
+          <div class="form-group">
+            <label for="contactRelationship">Relationship</label>
+            <input type="text" id="contactRelationship" required>
+          </div>
+          <div class="form-group">
+            <label for="contactPhone">Phone Number</label>
+            <input type="tel" id="contactPhone" required>
+          </div>
+          <button type="submit" class="save-btn">Add Contact</button>
+        </form>
+      </div>
+    </div>
   </main>
 
   <footer>
@@ -452,85 +555,130 @@
       });
     }
 
+    // Emergency contacts data
+    let emergencyContacts = JSON.parse(localStorage.getItem('emergencyContacts')) || [
+      { name: "Chidi", relationship: "Son", phone: "+234-803-456-7890" },
+      { name: "Nneka", relationship: "Daughter", phone: "+234-804-567-8901" }
+    ];
+
+    // Save contacts to localStorage
+    function saveContacts() {
+      localStorage.setItem('emergencyContacts', JSON.stringify(emergencyContacts));
+    }
+
+    // Load and display emergency contacts
+    function loadEmergencyContacts() {
+      const contactsList = document.getElementById('emergencyContactsList');
+      contactsList.innerHTML = '';
+
+      if (emergencyContacts.length === 0) {
+        contactsList.innerHTML = '<p style="text-align: center; color: #666; padding: 20px;">No emergency contacts added yet.</p>';
+        return;
+      }
+
+      emergencyContacts.forEach((contact, index) => {
+        const contactItem = document.createElement('div');
+        contactItem.className = 'contact-item';
+        contactItem.innerHTML = `
+          <div class="contact-left">
+            <div class="contact-icon">${contact.name.charAt(0)}</div>
+            <div class="contact-info">
+              <div class="contact-name">${contact.name}</div>
+              <div class="contact-relationship">${contact.relationship}</div>
+              <div class="contact-phone">${contact.phone}</div>
+            </div>
+          </div>
+          <div class="contact-actions">
+            <button class="contact-btn remove-contact-btn" onclick="removeContact(${index})">✕ Remove</button>
+          </div>
+        `;
+        contactsList.appendChild(contactItem);
+      });
+    }
+
+    // Remove a contact
+    function removeContact(index) {
+      const contact = emergencyContacts[index];
+      if (confirm(`Remove ${contact.name} from emergency contacts?`)) {
+        emergencyContacts.splice(index, 1);
+        saveContacts();
+        loadEmergencyContacts();
+        alert(`${contact.name} has been removed from your emergency contacts.`);
+      }
+    }
+
+    // Add new contact
+    function addContact(name, relationship, phone) {
+      const newContact = { name, relationship, phone };
+      emergencyContacts.push(newContact);
+      saveContacts();
+      loadEmergencyContacts();
+    }
+
     window.addEventListener("DOMContentLoaded", () => {
       const defaultLang = document.getElementById("languageSelect").value;
       applyTranslation(defaultLang);
-    });
+      loadEmergencyContacts();
 
-    document.getElementById("languageSelect").addEventListener("change", (e) => {
-      applyTranslation(e.target.value);
-    });
-
-    // Header functionality
-    function getGreeting() {
-      const hour = new Date().getHours();
-      if (hour < 12) return "Good morning";
-      if (hour < 18) return "Good afternoon";
-      return "Good evening";
-    }
-
-    function updateHeader() {
-      const greeting = getGreeting();
-      document.getElementById("headerGreeting").textContent = `${greeting}, Chidiuso! Let's stay on track with your health today.`;
-
-      const now = new Date();
-      document.getElementById("headerTime").textContent = now.toLocaleString();
-
-      const quotes = [
-        "Your health is your wealth 💙",
-        "Every dose is a step toward strength.",
-        "You're doing great — keep going!",
-        "Small steps, big impact. Take your meds!",
-        "The body knows how to heal — we just need to listen.",
-        "A healthy dose of gratitude is good medicine.",
-        "Medicine is not magic. It's science and care.",
-        "The best medicine is prevention.",
-        "Healing is a team effort.",
-        "Medication is a bridge — not the destination.",
-        "The best medicine is a life well-lived.",
-        "Doctors treat. Healers transform.",
-        "The medicine you need may not come in a bottle.",
-        "Doctors diagnose. Patients decide.",
-        "Medicine is a journey, not a destination.",
-        "Healing begins with trust.",
-        "A kind word is sometimes better than a prescription.",
-        "The best medicine is a good night's sleep.",
-        "Medicine is a science of hope.",
-        "The most powerful medicine is love.",
-        "Healing is remembering you are whole.",
-        "Medicine is a tool. Healing is a process."
-      ];
-      const quote = quotes[Math.floor(Math.random() * quotes.length)];
-      document.getElementById("dailyQuote").textContent = quote;
-    }
-
-    setInterval(updateHeader, 1800000);
-    updateHeader();
-
-    // Wellness button functionality
-    document.getElementById("wellnessBtn").addEventListener("click", () => {
-      const response = prompt("How are you feeling today?");
-      if (!response) return;
-
-      const negativeWords = ["sad", "tired", "angry", "bad", "not good", "depressed", "unwell", "down"];
-      const isNegative = negativeWords.some(word => response.toLowerCase().includes(word));
-
-      if (isNegative) {
-        alert("I'm really sorry you're feeling that way, Chidiuso. You're not alone — and it's okay to take things one step at a time 💙");
-      } else {
-        alert(`Thanks for sharing, Chidiuso. I'm here for you 💙`);
+      // Header functionality
+      function getGreeting() {
+        const hour = new Date().getHours();
+        if (hour < 12) return "Good morning";
+        if (hour < 18) return "Good afternoon";
+        return "Good evening";
       }
-    });
 
-    // Profile page functionality
-    document.addEventListener('DOMContentLoaded', function() {
+      function updateHeader() {
+        const greeting = getGreeting();
+        const userName = document.getElementById('profileFullName').textContent;
+        document.getElementById("headerGreeting").textContent = `${greeting}, ${userName}! Let's stay on track with your health today.`;
+
+        const now = new Date();
+        document.getElementById("headerTime").textContent = now.toLocaleString();
+
+        const quotes = [
+          "Your health is your wealth 💙",
+          "Every dose is a step toward strength.",
+          "You're doing great — keep going!",
+          "Small steps, big impact. Take your meds!",
+          "The body knows how to heal — we just need to listen.",
+          "A healthy dose of gratitude is good medicine.",
+          "Medicine is not magic. It's science and care.",
+          "The best medicine is prevention.",
+          "Healing is a team effort.",
+          "Medication is a bridge — not the destination.",
+          "The best medicine is a life well-lived.",
+          "Doctors treat. Healers transform.",
+          "The medicine you need may not come in a bottle.",
+          "Doctors diagnose. Patients decide.",
+          "Medicine is a journey, not a destination.",
+          "Healing begins with trust.",
+          "A kind word is sometimes better than a prescription.",
+          "The best medicine is a good night's sleep.",
+          "Medicine is a science of hope.",
+          "The most powerful medicine is love.",
+          "Healing is remembering you are whole.",
+          "Medicine is a tool. Healing is a process."
+        ];
+        const quote = quotes[Math.floor(Math.random() * quotes.length)];
+        document.getElementById("dailyQuote").textContent = quote;
+      }
+
+      setInterval(updateHeader, 1800000);
+      updateHeader();
+
       // Modal functionality
       const editProfileBtn = document.getElementById('editProfileBtn');
       const editProfileModal = document.getElementById('editProfileModal');
       const closeModalBtn = document.getElementById('closeModalBtn');
       const editProfileForm = document.getElementById('editProfileForm');
       
-      // Open modal
+      const addContactBtn = document.getElementById('addContactBtn');
+      const addContactModal = document.getElementById('addContactModal');
+      const closeContactModalBtn = document.getElementById('closeContactModalBtn');
+      const addContactForm = document.getElementById('addContactForm');
+      
+      // Open edit profile modal
       if (editProfileBtn) {
         editProfileBtn.addEventListener('click', function() {
           // Populate form with current values
@@ -549,21 +697,37 @@
         });
       }
       
-      // Close modal
+      // Open add contact modal
+      if (addContactBtn) {
+        addContactBtn.addEventListener('click', function() {
+          addContactModal.style.display = 'flex';
+        });
+      }
+      
+      // Close modals
       if (closeModalBtn) {
         closeModalBtn.addEventListener('click', function() {
           editProfileModal.style.display = 'none';
         });
       }
       
-      // Close modal when clicking outside
+      if (closeContactModalBtn) {
+        closeContactModalBtn.addEventListener('click', function() {
+          addContactModal.style.display = 'none';
+        });
+      }
+      
+      // Close modals when clicking outside
       window.addEventListener('click', function(event) {
         if (event.target === editProfileModal) {
           editProfileModal.style.display = 'none';
         }
+        if (event.target === addContactModal) {
+          addContactModal.style.display = 'none';
+        }
       });
       
-      // Handle form submission
+      // Handle edit profile form submission
       if (editProfileForm) {
         editProfileForm.addEventListener('submit', function(e) {
           e.preventDefault();
@@ -592,20 +756,43 @@
         });
       }
       
+      // Handle add contact form submission
+      if (addContactForm) {
+        addContactForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          
+          const name = document.getElementById('contactName').value;
+          const relationship = document.getElementById('contactRelationship').value;
+          const phone = document.getElementById('contactPhone').value;
+          
+          addContact(name, relationship, phone);
+          
+          // Reset form and close modal
+          addContactForm.reset();
+          addContactModal.style.display = 'none';
+          
+          // Show success message
+          alert(`${name} has been added to your emergency contacts!`);
+        });
+      }
+      
       // Logout functionality
       const logoutBtn = document.getElementById('logoutBtn');
       if (logoutBtn) {
         logoutBtn.addEventListener('click', function() {
           if (confirm('Are you sure you want to log out?')) {
             alert('You have been logged out.');
+            // In a real app, you would redirect to login page:
             // window.location.href = 'login.html';
           }
         });
       }
     });
+
+    // Language selector event listener
+    document.getElementById("languageSelect").addEventListener("change", (e) => {
+      applyTranslation(e.target.value);
+    });
   </script>
 </body>
-
 </html>
-
-
