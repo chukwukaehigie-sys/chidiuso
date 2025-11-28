@@ -420,8 +420,11 @@
       </div>
       
       <div class="emergency-contacts">
-        <h3>Emergency Contacts</h3>
-        <button class="add-contact-btn" id="addContactBtn">+ Add Emergency Contact</button>
+        <!-- Add these data-translate attributes to your HTML -->
+        <h3 data-translate="personalInfo">Personal Information</h3>
+        <span class="detail-label" data-translate="fullName">Full Name:</span>
+        <button class="add-contact-btn" id="addContactBtn" data-translate="addEmergencyContact">+ Add Emergency Contact</button>
+<!-- Add similar data-translate attributes to all translatable text -->
         <div id="emergencyContactsList">
           <!-- Contacts will be loaded here dynamically -->
         </div>
@@ -555,10 +558,7 @@
     }
 
     // Emergency contacts data
-    let emergencyContacts = JSON.parse(localStorage.getItem('emergencyContacts')) || [
-      { name: "Chidi", relationship: "Son", phone: "+234-803-456-7890" },
-      { name: "Nneka", relationship: "Daughter", phone: "+234-804-567-8901" }
-    ];
+    let emergencyContacts = JSON.parse(localStorage.getItem('emergencyContacts')) || [];
 
     // Save contacts to localStorage
     function saveContacts() {
@@ -795,4 +795,5 @@
   </script>
 </body>
 </html>
+
 
