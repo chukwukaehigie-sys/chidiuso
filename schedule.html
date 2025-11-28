@@ -292,7 +292,7 @@
         const dayHeader = document.createElement('div');
         dayHeader.className = `day-header ${isToday ? 'today-header' : ''}`;
         dayHeader.innerHTML = `
-          ${isToday ? '📌 ' : ''}${dayInfo.dayName}
+          ${isToday ? ' ' : ''}${dayInfo.dayName}
           ${isToday ? '<span style="color: #e74c3c; margin-left: 10px;">• Today</span>' : ''}
         `;
         
@@ -344,4 +344,5 @@
   </script>
 </body>
 </html>
+
 
