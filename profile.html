@@ -557,15 +557,13 @@
       });
     }
 
-    // Emergency contacts data
-// Emergency contacts data
-let emergencyContacts = JSON.parse(localStorage.getItem('emergencyContacts')) || [];
-   // Clear any existing default contacts from localStorage
-    localStorage.removeItem('emergencyContacts');
-    // Save contacts to localStorage
-    function saveContacts() {
-      localStorage.setItem('emergencyContacts', JSON.stringify(emergencyContacts));
-    }
+ // Emergency contacts data
+let emergencyContacts = [];
+
+// Save contacts to localStorage
+function saveContacts() {
+  localStorage.setItem('emergencyContacts', JSON.stringify(emergencyContacts));
+}
 
     // Load and display emergency contacts
     function loadEmergencyContacts() {
@@ -797,6 +795,7 @@ let emergencyContacts = JSON.parse(localStorage.getItem('emergencyContacts')) ||
   </script>
 </body>
 </html>
+
 
 
 
