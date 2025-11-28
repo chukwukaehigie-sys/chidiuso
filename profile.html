@@ -525,39 +525,337 @@
   </footer>
 
   <script>
-    // Language translations
-    const translations = {
-      en: {
-        welcome: "Welcome, Chidiuso!",
-        feeling: "🧘 How are you feeling today?"
-      },
-      ig: {
-        welcome: "Nnọọ, Chidiuso!",
-        feeling: "🧘 Kedu ka ị si dị taa?"
-      },
-      yo: {
-        welcome: "Kaabo, Chidiuso!",
-        feeling: "🧘 Bawo ni o ṣe n rilara loni?"
-      },
-      ha: {
-        welcome: "Barka da zuwa, Chidiuso!",
-        feeling: "🧘 Yaya kake ji yau?"
-      }
-    };
+// Language translations
+const translations = {
+  en: {
+    // Navigation
+    home: "Home",
+    schedule: "Schedule", 
+    settings: "Settings",
+    howToUse: "How to Use",
+    addedMeds: "Added Medications",
+    profile: "Profile",
+    
+    // Profile Sections
+    personalInfo: "Personal Information",
+    healthInfo: "Health Information",
+    emergencyContacts: "Emergency Contacts",
+    
+    // Personal Information Labels
+    fullName: "Full Name",
+    dateOfBirth: "Date of Birth", 
+    gender: "Gender",
+    phone: "Phone",
+    email: "Email",
+    
+    // Health Information Labels
+    primaryDoctor: "Primary Doctor",
+    doctorPhone: "Doctor's Phone",
+    pharmacy: "Pharmacy", 
+    allergies: "Allergies",
+    bloodType: "Blood Type",
+    
+    // Buttons and Actions
+    addEmergencyContact: "Add Emergency Contact",
+    editProfile: "Edit Profile", 
+    logout: "Log Out",
+    remove: "Remove",
+    saveChanges: "Save Changes",
+    
+    // Modal Titles
+    editProfileTitle: "Edit Profile",
+    addContactTitle: "Add Emergency Contact",
+    
+    // Form Labels
+    contactName: "Full Name",
+    contactRelationship: "Relationship", 
+    contactPhone: "Phone Number",
+    
+    // Messages
+    noContacts: "No emergency contacts added yet.",
+    removeContactConfirm: "Remove {name} from emergency contacts?",
+    contactRemoved: "{name} has been removed from your emergency contacts.",
+    contactAdded: "{name} has been added to your emergency contacts!",
+    profileUpdated: "Profile updated successfully!",
+    logoutConfirm: "Are you sure you want to log out?",
+    loggedOut: "You have been logged out.",
+    
+    // Header
+    welcome: "Welcome, {name}! Let's stay on track with your health today.",
+    goodMorning: "Good morning",
+    goodAfternoon: "Good afternoon", 
+    goodEvening: "Good evening",
+    
+    // Footer
+    copyright: "MedMinder © 2025",
+    designedFor: "Designed with care for older adults",
+    privacyPolicy: "Privacy Policy"
+  },
+  ig: {
+    // Navigation
+    home: "Ụlọ",
+    schedule: "Nhazi oge",
+    settings: "Ntọala", 
+    howToUse: "Otu esi eji",
+    addedMeds: "Ọgwụ Agbakwunyere",
+    profile: "Profaịlụ",
+    
+    // Profile Sections
+    personalInfo: "Ozi Onwe",
+    healthInfo: "Ozi Ahụike",
+    emergencyContacts: "Kọntaktị Mberede",
+    
+    // Personal Information Labels
+    fullName: "Aha Zuruezu",
+    dateOfBirth: "Ụbọchị Ọmụmụ",
+    gender: "Okike", 
+    phone: "Ekwentị",
+    email: "Email",
+    
+    // Health Information Labels
+    primaryDoctor: "Dọkịta Mbụ",
+    doctorPhone: "Ekwentị Dọkịta",
+    pharmacy: "Ụlọ Ahịa Ọgwụ",
+    allergies: "Ihe Nfụkasị Ahụ",
+    bloodType: "Ụdị Ọbara",
+    
+    // Buttons and Actions
+    addEmergencyContact: "Tinye Kọntaktị Mberede",
+    editProfile: "Dezie Profaịlụ",
+    logout: "Pụọ", 
+    remove: "Wepu",
+    saveChanges: "Chekwa Mgbanwe",
+    
+    // Modal Titles
+    editProfileTitle: "Dezie Profaịlụ",
+    addContactTitle: "Tinye Kọntaktị Mberede",
+    
+    // Form Labels
+    contactName: "Aha Zuruezu",
+    contactRelationship: "Mmekọrịta",
+    contactPhone: "Nọmba Ekwentị",
+    
+    // Messages
+    noContacts: "Enweghị kọntaktị mberede agbakwunyere.",
+    removeContactConfirm: "Wepu {name} na kọntaktị mberede gị?",
+    contactRemoved: "Ewepụla {name} na kọntaktị mberede gị.",
+    contactAdded: "Agbakwunyela {name} na kọntaktị mberede gị!",
+    profileUpdated: "Emechara melite profaịlụ gị nke ọma!",
+    logoutConfirm: "Ị ji n'aka na ị chọrọ ịpụ?",
+    loggedOut: "Ị pụọla.",
+    
+    // Header
+    welcome: "Nnọọ, {name}! Ka anyị nọrọ na egwu ahụike gị taa.",
+    goodMorning: "Utụtụ ọma",
+    goodAfternoon: "Ehihie ọma",
+    goodEvening: "Anyasị ọma",
+    
+    // Footer
+    copyright: "MedMinder © 2025",
+    designedFor: "Emebere ya maka ndị okenye",
+    privacyPolicy: "Amụma Nzuzo"
+  },
+  yo: {
+    // Navigation
+    home: "Ile",
+    schedule: "Iṣeto Akoko", 
+    settings: "Eto",
+    howToUse: "Bii Lati Lo",
+    addedMeds: "Awọn Oogun Ti A Fikun",
+    profile: "Profaili",
+    
+    // Profile Sections
+    personalInfo: "Alaye Ara Ẹni",
+    healthInfo: "Alaye Ilera",
+    emergencyContacts: "Awọn Olubasọrọ Iṣẹju Aye",
+    
+    // Personal Information Labels
+    fullName: "Orukọ Gbogbo",
+    dateOfBirth: "Ọjọ Ibi",
+    gender: "Ibiṣẹ",
+    phone: "Foonu",
+    email: "Imeeli",
+    
+    // Health Information Labels
+    primaryDoctor: "Dọkita Akọkọ",
+    doctorPhone: "Foonu Dọkita",
+    pharmacy: "Ile Itaja Oogun",
+    allergies: "Awọn Ailẹgbẹ",
+    bloodType: "Iru Ẹjẹ",
+    
+    // Buttons and Actions
+    addEmergencyContact: "Fi Olubasọrọ Iṣẹju Aye Kun",
+    editProfile: "Ṣatunkọ Profaili",
+    logout: "Jade",
+    remove: "Yọ Kuro",
+    saveChanges: "Fi Awọn Ayipada Pamọ",
+    
+    // Modal Titles
+    editProfileTitle: "Ṣatunkọ Profaili",
+    addContactTitle: "Fi Olubasọrọ Iṣẹju Aye Kun",
+    
+    // Form Labels
+    contactName: "Orukọ Gbogbo",
+    contactRelationship: "Ibatan",
+    contactPhone: "Nọmba Foonu",
+    
+    // Messages
+    noContacts: "Ko si awọn olubasọrọ iṣẹju aye ti a fikun sibẹ.",
+    removeContactConfirm: "Yọ {name} kuro ninu awọn olubasọrọ iṣẹju aye rẹ?",
+    contactRemoved: "Ti yọ {name} kuro ninu awọn olubasọrọ iṣẹju aye rẹ.",
+    contactAdded: "Ti fi {name} kun si awọn olubasọrọ iṣẹju aye rẹ!",
+    profileUpdated: "Profaili ti ni imudojuiwọn ni aṣeyọri!",
+    logoutConfirm: "Ṣe o da ọ loju pe o fẹ lati jade?",
+    loggedOut: "O ti jade.",
+    
+    // Header
+    welcome: "Kaabo, {name}! Jẹ ki a duro lori ilana ilera rẹ loni.",
+    goodMorning: "E kaaro",
+    goodAfternoon: "E kasan",
+    goodEvening: "E ku irole",
+    
+    // Footer
+    copyright: "MedMinder © 2025",
+    designedFor: "A ṣe apẹrẹ pẹlu itoju fun awọn arọgbọ",
+    privacyPolicy: "Ilana Ikọkọ"
+  },
+  ha: {
+    // Navigation
+    home: "Gida",
+    schedule: "Jadawali",
+    settings: "Saituna",
+    howToUse: "Yadda ake Amfani", 
+    addedMeds: "Magungunan Da Aka Ƙara",
+    profile: "Bayanan Martaba",
+    
+    // Profile Sections
+    personalInfo: "Bayanin Sirri",
+    healthInfo: "Bayanin Lafiya", 
+    emergencyContacts: "Lambobin Gaggawa",
+    
+    // Personal Information Labels
+    fullName: "Cikakken Suna",
+    dateOfBirth: "Ranar Haihuwa",
+    gender: "Jinsi",
+    phone: "Wayar",
+    email: "Imel",
+    
+    // Health Information Labels
+    primaryDoctor: "Likitoci Na Farko",
+    doctorPhone: "Lambar Wayar Likita",
+    pharmacy: "Kantin Magunguna",
+    allergies: "Rashin Lafiyar Jiki",
+    bloodType: "Nau'in Jini",
+    
+    // Buttons and Actions
+    addEmergencyContact: "Ƙara Lambobin Gaggawa",
+    editProfile: "Gyara Bayanan Martaba",
+    logout: "Fita",
+    remove: "Cire",
+    saveChanges: "Ajiye Canje-canjen",
+    
+    // Modal Titles
+    editProfileTitle: "Gyara Bayanan Martaba",
+    addContactTitle: "Ƙara Lambobin Gaggawa",
+    
+    // Form Labels
+    contactName: "Cikakken Suna",
+    contactRelationship: "Dangantaka",
+    contactPhone: "Lambar Wayar",
+    
+    // Messages
+    noContacts: "Babu lambobin gaggawa da aka ƙara tukuna.",
+    removeContactConfirm: "Cire {name} daga lambobin gaggawa?",
+    contactRemoved: "An cire {name} daga lambobin gaggawa.",
+    contactAdded: "An ƙara {name} zuwa lambobin gaggawa!",
+    profileUpdated: "An sabunta bayanan martaba cikin nasara!",
+    logoutConfirm: "Shin kuna da tabbacin kuna son fita?",
+    loggedOut: "Kun fita.",
+    
+    // Header
+    welcome: "Barka da zuwa, {name}! Bari mu ci gaba da bin tsarin lafiyar ku a yau.",
+    goodMorning: "Barka da safiya",
+    goodAfternoon: "Barka da rana",
+    goodEvening: "Barka da yamma",
+    
+    // Footer
+    copyright: "MedMinder © 2025",
+    designedFor: "An tsara shi da kulawa ga tsofaffi",
+    privacyPolicy: "Manufar Sirri"
+  }
+};
 
-    function applyTranslation(lang) {
-      const t = translations[lang] || translations["en"];
-      const elements = {
-        headerGreeting: t.welcome,
-        wellnessBtn: t.feeling
-      };
-      Object.entries(elements).forEach(([id, text]) => {
-        const el = document.getElementById(id);
-        if (el) el.textContent = text;
-      });
-    }
+// Helper function to get greeting based on time
+function getGreeting(lang) {
+  const hour = new Date().getHours();
+  const t = translations[lang] || translations["en"];
+  if (hour < 12) return t.goodMorning;
+  if (hour < 18) return t.goodAfternoon;
+  return t.goodEvening;
+}
 
- // Emergency contacts data
+function applyTranslation(lang) {
+  const t = translations[lang] || translations["en"];
+  
+  // Update all elements with data-translate attribute
+  document.querySelectorAll('[data-translate]').forEach(element => {
+    const key = element.getAttribute('data-translate');
+    if (t[key]) element.textContent = t[key];
+  });
+  
+  // Update header greeting
+  const userName = document.getElementById('profileFullName').textContent;
+  const greeting = getGreeting(lang);
+  document.getElementById("headerGreeting").textContent = t.welcome.replace('{name}', userName);
+  
+  // Update buttons and dynamic content
+  const elementsToUpdate = {
+    'addContactBtn': t.addEmergencyContact,
+    'editProfileBtn': t.editProfile,
+    'logoutBtn': t.logout
+  };
+  
+  Object.entries(elementsToUpdate).forEach(([id, text]) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  });
+  
+  // Update modal titles
+  const editModalTitle = document.querySelector('#editProfileModal .modal-title');
+  const addContactModalTitle = document.querySelector('#addContactModal .modal-title');
+  if (editModalTitle) editModalTitle.textContent = t.editProfileTitle;
+  if (addContactModalTitle) addContactModalTitle.textContent = t.addContactTitle;
+  
+  // Update form labels
+  const formLabels = {
+    'editFullName': t.fullName,
+    'editDOB': t.dateOfBirth,
+    'editGender': t.gender,
+    'editPhone': t.phone,
+    'editEmail': t.email,
+    'editDoctor': t.primaryDoctor,
+    'editDoctorPhone': t.doctorPhone,
+    'editPharmacy': t.pharmacy,
+    'editAllergies': t.allergies,
+    'editBloodType': t.bloodType,
+    'contactName': t.contactName,
+    'contactRelationship': t.contactRelationship,
+    'contactPhone': t.contactPhone
+  };
+  
+  Object.entries(formLabels).forEach(([id, text]) => {
+    const label = document.querySelector(`label[for="${id}"]`);
+    if (label) label.textContent = text;
+  });
+  
+  // Update save buttons
+  const saveButtons = document.querySelectorAll('.save-btn');
+  saveButtons.forEach(button => {
+    button.textContent = t.saveChanges;
+  });
+}
+
+// Emergency contacts data
 let emergencyContacts = [];
 
 // Save contacts to localStorage
@@ -565,238 +863,243 @@ function saveContacts() {
   localStorage.setItem('emergencyContacts', JSON.stringify(emergencyContacts));
 }
 
-    // Load and display emergency contacts
-    function loadEmergencyContacts() {
-      const contactsList = document.getElementById('emergencyContactsList');
-      contactsList.innerHTML = '';
+// Load and display emergency contacts
+function loadEmergencyContacts() {
+  const contactsList = document.getElementById('emergencyContactsList');
+  contactsList.innerHTML = '';
 
-      if (emergencyContacts.length === 0) {
-        contactsList.innerHTML = '<p style="text-align: center; color: #666; padding: 20px;">No emergency contacts added yet.</p>';
-        return;
-      }
+  const currentLang = document.getElementById("languageSelect").value;
+  const t = translations[currentLang] || translations["en"];
 
-      emergencyContacts.forEach((contact, index) => {
-        const contactItem = document.createElement('div');
-        contactItem.className = 'contact-item';
-        contactItem.innerHTML = `
-          <div class="contact-left">
-            <div class="contact-icon">${contact.name.charAt(0)}</div>
-            <div class="contact-info">
-              <div class="contact-name">${contact.name}</div>
-              <div class="contact-relationship">${contact.relationship}</div>
-              <div class="contact-phone">${contact.phone}</div>
-            </div>
-          </div>
-          <div class="contact-actions">
-            <button class="contact-btn remove-contact-btn" onclick="removeContact(${index})">✕ Remove</button>
-          </div>
-        `;
-        contactsList.appendChild(contactItem);
-      });
+  if (emergencyContacts.length === 0) {
+    contactsList.innerHTML = `<p style="text-align: center; color: #666; padding: 20px;">${t.noContacts}</p>`;
+    return;
+  }
+
+  emergencyContacts.forEach((contact, index) => {
+    const contactItem = document.createElement('div');
+    contactItem.className = 'contact-item';
+    contactItem.innerHTML = `
+      <div class="contact-left">
+        <div class="contact-icon">${contact.name.charAt(0)}</div>
+        <div class="contact-info">
+          <div class="contact-name">${contact.name}</div>
+          <div class="contact-relationship">${contact.relationship}</div>
+          <div class="contact-phone">${contact.phone}</div>
+        </div>
+      </div>
+      <div class="contact-actions">
+        <button class="contact-btn remove-contact-btn" onclick="removeContact(${index})">✕ ${t.remove}</button>
+      </div>
+    `;
+    contactsList.appendChild(contactItem);
+  });
+}
+
+// Remove a contact
+function removeContact(index) {
+  const currentLang = document.getElementById("languageSelect").value;
+  const t = translations[currentLang] || translations["en"];
+  
+  const contact = emergencyContacts[index];
+  if (confirm(t.removeContactConfirm.replace('{name}', contact.name))) {
+    emergencyContacts.splice(index, 1);
+    saveContacts();
+    loadEmergencyContacts();
+    alert(t.contactRemoved.replace('{name}', contact.name));
+  }
+}
+
+// Add new contact
+function addContact(name, relationship, phone) {
+  const currentLang = document.getElementById("languageSelect").value;
+  const t = translations[currentLang] || translations["en"];
+  
+  const newContact = { name, relationship, phone };
+  emergencyContacts.push(newContact);
+  saveContacts();
+  loadEmergencyContacts();
+  alert(t.contactAdded.replace('{name}', name));
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  const defaultLang = document.getElementById("languageSelect").value;
+  applyTranslation(defaultLang);
+  loadEmergencyContacts();
+
+  // Header functionality
+  function updateHeader() {
+    const currentLang = document.getElementById("languageSelect").value;
+    const t = translations[currentLang] || translations["en"];
+    const greeting = getGreeting(currentLang);
+    const userName = document.getElementById('profileFullName').textContent;
+    document.getElementById("headerGreeting").textContent = t.welcome.replace('{name}', userName);
+
+    const now = new Date();
+    document.getElementById("headerTime").textContent = now.toLocaleString();
+
+    const quotes = [
+      "Your health is your wealth 💙",
+      "Every dose is a step toward strength.",
+      "You're doing great — keep going!",
+      "Small steps, big impact. Take your meds!",
+      "The body knows how to heal — we just need to listen.",
+      "A healthy dose of gratitude is good medicine.",
+      "Medicine is not magic. It's science and care.",
+      "The best medicine is prevention.",
+      "Healing is a team effort.",
+      "Medication is a bridge — not the destination.",
+      "The best medicine is a life well-lived.",
+      "Doctors treat. Healers transform.",
+      "The medicine you need may not come in a bottle.",
+      "Doctors diagnose. Patients decide.",
+      "Medicine is a journey, not a destination.",
+      "Healing begins with trust.",
+      "A kind word is sometimes better than a prescription.",
+      "The best medicine is a good night's sleep.",
+      "Medicine is a science of hope.",
+      "The most powerful medicine is love.",
+      "Healing is remembering you are whole.",
+      "Medicine is a tool. Healing is a process."
+    ];
+    const quote = quotes[Math.floor(Math.random() * quotes.length)];
+    document.getElementById("dailyQuote").textContent = quote;
+  }
+
+  setInterval(updateHeader, 1800000);
+  updateHeader();
+
+  // Modal functionality
+  const editProfileBtn = document.getElementById('editProfileBtn');
+  const editProfileModal = document.getElementById('editProfileModal');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  const editProfileForm = document.getElementById('editProfileForm');
+  
+  const addContactBtn = document.getElementById('addContactBtn');
+  const addContactModal = document.getElementById('addContactModal');
+  const closeContactModalBtn = document.getElementById('closeContactModalBtn');
+  const addContactForm = document.getElementById('addContactForm');
+  
+  // Open edit profile modal
+  if (editProfileBtn) {
+    editProfileBtn.addEventListener('click', function() {
+      // Populate form with current values
+      document.getElementById('editFullName').value = document.getElementById('profileFullName').textContent;
+      document.getElementById('editDOB').value = document.getElementById('profileDOB').textContent;
+      document.getElementById('editGender').value = document.getElementById('profileGender').textContent;
+      document.getElementById('editPhone').value = document.getElementById('profilePhone').textContent;
+      document.getElementById('editEmail').value = document.getElementById('profileEmail').textContent;
+      document.getElementById('editDoctor').value = document.getElementById('profileDoctor').textContent;
+      document.getElementById('editDoctorPhone').value = document.getElementById('profileDoctorPhone').textContent;
+      document.getElementById('editPharmacy').value = document.getElementById('profilePharmacy').textContent;
+      document.getElementById('editAllergies').value = document.getElementById('profileAllergies').textContent;
+      document.getElementById('editBloodType').value = document.getElementById('profileBloodType').textContent;
+      
+      editProfileModal.style.display = 'flex';
+    });
+  }
+  
+  // Open add contact modal
+  if (addContactBtn) {
+    addContactBtn.addEventListener('click', function() {
+      addContactModal.style.display = 'flex';
+    });
+  }
+  
+  // Close modals
+  if (closeModalBtn) {
+    closeModalBtn.addEventListener('click', function() {
+      editProfileModal.style.display = 'none';
+    });
+  }
+  
+  if (closeContactModalBtn) {
+    closeContactModalBtn.addEventListener('click', function() {
+      addContactModal.style.display = 'none';
+    });
+  }
+  
+  // Close modals when clicking outside
+  window.addEventListener('click', function(event) {
+    if (event.target === editProfileModal) {
+      editProfileModal.style.display = 'none';
     }
-
-    // Remove a contact
-    function removeContact(index) {
-      const contact = emergencyContacts[index];
-      if (confirm(`Remove ${contact.name} from emergency contacts?`)) {
-        emergencyContacts.splice(index, 1);
-        saveContacts();
-        loadEmergencyContacts();
-        alert(`${contact.name} has been removed from your emergency contacts.`);
-      }
+    if (event.target === addContactModal) {
+      addContactModal.style.display = 'none';
     }
-
-    // Add new contact
-    function addContact(name, relationship, phone) {
-      const newContact = { name, relationship, phone };
-      emergencyContacts.push(newContact);
-      saveContacts();
-      loadEmergencyContacts();
-    }
-
-    window.addEventListener("DOMContentLoaded", () => {
-      const defaultLang = document.getElementById("languageSelect").value;
-      applyTranslation(defaultLang);
-      loadEmergencyContacts();
-
-      // Header functionality
-      function getGreeting() {
-        const hour = new Date().getHours();
-        if (hour < 12) return "Good morning";
-        if (hour < 18) return "Good afternoon";
-        return "Good evening";
-      }
-
-      function updateHeader() {
-        const greeting = getGreeting();
-        const userName = document.getElementById('profileFullName').textContent;
-        document.getElementById("headerGreeting").textContent = `${greeting}, ${userName}! Let's stay on track with your health today.`;
-
-        const now = new Date();
-        document.getElementById("headerTime").textContent = now.toLocaleString();
-
-        const quotes = [
-          "Your health is your wealth 💙",
-          "Every dose is a step toward strength.",
-          "You're doing great — keep going!",
-          "Small steps, big impact. Take your meds!",
-          "The body knows how to heal — we just need to listen.",
-          "A healthy dose of gratitude is good medicine.",
-          "Medicine is not magic. It's science and care.",
-          "The best medicine is prevention.",
-          "Healing is a team effort.",
-          "Medication is a bridge — not the destination.",
-          "The best medicine is a life well-lived.",
-          "Doctors treat. Healers transform.",
-          "The medicine you need may not come in a bottle.",
-          "Doctors diagnose. Patients decide.",
-          "Medicine is a journey, not a destination.",
-          "Healing begins with trust.",
-          "A kind word is sometimes better than a prescription.",
-          "The best medicine is a good night's sleep.",
-          "Medicine is a science of hope.",
-          "The most powerful medicine is love.",
-          "Healing is remembering you are whole.",
-          "Medicine is a tool. Healing is a process."
-        ];
-        const quote = quotes[Math.floor(Math.random() * quotes.length)];
-        document.getElementById("dailyQuote").textContent = quote;
-      }
-
-      setInterval(updateHeader, 1800000);
-      updateHeader();
-
-      // Modal functionality
-      const editProfileBtn = document.getElementById('editProfileBtn');
-      const editProfileModal = document.getElementById('editProfileModal');
-      const closeModalBtn = document.getElementById('closeModalBtn');
-      const editProfileForm = document.getElementById('editProfileForm');
+  });
+  
+  // Handle edit profile form submission
+  if (editProfileForm) {
+    editProfileForm.addEventListener('submit', function(e) {
+      e.preventDefault();
       
-      const addContactBtn = document.getElementById('addContactBtn');
-      const addContactModal = document.getElementById('addContactModal');
-      const closeContactModalBtn = document.getElementById('closeContactModalBtn');
-      const addContactForm = document.getElementById('addContactForm');
+      const currentLang = document.getElementById("languageSelect").value;
+      const t = translations[currentLang] || translations["en"];
       
-      // Open edit profile modal
-      if (editProfileBtn) {
-        editProfileBtn.addEventListener('click', function() {
-          // Populate form with current values
-          document.getElementById('editFullName').value = document.getElementById('profileFullName').textContent;
-          document.getElementById('editDOB').value = document.getElementById('profileDOB').textContent;
-          document.getElementById('editGender').value = document.getElementById('profileGender').textContent;
-          document.getElementById('editPhone').value = document.getElementById('profilePhone').textContent;
-          document.getElementById('editEmail').value = document.getElementById('profileEmail').textContent;
-          document.getElementById('editDoctor').value = document.getElementById('profileDoctor').textContent;
-          document.getElementById('editDoctorPhone').value = document.getElementById('profileDoctorPhone').textContent;
-          document.getElementById('editPharmacy').value = document.getElementById('profilePharmacy').textContent;
-          document.getElementById('editAllergies').value = document.getElementById('profileAllergies').textContent;
-          document.getElementById('editBloodType').value = document.getElementById('profileBloodType').textContent;
-          
-          editProfileModal.style.display = 'flex';
-        });
-      }
+      // Update profile with new values
+      document.getElementById('profileFullName').textContent = document.getElementById('editFullName').value;
+      document.getElementById('profileDOB').textContent = document.getElementById('editDOB').value;
+      document.getElementById('profileGender').textContent = document.getElementById('editGender').value;
+      document.getElementById('profilePhone').textContent = document.getElementById('editPhone').value;
+      document.getElementById('profileEmail').textContent = document.getElementById('editEmail').value;
+      document.getElementById('profileDoctor').textContent = document.getElementById('editDoctor').value;
+      document.getElementById('profileDoctorPhone').textContent = document.getElementById('editDoctorPhone').value;
+      document.getElementById('profilePharmacy').textContent = document.getElementById('editPharmacy').value;
+      document.getElementById('profileAllergies').textContent = document.getElementById('editAllergies').value;
+      document.getElementById('profileBloodType').textContent = document.getElementById('editBloodType').value;
       
-      // Open add contact modal
-      if (addContactBtn) {
-        addContactBtn.addEventListener('click', function() {
-          addContactModal.style.display = 'flex';
-        });
-      }
+      // Update header greeting if name changed
+      const newName = document.getElementById('editFullName').value;
+      const greeting = getGreeting(currentLang);
+      document.getElementById('headerGreeting').textContent = t.welcome.replace('{name}', newName);
       
-      // Close modals
-      if (closeModalBtn) {
-        closeModalBtn.addEventListener('click', function() {
-          editProfileModal.style.display = 'none';
-        });
-      }
+      // Close modal
+      editProfileModal.style.display = 'none';
       
-      if (closeContactModalBtn) {
-        closeContactModalBtn.addEventListener('click', function() {
-          addContactModal.style.display = 'none';
-        });
-      }
+      // Show success message
+      alert(t.profileUpdated);
+    });
+  }
+  
+  // Handle add contact form submission
+  if (addContactForm) {
+    addContactForm.addEventListener('submit', function(e) {
+      e.preventDefault();
       
-      // Close modals when clicking outside
-      window.addEventListener('click', function(event) {
-        if (event.target === editProfileModal) {
-          editProfileModal.style.display = 'none';
-        }
-        if (event.target === addContactModal) {
-          addContactModal.style.display = 'none';
-        }
-      });
+      const name = document.getElementById('contactName').value;
+      const relationship = document.getElementById('contactRelationship').value;
+      const phone = document.getElementById('contactPhone').value;
       
-      // Handle edit profile form submission
-      if (editProfileForm) {
-        editProfileForm.addEventListener('submit', function(e) {
-          e.preventDefault();
-          
-          // Update profile with new values
-          document.getElementById('profileFullName').textContent = document.getElementById('editFullName').value;
-          document.getElementById('profileDOB').textContent = document.getElementById('editDOB').value;
-          document.getElementById('profileGender').textContent = document.getElementById('editGender').value;
-          document.getElementById('profilePhone').textContent = document.getElementById('editPhone').value;
-          document.getElementById('profileEmail').textContent = document.getElementById('editEmail').value;
-          document.getElementById('profileDoctor').textContent = document.getElementById('editDoctor').value;
-          document.getElementById('profileDoctorPhone').textContent = document.getElementById('editDoctorPhone').value;
-          document.getElementById('profilePharmacy').textContent = document.getElementById('editPharmacy').value;
-          document.getElementById('profileAllergies').textContent = document.getElementById('editAllergies').value;
-          document.getElementById('profileBloodType').textContent = document.getElementById('editBloodType').value;
-          
-          // Update header greeting if name changed
-          const newName = document.getElementById('editFullName').value;
-          document.getElementById('headerGreeting').textContent = `Welcome, ${newName}!`;
-          
-          // Close modal
-          editProfileModal.style.display = 'none';
-          
-          // Show success message
-          alert('Profile updated successfully!');
-        });
-      }
+      addContact(name, relationship, phone);
       
-      // Handle add contact form submission
-      if (addContactForm) {
-        addContactForm.addEventListener('submit', function(e) {
-          e.preventDefault();
-          
-          const name = document.getElementById('contactName').value;
-          const relationship = document.getElementById('contactRelationship').value;
-          const phone = document.getElementById('contactPhone').value;
-          
-          addContact(name, relationship, phone);
-          
-          // Reset form and close modal
-          addContactForm.reset();
-          addContactModal.style.display = 'none';
-          
-          // Show success message
-          alert(`${name} has been added to your emergency contacts!`);
-        });
-      }
+      // Reset form and close modal
+      addContactForm.reset();
+      addContactModal.style.display = 'none';
+    });
+  }
+  
+  // Logout functionality
+  const logoutBtn = document.getElementById('logoutBtn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', function() {
+      const currentLang = document.getElementById("languageSelect").value;
+      const t = translations[currentLang] || translations["en"];
       
-      // Logout functionality
-      const logoutBtn = document.getElementById('logoutBtn');
-      if (logoutBtn) {
-        logoutBtn.addEventListener('click', function() {
-          if (confirm('Are you sure you want to log out?')) {
-            alert('You have been logged out.');
-            // In a real app, you would redirect to login page:
-            // window.location.href = 'login.html';
-          }
-        });
+      if (confirm(t.logoutConfirm)) {
+        alert(t.loggedOut);
+        // In a real app, you would redirect to login page:
+        // window.location.href = 'login.html';
       }
     });
+  }
+});
 
-    // Language selector event listener
-    document.getElementById("languageSelect").addEventListener("change", (e) => {
-      applyTranslation(e.target.value);
-    });
+// Language selector event listener
+document.getElementById("languageSelect").addEventListener("change", (e) => {
+  applyTranslation(e.target.value);
+  loadEmergencyContacts(); // Reload contacts with new language
+});
   </script>
 </body>
 </html>
-
-
-
-
-
