@@ -138,347 +138,374 @@
 
   <script>
     // Comprehensive translations for all content - SINGLE DEFINITION
-    const translations = {
-      en: {
-        home: "Home", schedule: "Schedule", reminders: "Reminders", settings: "Settings",
-        howToUse: "How to Use", addedMeds: "Added Medications", profile: "Profile",
-        appName: "MedMinder", welcome: "Welcome, Chidiuso!", welcomeMessage: "Welcome to MedMinder!",
-        todaysMeds: "Today's Medications", addNewMed: "Add a New Medication", dayLabel: "Day",
-        medNameLabel: "Medication Name", dosageLabel: "Dosage", timeLabel: "Time to Take",
-        addMedButton: "Add Medication", copyright: "MedMinder © 2025",
-        designedFor: "Designed with care for older adults", privacyPolicy: "Privacy Policy",
-        dayPlaceholder: "e.g. Monday", medNamePlaceholder: "e.g. Vitamin D", dosagePlaceholder: "e.g. 500mg",
-        medicationAdded: "Medication Added", reminderAlert: "⏰ Reminder: Take {name} ({dose}) in 30 minutes",
-        goodMorning: "Good morning", goodAfternoon: "Good afternoon", goodEvening: "Good evening",
-        readPage: "Read This Page Aloud", stopReading: "Stop Reading",
-        quotes: [
-          "Your health is your wealth 💙", "Every dose is a step toward strength.",
-          "You're doing great — keep going!", "Small steps, big impact. Take your meds!",
-          "The body knows how to heal — we just need to listen."
-        ]
-      },
-      ig: {
-        home: "Ụlọ", schedule: "Nhazi oge", reminders: "Ncheta", settings: "Ntọala",
-        howToUse: "Otu esi eji", addedMeds: "Ọgwụ Agbakwunyere", profile: "Profaịlụ",
-        appName: "MedMinder", welcome: "Nnọọ, Chidiuso!", welcomeMessage: "Nnọọ na MedMinder!",
-        todaysMeds: "Ọgwụ Taa", addNewMed: "Tinye Ọgwụ Ọhụrụ", dayLabel: "Ụbọchị",
-        medNameLabel: "Aha Ọgwụ", dosageLabel: "Usoro", timeLabel: "Oge Iwere",
-        addMedButton: "Tinye Ọgwụ", copyright: "MedMinder © 2025",
-        designedFor: "Emebere ya maka ndị okenye", privacyPolicy: "Amụma Nzuzo",
-        dayPlaceholder: "dịka Mọnde", medNamePlaceholder: "dịka Vitamin D", dosagePlaceholder: "dịka 500mg",
-        medicationAdded: "Agbakwunyere Ọgwụ", reminderAlert: "⏰ Ncheta: Were {name} ({dose}) n'ime nkeji iri atọ",
-        goodMorning: "Utụtụ ọma", goodAfternoon: "Ehihie ọma", goodEvening: "Anyasị ọma",
-        readPage: "Gụọ Ibe A", stopReading: "Kwụsị Ịgụ",
-        quotes: [
-          "Ahụ ike gị bụ akụ na ụba gị 💙", "Ọgwụ ọ bụla bụ nzọụkwụ n'ihu ike.",
-          "Ị na-eme nke ọma — gaa n'ihu!", "Nzọụkwụ ndị dị nta, mmetụta dị ukwuu. Were ọgwụ gị!",
-          "Ahụ maara otu esi agwọ ọrịa — anyị kwesịrị ige ntị."
-        ]
-      },
-      yo: {
-        home: "Ile", schedule: "Iṣeto Akoko", reminders: "Awọn iranti", settings: "Eto",
-        howToUse: "Bii Lati Lo", addedMeds: "Awọn Oogun Ti A Fikun", profile: "Profaili",
-        appName: "MedMinder", welcome: "Kaabo, Chidiuso!", welcomeMessage: "Kaabo si MedMinder!",
-        todaysMeds: "Awọn Oogun Loni", addNewMed: "Fi Oogun Tuntun Kun", dayLabel: "Ọjọ",
-        medNameLabel: "Orukọ Oogun", dosageLabel: "Iwon Oogun", timeLabel: "Akoko Lati Mu",
-        addMedButton: "Fi Oogun Kun", copyright: "MedMinder © 2025",
-        designedFor: "A ṣe apẹrẹ pẹlu itoju fun awọn arọgbọ", privacyPolicy: "Ilana Ikọkọ",
-        dayPlaceholder: "bii Monday", medNamePlaceholder: "bii Vitamin D", dosagePlaceholder: "bii 500mg",
-        medicationAdded: "Oogun Ti A Fikun", reminderAlert: "⏰ Iranti: Mu {name} ({dose}) ninu iṣẹju aadọta",
-        goodMorning: "E kaaro", goodAfternoon: "E kasan", goodEvening: "E ku irole",
-        readPage: "Ka Oju-Iwe Yi", stopReading: "Duro Kika",
-        quotes: [
-          "Ilera rẹ ni dukia rẹ 💙", "Gbigbe oogun kọọkan jẹ igbesẹ si alagbara.",
-          "O n ṣe daradara — tẹsiwaju!", "Awọn igbesẹ kekere, ipa nla. Mu awọn oogun rẹ!",
-          "Ara mọ bi a ṣe le wosan — a kan nilo lati feti si."
-        ]
-      },
-      ha: {
-        home: "Gida", schedule: "Jadawali", reminders: "Tunatarwa", settings: "Saituna",
-        howToUse: "Yadda ake Amfani", addedMeds: "Magungunan Da Aka Ƙara", profile: "Bayanan Martaba",
-        appName: "MedMinder", welcome: "Barka da zuwa, Chidiuso!", welcomeMessage: "Barka da zuwa MedMinder!",
-        todaysMeds: "Magungunan Yau", addNewMed: "Ƙara Sabon Magani", dayLabel: "Rana",
-        medNameLabel: "Sunan Magani", dosageLabel: "Dozi", timeLabel: "Lokacin Shan",
-        addMedButton: "Ƙara Magani", copyright: "MedMinder © 2025",
-        designedFor: "An tsara shi da kulawa ga tsofaffi", privacyPolicy: "Manufar Sirri",
-        dayPlaceholder: "misali Litinin", medNamePlaceholder: "misali Vitamin D", dosagePlaceholder: "misali 500mg",
-        medicationAdded: "An Ƙara Magani", reminderAlert: "⏰ Tunatarwa: Sha {name} ({dose}) cikin mintuna talatin",
-        goodMorning: "Barka da safiya", goodAfternoon: "Barka da rana", goodEvening: "Barka da yamma",
-        readPage: "Karanta Wannan Shafi", stopReading: "Dakatar da Karatu",
-        quotes: [
-          "Lafiyar ku ce dukiyar ku 💙", "Kowane dozi mataki ne zuwa ga ƙarfi.",
-          "Kuna yin kyau — ci gaba!", "Ƙananan matakai, babban tasiri. Sha magungunan ku!",
-          "Jiki ya san yadda ake warkarwa — kawai muna buƙatar sauraro."
-        ]
-      }
-    };
+  // Comprehensive translations for all content - SINGLE DEFINITION
+const translations = {
+  en: {
+    home: "Home", schedule: "Schedule", reminders: "Reminders", settings: "Settings",
+    howToUse: "How to Use", addedMeds: "Added Medications", profile: "Profile",
+    appName: "MedMinder", welcome: "Welcome, Chidiuso!", welcomeMessage: "Welcome to MedMinder!",
+    todaysMeds: "Today's Medications", addNewMed: "Add a New Medication", dateLabel: "Date",
+    medNameLabel: "Medication Name", dosageLabel: "Dosage", timeLabel: "Time to Take",
+    addMedButton: "Add Medication", copyright: "MedMinder © 2025",
+    designedFor: "Designed with care for older adults", privacyPolicy: "Privacy Policy",
+    medNamePlaceholder: "e.g. Vitamin D", dosagePlaceholder: "e.g. 500mg",
+    medicationAdded: "Medication Added", reminderAlert: "⏰ Reminder: Take {name} ({dose}) in 30 minutes",
+    goodMorning: "Good morning", goodAfternoon: "Good afternoon", goodEvening: "Good evening",
+    readPage: "Read This Page Aloud", stopReading: "Stop Reading",
+    quotes: [
+      "Your health is your wealth 💙", "Every dose is a step toward strength.",
+      "You're doing great — keep going!", "Small steps, big impact. Take your meds!",
+      "The body knows how to heal — we just need to listen."
+    ]
+  },
+  ig: {
+    home: "Ụlọ", schedule: "Nhazi oge", reminders: "Ncheta", settings: "Ntọala",
+    howToUse: "Otu esi eji", addedMeds: "Ọgwụ Agbakwunyere", profile: "Profaịlụ",
+    appName: "MedMinder", welcome: "Nnọọ, Chidiuso!", welcomeMessage: "Nnọọ na MedMinder!",
+    todaysMeds: "Ọgwụ Taa", addNewMed: "Tinye Ọgwụ Ọhụrụ", dateLabel: "Ụbọchị",
+    medNameLabel: "Aha Ọgwụ", dosageLabel: "Usoro", timeLabel: "Oge Iwere",
+    addMedButton: "Tinye Ọgwụ", copyright: "MedMinder © 2025",
+    designedFor: "Emebere ya maka ndị okenye", privacyPolicy: "Amụma Nzuzo",
+    medNamePlaceholder: "dịka Vitamin D", dosagePlaceholder: "dịka 500mg",
+    medicationAdded: "Agbakwunyere Ọgwụ", reminderAlert: "⏰ Ncheta: Were {name} ({dose}) n'ime nkeji iri atọ",
+    goodMorning: "Utụtụ ọma", goodAfternoon: "Ehihie ọma", goodEvening: "Anyasị ọma",
+    readPage: "Gụọ Ibe A", stopReading: "Kwụsị Ịgụ",
+    quotes: [
+      "Ahụ ike gị bụ akụ na ụba gị 💙", "Ọgwụ ọ bụla bụ nzọụkwụ n'ihu ike.",
+      "Ị na-eme nke ọma — gaa n'ihu!", "Nzọụkwụ ndị dị nta, mmetụta dị ukwuu. Were ọgwụ gị!",
+      "Ahụ maara otu esi agwọ ọrịa — anyị kwesịrị ige ntị."
+    ]
+  },
+  yo: {
+    home: "Ile", schedule: "Iṣeto Akoko", reminders: "Awọn iranti", settings: "Eto",
+    howToUse: "Bii Lati Lo", addedMeds: "Awọn Oogun Ti A Fikun", profile: "Profaili",
+    appName: "MedMinder", welcome: "Kaabo, Chidiuso!", welcomeMessage: "Kaabo si MedMinder!",
+    todaysMeds: "Awọn Oogun Loni", addNewMed: "Fi Oogun Tuntun Kun", dateLabel: "Ọjọ",
+    medNameLabel: "Orukọ Oogun", dosageLabel: "Iwon Oogun", timeLabel: "Akoko Lati Mu",
+    addMedButton: "Fi Oogun Kun", copyright: "MedMinder © 2025",
+    designedFor: "A ṣe apẹrẹ pẹlu itoju fun awọn arọgbọ", privacyPolicy: "Ilana Ikọkọ",
+    medNamePlaceholder: "bii Vitamin D", dosagePlaceholder: "bii 500mg",
+    medicationAdded: "Oogun Ti A Fikun", reminderAlert: "⏰ Iranti: Mu {name} ({dose}) ninu iṣẹju aadọta",
+    goodMorning: "E kaaro", goodAfternoon: "E kasan", goodEvening: "E ku irole",
+    readPage: "Ka Oju-Iwe Yi", stopReading: "Duro Kika",
+    quotes: [
+      "Ilera rẹ ni dukia rẹ 💙", "Gbigbe oogun kọọkan jẹ igbesẹ si alagbara.",
+      "O n ṣe daradara — tẹsiwaju!", "Awọn igbesẹ kekere, ipa nla. Mu awọn oogun rẹ!",
+      "Ara mọ bi a ṣe le wosan — a kan nilo lati feti si."
+    ]
+  },
+  ha: {
+    home: "Gida", schedule: "Jadawali", reminders: "Tunatarwa", settings: "Saituna",
+    howToUse: "Yadda ake Amfani", addedMeds: "Magungunan Da Aka Ƙara", profile: "Bayanan Martaba",
+    appName: "MedMinder", welcome: "Barka da zuwa, Chidiuso!", welcomeMessage: "Barka da zuwa MedMinder!",
+    todaysMeds: "Magungunan Yau", addNewMed: "Ƙara Sabon Magani", dateLabel: "Rana",
+    medNameLabel: "Sunan Magani", dosageLabel: "Dozi", timeLabel: "Lokacin Shan",
+    addMedButton: "Ƙara Magani", copyright: "MedMinder © 2025",
+    designedFor: "An tsara shi da kulawa ga tsofaffi", privacyPolicy: "Manufar Sirri",
+    medNamePlaceholder: "misali Vitamin D", dosagePlaceholder: "misali 500mg",
+    medicationAdded: "An Ƙara Magani", reminderAlert: "⏰ Tunatarwa: Sha {name} ({dose}) cikin mintuna talatin",
+    goodMorning: "Barka da safiya", goodAfternoon: "Barka da rana", goodEvening: "Barka da yamma",
+    readPage: "Karanta Wannan Shafi", stopReading: "Dakatar da Karatu",
+    quotes: [
+      "Lafiyar ku ce dukiyar ku 💙", "Kowane dozi mataki ne zuwa ga ƙarfi.",
+      "Kuna yin kyau — ci gaba!", "Ƙananan matakai, babban tasiri. Sha magungunan ku!",
+      "Jiki ya san yadda ake warkarwa — kawai muna buƙatar sauraro."
+    ]
+  }
+};
 
-    // Speech synthesis variables
-    let currentUtterance = null;
-    let isSpeaking = false;
+// Speech synthesis variables
+let currentUtterance = null;
+let isSpeaking = false;
 
-    // Apply translations to the entire page
-    function applyTranslation(lang) {
-      const t = translations[lang] || translations["en"];
-      
-      document.querySelectorAll('[data-translate]').forEach(element => {
-        const key = element.getAttribute('data-translate');
-        if (t[key]) element.textContent = t[key];
-      });
-      
-      // Update form placeholders
-      const dayInput = document.getElementById('Day');
-      const medNameInput = document.getElementById('medName');
-      const dosageInput = document.getElementById('dosage');
-      
-      if (dayInput && t.dayPlaceholder) dayInput.placeholder = t.dayPlaceholder;
-      if (medNameInput && t.medNamePlaceholder) medNameInput.placeholder = t.medNamePlaceholder;
-      if (dosageInput && t.dosagePlaceholder) dosageInput.placeholder = t.dosagePlaceholder;
-      
-      // Update narration button text
+// Apply translations to the entire page
+function applyTranslation(lang) {
+  const t = translations[lang] || translations["en"];
+  
+  document.querySelectorAll('[data-translate]').forEach(element => {
+    const key = element.getAttribute('data-translate');
+    if (t[key]) element.textContent = t[key];
+  });
+  
+  // Update form placeholders
+  const medNameInput = document.getElementById('medName');
+  const dosageInput = document.getElementById('dosage');
+  
+  if (medNameInput && t.medNamePlaceholder) medNameInput.placeholder = t.medNamePlaceholder;
+  if (dosageInput && t.dosagePlaceholder) dosageInput.placeholder = t.dosagePlaceholder;
+  
+  // Update narration button text
+  const narrationBtn = document.getElementById('narrationBtn');
+  if (narrationBtn) {
+    narrationBtn.textContent = isSpeaking ? '⏹️ ' + (t.stopReading || 'Stop Reading') : '🔊 ' + (t.readPage || 'Read This Page Aloud');
+  }
+  
+  updateHeader(lang);
+  updateDailyQuote(lang);
+}
+
+// Time-based greeting function with translation
+function getGreeting(lang) {
+  const hour = new Date().getHours();
+  const t = translations[lang] || translations["en"];
+  if (hour < 12) return t.goodMorning;
+  if (hour < 18) return t.goodAfternoon;
+  return t.goodEvening;
+}
+
+function updateHeader(lang = 'en') {
+  const greeting = getGreeting(lang);
+  document.getElementById("headerGreeting").textContent = `${greeting}, Chidiuso!`;
+  document.getElementById("headerTime").textContent = new Date().toLocaleString();
+}
+
+function updateDailyQuote(lang = 'en') {
+  const t = translations[lang] || translations["en"];
+  const quotes = t.quotes || translations["en"].quotes;
+  const quote = quotes[Math.floor(Math.random() * quotes.length)];
+  document.getElementById("dailyQuote").textContent = quote;
+}
+
+// Function to read the entire page content
+function readPageContent() {
+  if (isSpeaking) {
+    stopReading();
+    return;
+  }
+
+  const currentLang = document.getElementById("languageSelect").value;
+  const t = translations[currentLang] || translations["en"];
+  
+  let fullText = t.welcomeMessage + ". ";
+  
+  // Read header content
+  fullText += "App Name: " + t.appName + ". ";
+  fullText += "Greeting: " + document.getElementById("headerGreeting").textContent + ". ";
+  fullText += "Daily Quote: " + document.getElementById("dailyQuote").textContent + ". ";
+  
+  // Read main sections
+  fullText += "Main section: " + document.getElementById("homeSection").textContent + ". ";
+  
+  // Read today's medications
+  const medicationsList = document.getElementById('medications');
+  const medications = medicationsList.getElementsByTagName('li');
+  
+  if (medications.length > 0) {
+    fullText += "Today's Medications: ";
+    Array.from(medications).forEach((med, index) => {
+      const medText = med.textContent.replace('✕ Remove', '').trim();
+      fullText += `Medication ${index + 1}: ${medText}. `;
+    });
+  } else {
+    fullText += "No medications added yet. ";
+  }
+  
+  // Read add medication section
+  fullText += "To add a new medication, use the form below. ";
+  fullText += "You need to enter the date, medication name, dosage, and time. ";
+  
+  // Read footer
+  const footerText = document.querySelector('footer').textContent.replace(/\s+/g, ' ').trim();
+  fullText += "Footer: " + footerText + ". ";
+  
+  // Speak the content
+  speakText(fullText);
+}
+
+// Speech synthesis function
+function speakText(text) {
+  if ('speechSynthesis' in window) {
+    // Stop any ongoing speech
+    window.speechSynthesis.cancel();
+    
+    // Create new utterance
+    currentUtterance = new SpeechSynthesisUtterance(text);
+    currentUtterance.rate = 0.8;
+    currentUtterance.pitch = 1;
+    currentUtterance.volume = 1;
+    
+    // Set language based on selection
+    const currentLang = document.getElementById("languageSelect").value;
+    if (currentLang === 'ig') currentUtterance.lang = "ig-NG";
+    else if (currentLang === 'yo') currentUtterance.lang = "yo-NG";
+    else if (currentLang === 'ha') currentUtterance.lang = "ha-NG";
+    else currentUtterance.lang = "en-US";
+    
+    // Update UI when speaking starts
+    currentUtterance.onstart = function() {
+      isSpeaking = true;
+      document.body.classList.add('speaking');
       const narrationBtn = document.getElementById('narrationBtn');
-      if (narrationBtn) {
-        narrationBtn.textContent = isSpeaking ? '⏹️ ' + (t.stopReading || 'Stop Reading') : '🔊 ' + (t.readPage || 'Read This Page Aloud');
-      }
-      
-      updateHeader(lang);
-      updateDailyQuote(lang);
-    }
-
-    // Time-based greeting function with translation
-    function getGreeting(lang) {
-      const hour = new Date().getHours();
-      const t = translations[lang] || translations["en"];
-      if (hour < 12) return t.goodMorning;
-      if (hour < 18) return t.goodAfternoon;
-      return t.goodEvening;
-    }
-
-    function updateHeader(lang = 'en') {
-      const greeting = getGreeting(lang);
-      document.getElementById("headerGreeting").textContent = `${greeting}, Chidiuso!`;
-      document.getElementById("headerTime").textContent = new Date().toLocaleString();
-    }
-
-    function updateDailyQuote(lang = 'en') {
-      const t = translations[lang] || translations["en"];
-      const quotes = t.quotes || translations["en"].quotes;
-      const quote = quotes[Math.floor(Math.random() * quotes.length)];
-      document.getElementById("dailyQuote").textContent = quote;
-    }
-
-    // Function to read the entire page content
-    function readPageContent() {
-      if (isSpeaking) {
-        stopReading();
-        return;
-      }
-
-      const currentLang = document.getElementById("languageSelect").value;
       const t = translations[currentLang] || translations["en"];
-      
-      let fullText = t.welcomeMessage + ". ";
-      
-      // Read header content
-      fullText += "App Name: " + t.appName + ". ";
-      fullText += "Greeting: " + document.getElementById("headerGreeting").textContent + ". ";
-      fullText += "Daily Quote: " + document.getElementById("dailyQuote").textContent + ". ";
-      
-      // Read main sections
-      fullText += "Main section: " + document.getElementById("homeSection").textContent + ". ";
-      
-      // Read today's medications
-      const medicationsList = document.getElementById('medications');
-      const medications = medicationsList.getElementsByTagName('li');
-      
-      if (medications.length > 0) {
-        fullText += "Today's Medications: ";
-        Array.from(medications).forEach((med, index) => {
-          const medText = med.textContent.replace('✕ Remove', '').trim();
-          fullText += `Medication ${index + 1}: ${medText}. `;
-        });
-      } else {
-        fullText += "No medications added yet. ";
-      }
-      
-      // Read add medication section
-      fullText += "To add a new medication, use the form below. ";
-      fullText += "You need to enter the day, medication name, dosage, and time. ";
-      
-      // Read footer
-      const footerText = document.querySelector('footer').textContent.replace(/\s+/g, ' ').trim();
-      fullText += "Footer: " + footerText + ". ";
-      
-      // Speak the content
-      speakText(fullText);
-    }
-
-    // Speech synthesis function
-    function speakText(text) {
-      if ('speechSynthesis' in window) {
-        // Stop any ongoing speech
-        window.speechSynthesis.cancel();
-        
-        // Create new utterance
-        currentUtterance = new SpeechSynthesisUtterance(text);
-        currentUtterance.rate = 0.8;
-        currentUtterance.pitch = 1;
-        currentUtterance.volume = 1;
-        
-        // Set language based on selection
-        const currentLang = document.getElementById("languageSelect").value;
-        if (currentLang === 'ig') currentUtterance.lang = "ig-NG";
-        else if (currentLang === 'yo') currentUtterance.lang = "yo-NG";
-        else if (currentLang === 'ha') currentUtterance.lang = "ha-NG";
-        else currentUtterance.lang = "en-US";
-        
-        // Update UI when speaking starts
-        currentUtterance.onstart = function() {
-          isSpeaking = true;
-          document.body.classList.add('speaking');
-          const narrationBtn = document.getElementById('narrationBtn');
-          const t = translations[currentLang] || translations["en"];
-          narrationBtn.textContent = '⏹️ ' + (t.stopReading || 'Stop Reading');
-          narrationBtn.disabled = false;
-        };
-        
-        // Update UI when speaking ends
-        currentUtterance.onend = function() {
-          isSpeaking = false;
-          document.body.classList.remove('speaking');
-          const narrationBtn = document.getElementById('narrationBtn');
-          const t = translations[currentLang] || translations["en"];
-          narrationBtn.textContent = '🔊 ' + (t.readPage || 'Read This Page Aloud');
-          narrationBtn.disabled = false;
-        };
-        
-        currentUtterance.onerror = function() {
-          isSpeaking = false;
-          document.body.classList.remove('speaking');
-          const narrationBtn = document.getElementById('narrationBtn');
-          const t = translations[currentLang] || translations["en"];
-          narrationBtn.textContent = '🔊 ' + (t.readPage || 'Read This Page Aloud');
-          narrationBtn.disabled = false;
-          alert('Speech synthesis error. Please try again.');
-        };
-        
-        // Start speaking
-        window.speechSynthesis.speak(currentUtterance);
-      } else {
-        alert('Text-to-speech is not supported in your browser. Please try using Chrome, Edge, or Safari.');
-      }
-    }
-
-    // Stop reading function
-    function stopReading() {
-      if ('speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-        isSpeaking = false;
-        document.body.classList.remove('speaking');
-        const currentLang = document.getElementById("languageSelect").value;
-        const t = translations[currentLang] || translations["en"];
-        const narrationBtn = document.getElementById('narrationBtn');
-        narrationBtn.textContent = '🔊 ' + (t.readPage || 'Read This Page Aloud');
-        narrationBtn.disabled = false;
-      }
-    }
-
-    // Load medications from localStorage on page load
-    function loadMedications() {
-      const medicationsList = document.getElementById('medications');
-      medicationsList.innerHTML = '';
-      
-      const userMedications = JSON.parse(localStorage.getItem('userMedications') || '[]');
-      
-      userMedications.forEach(med => {
-        const listItem = document.createElement('li');
-        listItem.innerHTML = `
-          <strong>${med.name}</strong> – ${med.dose} at <em>${med.time}</em>
-          <button class="remove-btn" onclick="removeMedication('${med.name}', '${med.dose}', '${med.time}', '${med.day}')">
-            ✕ Remove
-          </button>
-        `;
-        medicationsList.appendChild(listItem);
-      });
-    }
-
-    // Remove medication function
-    function removeMedication(name, dose, time, day) {
-      if (confirm(`Remove ${name} (${dose}) from ${day} at ${time}?`)) {
-        const userMedications = JSON.parse(localStorage.getItem('userMedications') || '[]');
-        const updatedMeds = userMedications.filter(med => 
-          !(med.name === name && med.dose === dose && med.time === time && med.day === day)
-        );
-        localStorage.setItem('userMedications', JSON.stringify(updatedMeds));
-        loadMedications(); // Refresh the display
-      }
-    }
-
-    // Enhanced duplicate checking - checks localStorage
-    function isDuplicateMedication(name, dose, time, day) {
-      const userMedications = JSON.parse(localStorage.getItem('userMedications') || '[]');
-      return userMedications.some(med => 
-        med.name.toLowerCase() === name.toLowerCase() && 
-        med.dose.toLowerCase() === dose.toLowerCase() && 
-        med.time === time &&
-        med.day === day
-      );
-    }
-
-    // Medication form handling - FIXED with localStorage integration
-    document.getElementById("medForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-
-      const day = document.getElementById("Day").value.trim();
-      const name = document.getElementById("medName").value.trim();
-      const dose = document.getElementById("dosage").value.trim();
-      const time = document.getElementById("time").value;
-
-      // VALIDATION: Check for empty fields
-      if (!day || !name || !dose || !time) {
-        alert("❌ Please fill all fields");
-        return;
-      }
-
-      // VALIDATION: Check for duplicates in localStorage
-      if (isDuplicateMedication(name, dose, time, day)) {
-        alert("❌ This medication is already in your list!");
-        return;
-      }
-
-      // Save to localStorage
-      const userMedications = JSON.parse(localStorage.getItem('userMedications') || '[]');
-      userMedications.push({ name, dose, time, day });
-      localStorage.setItem('userMedications', JSON.stringify(userMedications));
-
-      // Refresh display
-      loadMedications();
-      this.reset();
-    });
-
-    // Initialize the page
-    window.addEventListener("DOMContentLoaded", () => {
-      const defaultLang = document.getElementById("languageSelect").value;
-      applyTranslation(defaultLang);
-      loadMedications(); // Load existing medications
-      
-      // Add event listener for narration button
+      narrationBtn.textContent = '⏹️ ' + (t.stopReading || 'Stop Reading');
+      narrationBtn.disabled = false;
+    };
+    
+    // Update UI when speaking ends
+    currentUtterance.onend = function() {
+      isSpeaking = false;
+      document.body.classList.remove('speaking');
       const narrationBtn = document.getElementById('narrationBtn');
-      if (narrationBtn) {
-        narrationBtn.addEventListener('click', readPageContent);
-      }
-      
-      setInterval(() => {
-        const currentLang = document.getElementById("languageSelect").value;
-        updateHeader(currentLang);
-      }, 1800000);
-    });
+      const t = translations[currentLang] || translations["en"];
+      narrationBtn.textContent = '🔊 ' + (t.readPage || 'Read This Page Aloud');
+      narrationBtn.disabled = false;
+    };
+    
+    currentUtterance.onerror = function() {
+      isSpeaking = false;
+      document.body.classList.remove('speaking');
+      const narrationBtn = document.getElementById('narrationBtn');
+      const t = translations[currentLang] || translations["en"];
+      narrationBtn.textContent = '🔊 ' + (t.readPage || 'Read This Page Aloud');
+      narrationBtn.disabled = false;
+      alert('Speech synthesis error. Please try again.');
+    };
+    
+    // Start speaking
+    window.speechSynthesis.speak(currentUtterance);
+  } else {
+    alert('Text-to-speech is not supported in your browser. Please try using Chrome, Edge, or Safari.');
+  }
+}
 
-    // Language selector event listener
-    document.getElementById("languageSelect").addEventListener("change", (e) => {
-      applyTranslation(e.target.value);
-    });
+// Stop reading function
+function stopReading() {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    isSpeaking = false;
+    document.body.classList.remove('speaking');
+    const currentLang = document.getElementById("languageSelect").value;
+    const t = translations[currentLang] || translations["en"];
+    const narrationBtn = document.getElementById('narrationBtn');
+    narrationBtn.textContent = '🔊 ' + (t.readPage || 'Read This Page Aloud');
+    narrationBtn.disabled = false;
+  }
+}
+
+// Load medications from localStorage on page load - UPDATED
+function loadMedications() {
+  const medicationsList = document.getElementById('medications');
+  medicationsList.innerHTML = '';
+  
+  const userMedications = JSON.parse(localStorage.getItem('userMedications') || '[]');
+  
+  // Get today's date in YYYY-MM-DD format
+  const today = new Date().toISOString().split('T')[0];
+  
+  // Filter medications for today only
+  const todayMeds = userMedications.filter(med => med.date === today);
+  
+  if (todayMeds.length === 0) {
+    medicationsList.innerHTML = '<li>No medications scheduled for today</li>';
+    return;
+  }
+  
+  todayMeds.forEach(med => {
+    const listItem = document.createElement('li');
+    listItem.innerHTML = `
+      <strong>${med.name}</strong> – ${med.dose} at <em>${med.time}</em>
+      <button class="remove-btn" onclick="removeMedication('${med.name}', '${med.dose}', '${med.time}', '${med.date}')">
+        ✕ Remove
+      </button>
+    `;
+    medicationsList.appendChild(listItem);
+  });
+}
+
+// Remove medication function - UPDATED
+function removeMedication(name, dose, time, date) {
+  if (confirm(`Remove ${name} (${dose}) from ${date} at ${time}?`)) {
+    const userMedications = JSON.parse(localStorage.getItem('userMedications') || '[]');
+    const updatedMeds = userMedications.filter(med => 
+      !(med.name === name && med.dose === dose && med.time === time && med.date === date)
+    );
+    localStorage.setItem('userMedications', JSON.stringify(updatedMeds));
+    loadMedications(); // Refresh the display
+  }
+}
+
+// Enhanced duplicate checking - checks localStorage - UPDATED
+function isDuplicateMedication(name, dose, time, date) {
+  const userMedications = JSON.parse(localStorage.getItem('userMedications') || '[]');
+  return userMedications.some(med => 
+    med.name.toLowerCase() === name.toLowerCase() && 
+    med.dose.toLowerCase() === dose.toLowerCase() && 
+    med.time === time &&
+    med.date === date
+  );
+}
+
+// Medication form handling - UPDATED with date field
+document.getElementById("medForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const date = document.getElementById("medDate").value;
+  const name = document.getElementById("medName").value.trim();
+  const dose = document.getElementById("dosage").value.trim();
+  const time = document.getElementById("time").value;
+
+  // VALIDATION: Check for empty fields
+  if (!date || !name || !dose || !time) {
+    alert("❌ Please fill all fields");
+    return;
+  }
+
+  // VALIDATION: Check for duplicates in localStorage
+  if (isDuplicateMedication(name, dose, time, date)) {
+    alert("❌ This medication is already scheduled for this date and time!");
+    return;
+  }
+
+  // Save to localStorage
+  const userMedications = JSON.parse(localStorage.getItem('userMedications') || '[]');
+  userMedications.push({ name, dose, time, date });
+  localStorage.setItem('userMedications', JSON.stringify(userMedications));
+
+  // Refresh display
+  loadMedications();
+  this.reset();
+});
+
+// Initialize the page
+window.addEventListener("DOMContentLoaded", () => {
+  const defaultLang = document.getElementById("languageSelect").value;
+  applyTranslation(defaultLang);
+  loadMedications(); // Load existing medications
+  
+  // Add event listener for narration button
+  const narrationBtn = document.getElementById('narrationBtn');
+  if (narrationBtn) {
+    narrationBtn.addEventListener('click', readPageContent);
+  }
+  
+  setInterval(() => {
+    const currentLang = document.getElementById("languageSelect").value;
+    updateHeader(currentLang);
+  }, 1800000);
+});
+
+// Language selector event listener
+document.getElementById("languageSelect").addEventListener("change", (e) => {
+  applyTranslation(e.target.value);
+});
+
+// NEW: Function to check medications for specific date (like November 29th)
+function checkMedicationsForDate(specificDate) {
+  const userMedications = JSON.parse(localStorage.getItem('userMedications') || '[]');
+  const medsForDate = userMedications.filter(med => med.date === specificDate);
+  
+  if (medsForDate.length === 0) {
+    console.log(`No medications scheduled for ${specificDate}`);
+    return [];
+  }
+  
+  console.log(`Medications for ${specificDate}:`, medsForDate);
+  return medsForDate;
+}
+
+// Usage example: checkMedicationsForDate('2024-11-29');
   </script>
 </body>
 </html>
+
 
