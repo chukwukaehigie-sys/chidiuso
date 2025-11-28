@@ -97,8 +97,6 @@
 
     <!-- Narration Button -->
     <button class="narration-btn" id="narrationBtn">
-      🔊 Read This Page Aloud
-    </button>
   </header>
 
   <main>
@@ -116,8 +114,8 @@
     <section class="add-med">
       <h2>➕ <span data-translate="addNewMed">Add a New Medication</span></h2>
       <form id="medForm">
-        <label for="Day" data-translate="dayLabel">Day</label>
-        <input id="Day" type="text" placeholder="e.g. Monday" required />
+        <label for="medDate" data-translate="dateLabel">Date</label>
+        <input id="medDate" type="date" required />
         
         <label for="medName" data-translate="medNameLabel">Medication Name</label>
         <input id="medName" type="text" placeholder="e.g. Vitamin D" required />
@@ -483,3 +481,4 @@
   </script>
 </body>
 </html>
+
