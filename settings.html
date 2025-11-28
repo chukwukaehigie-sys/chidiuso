@@ -68,6 +68,18 @@
       margin-right: 10px;
     }
 
+    button {
+      background: linear-gradient(135deg, #4CAF50, #45a049);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 15px 25px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 20px;
+      transition: all 0.3s ease;
+    }
+
     button:hover {
       transform: translateY(-3px);
       box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
@@ -151,8 +163,8 @@
       justify-content: center;
       gap: 5px;
       border-bottom: none;
-      height: 50px; /* Fixed height for consistent alignment */
-      min-width: 120px; /* Minimum width for consistency */
+      height: 50px;
+      min-width: 120px;
     }
 
     .utility-bar button:hover,
@@ -172,8 +184,8 @@
       cursor: pointer;
       font-size: 16px;
       transition: all 0.3s ease;
-      height: 50px; /* Match button height */
-      min-width: 120px; /* Match button min-width */
+      height: 50px;
+      min-width: 120px;
     }
 
     .utility-bar select:hover {
@@ -187,6 +199,12 @@
       color: #333;
       padding: 10px;
       font-size: 16px;
+    }
+
+    /* Speaking indicator */
+    .speaking {
+      background-color: #e8f5e8 !important;
+      border-color: #4CAF50 !important;
     }
   </style>
 </head>
@@ -243,6 +261,7 @@
       <div class="instruction-text">When should the app start making sounds again?</div>
     </div>
   </section>
+
    <footer>
     <p><span data-translate="copyright">MedMinder © 2025</span></p>
     <p><span data-translate="designedFor">Designed with care for older adults</span> | <a href="#" data-translate="privacyPolicy">Privacy Policy</a></p>
@@ -259,6 +278,146 @@
     const stopTalkingToggle = document.getElementById('stopTalkingToggle');
     const resumeTalkingBtn = document.getElementById('resumeTalkingBtn');
     
+    // Function to read the entire page content
+    function readPageContent() {
+      if (!speechEnabled || speechPaused) return;
+      
+      let fullText = "Settings Page. ";
+      
+      // Read main heading
+      const mainHeading = document.querySelector('h2');
+      if (mainHeading) {
+        fullText += "Main heading: " + mainHeading.textContent + ". ";
+      }
+      
+      // Read voice settings section
+      const voiceSection = document.getElementById('voiceSettings');
+      if (voiceSection) {
+        const voiceTitle = voiceSection.querySelector('h3');
+        if (voiceTitle) {
+          fullText += "Section: " + voiceTitle.textContent.replace('🔊', 'Voice Settings') + ". ";
+        }
+        
+        // Read voice toggle
+        const voiceLabel = voiceSection.querySelector('label[for="voiceToggle"]');
+        if (voiceLabel) {
+          fullText += "Option: " + voiceLabel.textContent + ". ";
+          fullText += "This option is currently " + (voiceToggle.checked ? "enabled" : "disabled") + ". ";
+        }
+        
+        // Read stop talking toggle
+        const stopTalkingLabel = voiceSection.querySelector('label[for="stopTalkingToggle"]');
+        if (stopTalkingLabel) {
+          fullText += "Option: " + stopTalkingLabel.textContent + ". ";
+          fullText += "This option is currently " + (stopTalkingToggle.checked ? "enabled" : "disabled") + ". ";
+        }
+        
+        // Read resume button
+        fullText += "Button available: " + resumeTalkingBtn.textContent + ". ";
+      }
+      
+      // Read quiet hours section
+      const quietSection = document.getElementById('quietHours');
+      if (quietSection) {
+        const quietTitle = quietSection.querySelector('h3');
+        if (quietTitle) {
+          fullText += "Section: " + quietTitle.textContent.replace('🌙', 'Quiet Hours') + ". ";
+        }
+        
+        // Read quiet hours start
+        const startLabel = quietSection.querySelector('label[for="quietStart"]');
+        const startTime = document.getElementById('quietStart');
+        if (startLabel && startTime) {
+          fullText += "Setting: " + startLabel.textContent + ". ";
+          fullText += "Current value: " + (startTime.value || "not set") + ". ";
+        }
+        
+        // Read quiet hours end
+        const endLabel = quietSection.querySelector('label[for="quietEnd"]');
+        const endTime = document.getElementById('quietEnd');
+        if (endLabel && endTime) {
+          fullText += "Setting: " + endLabel.textContent + ". ";
+          fullText += "Current value: " + (endTime.value || "not set") + ". ";
+        }
+      }
+      
+      // Read footer
+      const footer = document.querySelector('footer');
+      if (footer) {
+        const footerText = footer.textContent.replace(/\s+/g, ' ').trim();
+        fullText += "Footer: " + footerText + ". ";
+      }
+      
+      // Instructions for using the page
+      fullText += "To change any setting, simply click on the option you want to modify. ";
+      fullText += "Use the checkboxes to enable or disable features. ";
+      fullText += "Use the time inputs to set specific times for quiet hours. ";
+      fullText += "The resume talking button will restart voice narration if it was paused. ";
+      
+      speakText(fullText);
+    }
+    
+    // Function to read specific element when focused
+    function readElementOnFocus(element, additionalText = '') {
+      if (!speechEnabled || speechPaused) return;
+      
+      let text = '';
+      
+      // Find the associated label
+      const id = element.id;
+      const label = document.querySelector(`label[for="${id}"]`);
+      
+      if (label) {
+        text = label.textContent + '. ';
+      }
+      
+      if (additionalText) {
+        text += additionalText + '. ';
+      }
+      
+      if (element.type === 'checkbox') {
+        text += 'This option is currently ' + (element.checked ? 'enabled' : 'disabled') + '.';
+      } else if (element.type === 'time' && element.value) {
+        text += 'Current value is ' + element.value + '.';
+      }
+      
+      if (text) {
+        speakText(text);
+      }
+    }
+    
+    // Speech synthesis function
+    function speakText(text) {
+      if (!speechEnabled || speechPaused) return;
+      
+      // Cancel any ongoing speech
+      if (speechUtterance) {
+        window.speechSynthesis.cancel();
+      }
+      
+      // Create new speech utterance
+      speechUtterance = new SpeechSynthesisUtterance(text);
+      speechUtterance.rate = 0.8;
+      speechUtterance.pitch = 1;
+      speechUtterance.volume = 1;
+      
+      // Add visual feedback while speaking
+      speechUtterance.onstart = function() {
+        document.body.classList.add('speaking');
+      };
+      
+      speechUtterance.onend = function() {
+        document.body.classList.remove('speaking');
+      };
+      
+      speechUtterance.onerror = function() {
+        document.body.classList.remove('speaking');
+      };
+      
+      // Speak the text
+      window.speechSynthesis.speak(speechUtterance);
+    }
+    
     // Initialize settings from localStorage
     function initializeSettings() {
       // Voice settings
@@ -274,29 +433,12 @@
       if (savedQuietStart) document.getElementById('quietStart').value = savedQuietStart;
       if (savedQuietEnd) document.getElementById('quietEnd').value = savedQuietEnd;
       
-      // Announce settings page if voice is enabled
-      if (speechEnabled) {
-        speakText("Welcome to the Settings page. Here you can manage voice settings and quiet hours.");
-      }
-    }
-    
-    // Speech synthesis function
-    function speakText(text) {
-      if (!speechEnabled || speechPaused) return;
-      
-      // Cancel any ongoing speech
-      if (speechUtterance) {
-        window.speechSynthesis.cancel();
-      }
-      
-      // Create new speech utterance
-      speechUtterance = new SpeechSynthesisUtterance(text);
-      speechUtterance.rate = 0.8; // Slower rate for better comprehension
-      speechUtterance.pitch = 1;
-      speechUtterance.volume = 1;
-      
-      // Speak the text
-      window.speechSynthesis.speak(speechUtterance);
+      // Read page content when loaded
+      setTimeout(() => {
+        if (speechEnabled) {
+          readPageContent();
+        }
+      }, 1000);
     }
     
     // Event listeners for voice controls
@@ -305,10 +447,10 @@
       localStorage.setItem('voiceEnabled', speechEnabled);
       
       if (speechEnabled) {
-        speakText("Voice narration has been enabled.");
+        readElementOnFocus(this, "Voice narration has been enabled");
       } else {
         window.speechSynthesis.cancel();
-        speakText("Voice narration has been disabled.");
+        readElementOnFocus(this, "Voice narration has been disabled");
       }
     });
     
@@ -317,27 +459,65 @@
       
       if (speechPaused) {
         window.speechSynthesis.cancel();
-        speakText("Voice narration has been paused.");
+        readElementOnFocus(this, "Voice narration has been paused");
       } else {
-        speakText("Voice narration has been resumed.");
+        readElementOnFocus(this, "Voice narration has been resumed");
       }
     });
     
     resumeTalkingBtn.addEventListener('click', function() {
       speechPaused = false;
       stopTalkingToggle.checked = false;
-      speakText("Voice narration has been resumed.");
+      readPageContent();
     });
     
-    // Save quiet hours
+    // Add focus event listeners to form elements
+    const formElements = document.querySelectorAll('input, button, select');
+    formElements.forEach(element => {
+      element.addEventListener('focus', function() {
+        if (element.type === 'checkbox') {
+          readElementOnFocus(element);
+        } else if (element.type === 'time') {
+          readElementOnFocus(element);
+        } else if (element.tagName === 'BUTTON') {
+          if (speechEnabled && !speechPaused) {
+            speakText("Button: " + element.textContent);
+          }
+        }
+      });
+    });
+    
+    // Save quiet hours and provide feedback
     document.getElementById('quietStart').addEventListener('change', function() {
       localStorage.setItem('quietStart', this.value);
-      if (speechEnabled) speakText("Quiet hours start time has been updated to " + this.value);
+      readElementOnFocus(this, "Start time has been updated to " + this.value);
     });
     
     document.getElementById('quietEnd').addEventListener('change', function() {
       localStorage.setItem('quietEnd', this.value);
-      if (speechEnabled) speakText("Quiet hours end time has been updated to " + this.value);
+      readElementOnFocus(this, "End time has been updated to " + this.value);
+    });
+    
+    // Read section titles when they come into view
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && speechEnabled && !speechPaused) {
+          const section = entry.target;
+          const title = section.querySelector('h3');
+          if (title) {
+            // Small delay to avoid interrupting current speech
+            setTimeout(() => {
+              speakText("Now viewing: " + title.textContent);
+            }, 500);
+          }
+        }
+      });
+    }, { threshold: 0.5 });
+    
+    // Observe sections
+    const sections = document.querySelectorAll('section');
+    sections.forEach(section => {
+      observer.observe(section);
     });
     
     // Initialize settings when page loads
@@ -345,6 +525,3 @@
   </script>
 </body>
 </html>
-
-
-
