@@ -6,6 +6,17 @@
   <title>Medication Schedule - MedMinder</title>
   <link rel="stylesheet" href="simpMedCheck.css">
   <style>
+    /* Additional styles for better language support */
+    .language-selector {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .translated-content {
+      transition: all 0.3s ease;
+    }
+
     /* Senior-friendly styles */
     body {
       font-family: 'Arial', sans-serif;
@@ -17,9 +28,6 @@
       padding: 20px;
     }
     
-    /* Navigation bar */
-
-
     /* Headings */
     h2 {
       color: #2c5530;
@@ -228,68 +236,275 @@
 <body>
   <header>
     <nav class="utility-bar">
-      <a href="index.html" style="text-decoration: none;"><button id="homeBtn">🏠 Home</button></a>
-      <a href="schedule.html" style="text-decoration: none;"><button id="scheduleBtn">📅 Schedule</button></a>
-      <a href="reminder.html" style="text-decoration: none;"><button id="remindersBtn">🔔 Reminders</button></a>
-      <a href="settings.html" style="text-decoration: none;"><button id="settingsBtn">⚙️ Settings</button></a>
-      <a href="howtouse.html" style="text-decoration: none;"><button>❓ How to Use</button></a>
-      <a href="added-medications.html" style="text-decoration: none;"><button>💊 Added Medications</button></a>
-      <a href="profile.html" style="text-decoration: none;"><button>👤 Profile</button></a>
+      <a href="index.html" style="text-decoration: none;"><button id="homeBtn">🏠 <span data-translate="home">Home</span></button></a>
+      <a href="schedule.html" style="text-decoration: none;"><button id="scheduleBtn">📅 <span data-translate="schedule">Schedule</span></button></a>
+      <a href="reminder.html" style="text-decoration: none;"><button id="remindersBtn">🔔 <span data-translate="reminders">Reminders</span></button></a>
+      <a href="settings.html" style="text-decoration: none;"><button id="settingsBtn">⚙️ <span data-translate="settings">Settings</span></button></a>
+      <a href="howtouse.html" style="text-decoration: none;"><button>❓ <span data-translate="howToUse">How to Use</span></button></a>
+      <a href="added-medications.html" style="text-decoration: none;"><button>💊 <span data-translate="addedMeds">Added Medications</span></button></a>
+      <a href="profile.html" style="text-decoration: none;"><button>👤 <span data-translate="profile">Profile</span></button></a>
 
-      <select class="lS" id="languageSelect">
-        <option value="en">English</option>
-        <option value="ig">Igbo</option>
-        <option value="yo">Yoruba</option>
-        <option value="ha">Hausa</option>
-      </select>
+      <div class="language-selector">
+        <select class="lS" id="languageSelect">
+          <option value="en">English</option>
+          <option value="ig">Igbo</option>
+          <option value="yo">Yoruba</option>
+          <option value="ha">Hausa</option>
+        </select>
+      </div>
     </nav>
+
+    <h1>👵 <span data-translate="appName">MedMinder</span></h1>
+    <!-- Removed the greeting, time, and quote section -->
   </header>
 
-  <h2 class="week">📋 Weekly Medication Schedule</h2>
-  
-  <!-- Accessibility Controls -->
-  <div class="accessibility-controls">
-    <button class="accessibility-btn" onclick="increaseFontSize()">A+ Larger Text</button>
-    <button class="accessibility-btn" onclick="decreaseFontSize()">A- Smaller Text</button>
-    <button class="accessibility-btn" id="contrastToggle" onclick="toggleContrast()">🔆 High Contrast</button>
-  </div>
+  <main>
+    <h2 class="week" data-translate="weeklySchedule">📋 Weekly Medication Schedule</h2>
+    
+    <!-- Accessibility Controls -->
+    <div class="accessibility-controls">
+      <button class="accessibility-btn" onclick="increaseFontSize()" data-translate="largerText">A+ Larger Text</button>
+      <button class="accessibility-btn" onclick="decreaseFontSize()" data-translate="smallerText">A- Smaller Text</button>
+      <button class="accessibility-btn" id="contrastToggle" onclick="toggleContrast()" data-translate="highContrast">🔆 High Contrast</button>
+    </div>
 
-  <!-- Speech Controls -->
-  <div class="speech-controls">
-    <button class="speech-btn" onclick="readEverything()">🔊 Read Everything Aloud</button>
-    <button class="speech-btn stop" onclick="stopSpeech()">⏹️ Stop Reading</button>
-  </div>
+    <!-- Speech Controls -->
+    <div class="speech-controls">
+      <button class="speech-btn" onclick="readEverything()" data-translate="readAloud">🔊 Read Everything Aloud</button>
+      <button class="speech-btn stop" onclick="stopSpeech()" data-translate="stopReading">⏹️ Stop Reading</button>
+    </div>
 
-  <table id="medTable">
-    <thead>
-      <tr>
-        <th>Day</th>
-        <th>Medication</th>
-        <th>Dosage</th>
-        <th>Time</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><input type="text" placeholder="e.g. Monday"></td>
-        <td><input type="text" placeholder="e.g. Paracetamol"></td>
-        <td><input type="text" placeholder="e.g. 500mg"></td>
-        <td><input type="time"></td>
-        <td><button class="remove-btn" onclick="removeRow(this)">Remove</button></td>
-      </tr>
-    </tbody>
-  </table>
+    <table id="medTable">
+      <thead>
+        <tr>
+          <th data-translate="day">Day</th>
+          <th data-translate="medication">Medication</th>
+          <th data-translate="dosage">Dosage</th>
+          <th data-translate="time">Time</th>
+          <th data-translate="action">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><input type="text" placeholder="e.g. Monday" data-translate="mondayPlaceholder"></td>
+          <td><input type="text" placeholder="e.g. Paracetamol" data-translate="medPlaceholder"></td>
+          <td><input type="text" placeholder="e.g. 500mg" data-translate="dosagePlaceholder"></td>
+          <td><input type="time"></td>
+          <td><button class="remove-btn" onclick="removeRow(this)" data-translate="remove">Remove</button></td>
+        </tr>
+      </tbody>
+    </table>
 
-  <br>
-  <button class="add" onclick="addRow()">➕ Add Medication</button>
-  
+    <br>
+    <button class="add" onclick="addRow()" data-translate="addMedication">➕ Add Medication</button>
+  </main>
+
   <footer>
-    <p>MedMinder © 2025</p>
-    <p>Designed with care for older adults | <a href="#">Privacy Policy</a></p>
+    <p><span data-translate="copyright">MedMinder © 2025</span></p>
+    <p><span data-translate="designedFor">Designed with care for older adults</span> | <a href="#" data-translate="privacyPolicy">Privacy Policy</a></p>
   </footer>
 
   <script>
+    // Comprehensive translations for all content
+    const translations = {
+      en: {
+        // Navigation
+        home: "Home",
+        schedule: "Schedule",
+        reminders: "Reminders",
+        settings: "Settings",
+        howToUse: "How to Use",
+        addedMeds: "Added Medications",
+        profile: "Profile",
+        
+        // Header
+        appName: "MedMinder",
+        
+        // Main content
+        weeklySchedule: "Weekly Medication Schedule",
+        day: "Day",
+        medication: "Medication",
+        dosage: "Dosage",
+        time: "Time",
+        action: "Action",
+        remove: "Remove",
+        addMedication: "Add Medication",
+        largerText: "A+ Larger Text",
+        smallerText: "A- Smaller Text",
+        highContrast: "🔆 High Contrast",
+        readAloud: "🔊 Read Everything Aloud",
+        stopReading: "⏹️ Stop Reading",
+        normalMode: "🌙 Normal Mode",
+        
+        // Placeholders
+        mondayPlaceholder: "e.g. Monday",
+        medPlaceholder: "e.g. Paracetamol",
+        dosagePlaceholder: "e.g. 500mg",
+        
+        // Footer
+        copyright: "MedMinder © 2025",
+        designedFor: "Designed with care for older adults",
+        privacyPolicy: "Privacy Policy"
+      },
+      ig: {
+        // Navigation
+        home: "Ụlọ",
+        schedule: "Nhazi oge",
+        reminders: "Ncheta",
+        settings: "Ntọala",
+        howToUse: "Otu esi eji",
+        addedMeds: "Ọgwụ Agbakwunyere",
+        profile: "Profaịlụ",
+        
+        // Header
+        appName: "MedMinder",
+        
+        // Main content
+        weeklySchedule: "Nhazi Ọgwụ n'Izu",
+        day: "Ụbọchị",
+        medication: "Ọgwụ",
+        dosage: "Usoro",
+        time: "Oge",
+        action: "Omume",
+        remove: "Wepụ",
+        addMedication: "Tinye Ọgwụ",
+        largerText: "A+ Ederede Ukwuu",
+        smallerText: "A- Ederede Nta",
+        highContrast: "🔆 Ntụnye Uche Dị Elu",
+        readAloud: "🔊 Gụọ Ihe Niile",
+        stopReading: "⏹️ Kwụsị Ịgụ",
+        normalMode: "🌙 Ụdị Nkịtị",
+        
+        // Placeholders
+        mondayPlaceholder: "dịka Mọnde",
+        medPlaceholder: "dịka Paracetamol",
+        dosagePlaceholder: "dịka 500mg",
+        
+        // Footer
+        copyright: "MedMinder © 2025",
+        designedFor: "Emebere ya maka ndị okenye",
+        privacyPolicy: "Amụma Nzuzo"
+      },
+      yo: {
+        // Navigation
+        home: "Ile",
+        schedule: "Iṣeto Akoko",
+        reminders: "Awọn iranti",
+        settings: "Eto",
+        howToUse: "Bii Lati Lo",
+        addedMeds: "Awọn Oogun Ti A Fikun",
+        profile: "Profaili",
+        
+        // Header
+        appName: "MedMinder",
+        
+        // Main content
+        weeklySchedule: "Iṣeto Oogun Ọsẹ",
+        day: "Ọjọ",
+        medication: "Oogun",
+        dosage: "Iwon Oogun",
+        time: "Akoko",
+        action: "Iṣe",
+        remove: "Yọ kuro",
+        addMedication: "Fi Oogun Kun",
+        largerText: "A+ Ọrọ Nla",
+        smallerText: "A- Ọrọ Kekere",
+        highContrast: "🔆 Iyatọ Giga",
+        readAloud: "🔊 Ka Gbogbo Rara",
+        stopReading: "⏹️ Duro Kika",
+        normalMode: "🌙 Ọna Abẹ",
+        
+        // Placeholders
+        mondayPlaceholder: "bii Monday",
+        medPlaceholder: "bii Paracetamol",
+        dosagePlaceholder: "bii 500mg",
+        
+        // Footer
+        copyright: "MedMinder © 2025",
+        designedFor: "A ṣe apẹrẹ pẹlu itoju fun awọn arọgbọ",
+        privacyPolicy: "Ilana Ikọkọ"
+      },
+      ha: {
+        // Navigation
+        home: "Gida",
+        schedule: "Jadawali",
+        reminders: "Tunatarwa",
+        settings: "Saituna",
+        howToUse: "Yadda ake Amfani",
+        addedMeds: "Magungunan Da Aka Ƙara",
+        profile: "Bayanan Martaba",
+        
+        // Header
+        appName: "MedMinder",
+        
+        // Main content
+        weeklySchedule: "Jadawalin Magungunan Mako",
+        day: "Rana",
+        medication: "Magani",
+        dosage: "Dozi",
+        time: "Lokaci",
+        action: "Aiki",
+        remove: "Cire",
+        addMedication: "Ƙara Magani",
+        largerText: "A+ Rubutu Mai Girma",
+        smallerText: "A- Rubutu Ƙarami",
+        highContrast: "🔆 Babban Bambanci",
+        readAloud: "🔊 Karanta Komai",
+        stopReading: "⏹️ Dakatar da Karatu",
+        normalMode: "🌙 Yanayin Al'ada",
+        
+        // Placeholders
+        mondayPlaceholder: "misali Litinin",
+        medPlaceholder: "misali Paracetamol",
+        dosagePlaceholder: "misali 500mg",
+        
+        // Footer
+        copyright: "MedMinder © 2025",
+        designedFor: "An tsara shi da kulawa ga tsofaffi",
+        privacyPolicy: "Manufar Sirri"
+      }
+    };
+
+    // Apply translations to the entire page
+    function applyTranslation(lang) {
+      const t = translations[lang] || translations["en"];
+      
+      // Update all elements with data-translate attribute
+      document.querySelectorAll('[data-translate]').forEach(element => {
+        const key = element.getAttribute('data-translate');
+        if (t[key]) {
+          element.textContent = t[key];
+        }
+      });
+      
+      // Update input placeholders
+      document.querySelectorAll('input[data-translate]').forEach(input => {
+        const key = input.getAttribute('data-translate');
+        if (t[key]) {
+          input.placeholder = t[key];
+        }
+      });
+      
+      // Update contrast button text
+      const contrastButton = document.getElementById('contrastToggle');
+      if (document.body.classList.contains('high-contrast')) {
+        contrastButton.textContent = t.normalMode || "🌙 Normal Mode";
+      } else {
+        contrastButton.textContent = t.highContrast || "🔆 High Contrast";
+      }
+    }
+
+    // Initialize the page
+    window.addEventListener("DOMContentLoaded", () => {
+      const defaultLang = document.getElementById("languageSelect").value;
+      applyTranslation(defaultLang);
+    });
+
+    // Language selector event listener
+    document.getElementById("languageSelect").addEventListener("change", (e) => {
+      applyTranslation(e.target.value);
+    });
+
     // Font size adjustment
     let currentFontSize = 20;
     
@@ -308,11 +523,14 @@
     // High contrast mode
     function toggleContrast() {
       document.body.classList.toggle('high-contrast');
+      const currentLang = document.getElementById("languageSelect").value;
+      const t = translations[currentLang] || translations["en"];
+      
       const button = document.getElementById('contrastToggle');
       if (document.body.classList.contains('high-contrast')) {
-        button.textContent = '🌙 Normal Mode';
+        button.textContent = t.normalMode || "🌙 Normal Mode";
       } else {
-        button.textContent = '🔆 High Contrast';
+        button.textContent = t.highContrast || "🔆 High Contrast";
       }
     }
     
@@ -428,9 +646,9 @@
       const newRow = document.createElement("tr");
 
       const cells = [
-        '<input type="text" placeholder="e.g. Tuesday">',
-        '<input type="text" placeholder="e.g. Ibuprofen">',
-        '<input type="text" placeholder="e.g. 200mg">',
+        '<input type="text" placeholder="e.g. Tuesday" data-translate="mondayPlaceholder">',
+        '<input type="text" placeholder="e.g. Ibuprofen" data-translate="medPlaceholder">',
+        '<input type="text" placeholder="e.g. 200mg" data-translate="dosagePlaceholder">',
         '<input type="time">'
       ];
 
@@ -444,6 +662,7 @@
       const removeBtn = document.createElement("button");
       removeBtn.textContent = "Remove";
       removeBtn.className = "remove-btn";
+      removeBtn.setAttribute('data-translate', 'remove');
       removeBtn.onclick = function () {
         removeRow(this);
       };
@@ -451,20 +670,16 @@
       newRow.appendChild(removeCell);
 
       tableBody.appendChild(newRow);
+      
+      // Update placeholders for the new row
+      const currentLang = document.getElementById("languageSelect").value;
+      applyTranslation(currentLang);
     }
     
     function removeRow(button) {
       const row = button.closest("tr");
       row.remove();
     }
-    
-    // Auto-read when page loads (optional - can be removed if not desired)
-    document.addEventListener('DOMContentLoaded', function() {
-      // Uncomment the line below if you want the page to automatically read when loaded
-      // setTimeout(readEverything, 1000);
-    });
   </script>
 </body>
 </html>
-
-
