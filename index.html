@@ -30,6 +30,40 @@
     .remove-btn:hover {
       background: #c0392b;
     }
+
+    /* Narration button styles */
+    .narration-btn {
+      background: linear-gradient(135deg, #2196F3, #1976D2);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 20px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 18px;
+      margin: 15px auto;
+      display: block;
+      transition: all 0.3s ease;
+    }
+
+    .narration-btn:hover {
+      background: linear-gradient(135deg, #1976D2, #1565C0);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
+    }
+
+    .narration-btn:disabled {
+      background: #cccccc;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* Speaking indicator */
+    .speaking {
+      background-color: #e8f5e8 !important;
+      border: 2px solid #4CAF50 !important;
+    }
   </style>
 </head>
 <body>
@@ -60,6 +94,11 @@
     <p id="headerGreeting" data-translate="welcome">Welcome, Chidiuso!</p>
     <p id="headerTime"></p>
     <p id="dailyQuote"></p>
+
+    <!-- Narration Button -->
+    <button class="narration-btn" id="narrationBtn">
+      🔊 Read This Page Aloud
+    </button>
   </header>
 
   <main>
@@ -113,6 +152,7 @@
         dayPlaceholder: "e.g. Monday", medNamePlaceholder: "e.g. Vitamin D", dosagePlaceholder: "e.g. 500mg",
         medicationAdded: "Medication Added", reminderAlert: "⏰ Reminder: Take {name} ({dose}) in 30 minutes",
         goodMorning: "Good morning", goodAfternoon: "Good afternoon", goodEvening: "Good evening",
+        readPage: "Read This Page Aloud", stopReading: "Stop Reading",
         quotes: [
           "Your health is your wealth 💙", "Every dose is a step toward strength.",
           "You're doing great — keep going!", "Small steps, big impact. Take your meds!",
@@ -130,6 +170,7 @@
         dayPlaceholder: "dịka Mọnde", medNamePlaceholder: "dịka Vitamin D", dosagePlaceholder: "dịka 500mg",
         medicationAdded: "Agbakwunyere Ọgwụ", reminderAlert: "⏰ Ncheta: Were {name} ({dose}) n'ime nkeji iri atọ",
         goodMorning: "Utụtụ ọma", goodAfternoon: "Ehihie ọma", goodEvening: "Anyasị ọma",
+        readPage: "Gụọ Ibe A", stopReading: "Kwụsị Ịgụ",
         quotes: [
           "Ahụ ike gị bụ akụ na ụba gị 💙", "Ọgwụ ọ bụla bụ nzọụkwụ n'ihu ike.",
           "Ị na-eme nke ọma — gaa n'ihu!", "Nzọụkwụ ndị dị nta, mmetụta dị ukwuu. Were ọgwụ gị!",
@@ -147,6 +188,7 @@
         dayPlaceholder: "bii Monday", medNamePlaceholder: "bii Vitamin D", dosagePlaceholder: "bii 500mg",
         medicationAdded: "Oogun Ti A Fikun", reminderAlert: "⏰ Iranti: Mu {name} ({dose}) ninu iṣẹju aadọta",
         goodMorning: "E kaaro", goodAfternoon: "E kasan", goodEvening: "E ku irole",
+        readPage: "Ka Oju-Iwe Yi", stopReading: "Duro Kika",
         quotes: [
           "Ilera rẹ ni dukia rẹ 💙", "Gbigbe oogun kọọkan jẹ igbesẹ si alagbara.",
           "O n ṣe daradara — tẹsiwaju!", "Awọn igbesẹ kekere, ipa nla. Mu awọn oogun rẹ!",
@@ -164,6 +206,7 @@
         dayPlaceholder: "misali Litinin", medNamePlaceholder: "misali Vitamin D", dosagePlaceholder: "misali 500mg",
         medicationAdded: "An Ƙara Magani", reminderAlert: "⏰ Tunatarwa: Sha {name} ({dose}) cikin mintuna talatin",
         goodMorning: "Barka da safiya", goodAfternoon: "Barka da rana", goodEvening: "Barka da yamma",
+        readPage: "Karanta Wannan Shafi", stopReading: "Dakatar da Karatu",
         quotes: [
           "Lafiyar ku ce dukiyar ku 💙", "Kowane dozi mataki ne zuwa ga ƙarfi.",
           "Kuna yin kyau — ci gaba!", "Ƙananan matakai, babban tasiri. Sha magungunan ku!",
@@ -171,6 +214,10 @@
         ]
       }
     };
+
+    // Speech synthesis variables
+    let currentUtterance = null;
+    let isSpeaking = false;
 
     // Apply translations to the entire page
     function applyTranslation(lang) {
@@ -189,6 +236,12 @@
       if (dayInput && t.dayPlaceholder) dayInput.placeholder = t.dayPlaceholder;
       if (medNameInput && t.medNamePlaceholder) medNameInput.placeholder = t.medNamePlaceholder;
       if (dosageInput && t.dosagePlaceholder) dosageInput.placeholder = t.dosagePlaceholder;
+      
+      // Update narration button text
+      const narrationBtn = document.getElementById('narrationBtn');
+      if (narrationBtn) {
+        narrationBtn.textContent = isSpeaking ? '⏹️ ' + (t.stopReading || 'Stop Reading') : '🔊 ' + (t.readPage || 'Read This Page Aloud');
+      }
       
       updateHeader(lang);
       updateDailyQuote(lang);
@@ -214,6 +267,122 @@
       const quotes = t.quotes || translations["en"].quotes;
       const quote = quotes[Math.floor(Math.random() * quotes.length)];
       document.getElementById("dailyQuote").textContent = quote;
+    }
+
+    // Function to read the entire page content
+    function readPageContent() {
+      if (isSpeaking) {
+        stopReading();
+        return;
+      }
+
+      const currentLang = document.getElementById("languageSelect").value;
+      const t = translations[currentLang] || translations["en"];
+      
+      let fullText = t.welcomeMessage + ". ";
+      
+      // Read header content
+      fullText += "App Name: " + t.appName + ". ";
+      fullText += "Greeting: " + document.getElementById("headerGreeting").textContent + ". ";
+      fullText += "Daily Quote: " + document.getElementById("dailyQuote").textContent + ". ";
+      
+      // Read main sections
+      fullText += "Main section: " + document.getElementById("homeSection").textContent + ". ";
+      
+      // Read today's medications
+      const medicationsList = document.getElementById('medications');
+      const medications = medicationsList.getElementsByTagName('li');
+      
+      if (medications.length > 0) {
+        fullText += "Today's Medications: ";
+        Array.from(medications).forEach((med, index) => {
+          const medText = med.textContent.replace('✕ Remove', '').trim();
+          fullText += `Medication ${index + 1}: ${medText}. `;
+        });
+      } else {
+        fullText += "No medications added yet. ";
+      }
+      
+      // Read add medication section
+      fullText += "To add a new medication, use the form below. ";
+      fullText += "You need to enter the day, medication name, dosage, and time. ";
+      
+      // Read footer
+      const footerText = document.querySelector('footer').textContent.replace(/\s+/g, ' ').trim();
+      fullText += "Footer: " + footerText + ". ";
+      
+      // Speak the content
+      speakText(fullText);
+    }
+
+    // Speech synthesis function
+    function speakText(text) {
+      if ('speechSynthesis' in window) {
+        // Stop any ongoing speech
+        window.speechSynthesis.cancel();
+        
+        // Create new utterance
+        currentUtterance = new SpeechSynthesisUtterance(text);
+        currentUtterance.rate = 0.8;
+        currentUtterance.pitch = 1;
+        currentUtterance.volume = 1;
+        
+        // Set language based on selection
+        const currentLang = document.getElementById("languageSelect").value;
+        if (currentLang === 'ig') currentUtterance.lang = "ig-NG";
+        else if (currentLang === 'yo') currentUtterance.lang = "yo-NG";
+        else if (currentLang === 'ha') currentUtterance.lang = "ha-NG";
+        else currentUtterance.lang = "en-US";
+        
+        // Update UI when speaking starts
+        currentUtterance.onstart = function() {
+          isSpeaking = true;
+          document.body.classList.add('speaking');
+          const narrationBtn = document.getElementById('narrationBtn');
+          const t = translations[currentLang] || translations["en"];
+          narrationBtn.textContent = '⏹️ ' + (t.stopReading || 'Stop Reading');
+          narrationBtn.disabled = false;
+        };
+        
+        // Update UI when speaking ends
+        currentUtterance.onend = function() {
+          isSpeaking = false;
+          document.body.classList.remove('speaking');
+          const narrationBtn = document.getElementById('narrationBtn');
+          const t = translations[currentLang] || translations["en"];
+          narrationBtn.textContent = '🔊 ' + (t.readPage || 'Read This Page Aloud');
+          narrationBtn.disabled = false;
+        };
+        
+        currentUtterance.onerror = function() {
+          isSpeaking = false;
+          document.body.classList.remove('speaking');
+          const narrationBtn = document.getElementById('narrationBtn');
+          const t = translations[currentLang] || translations["en"];
+          narrationBtn.textContent = '🔊 ' + (t.readPage || 'Read This Page Aloud');
+          narrationBtn.disabled = false;
+          alert('Speech synthesis error. Please try again.');
+        };
+        
+        // Start speaking
+        window.speechSynthesis.speak(currentUtterance);
+      } else {
+        alert('Text-to-speech is not supported in your browser. Please try using Chrome, Edge, or Safari.');
+      }
+    }
+
+    // Stop reading function
+    function stopReading() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        isSpeaking = false;
+        document.body.classList.remove('speaking');
+        const currentLang = document.getElementById("languageSelect").value;
+        const t = translations[currentLang] || translations["en"];
+        const narrationBtn = document.getElementById('narrationBtn');
+        narrationBtn.textContent = '🔊 ' + (t.readPage || 'Read This Page Aloud');
+        narrationBtn.disabled = false;
+      }
     }
 
     // Load medications from localStorage on page load
@@ -295,6 +464,12 @@
       applyTranslation(defaultLang);
       loadMedications(); // Load existing medications
       
+      // Add event listener for narration button
+      const narrationBtn = document.getElementById('narrationBtn');
+      if (narrationBtn) {
+        narrationBtn.addEventListener('click', readPageContent);
+      }
+      
       setInterval(() => {
         const currentLang = document.getElementById("languageSelect").value;
         updateHeader(currentLang);
@@ -308,5 +483,3 @@
   </script>
 </body>
 </html>
-
-
